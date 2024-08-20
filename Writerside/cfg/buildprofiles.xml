@@ -3,7 +3,19 @@
 <buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <variables></variables>
+    <variables>
+        <primary-color>#65a4e3</primary-color>
+        <color-preset>soft</color-preset>
+        <custom-favicons>icon16.png, icon32.png, icon64.png, icon128.png, icon256.png, icon512.png</custom-favicons>
+        <header-logo>header_logo_square.svg</header-logo>
+        <product-web-url>https://jipipe.hki-jena.de/</product-web-url>
+    </variables>
+    <footer>
+        <copyright>2024 HKI Jena</copyright>
+        <link href="https://github.com/applied-systems-biology/jipipe">GitHub</link>
+        <link href="https://jipipe.hki-jena.de/cite">Cite JIPipe</link>
+        <link href="https://image.sc/">Community</link>
+    </footer>
     <build-profile instance="j">
         <variables>
             <noindex-content>true</noindex-content>

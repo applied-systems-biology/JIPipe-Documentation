@@ -7,4 +7,10 @@
                  start-page="starter.md">
 
     <toc-element topic="starter.md"/>
+    <toc-element topic="Installation.md">
+        <toc-element topic="Prepackaged-JIPipe.md"/>
+        <toc-element topic="Manual-installation.md"/>
+        <toc-element topic="ImageJ-update-site.md"/>
+    </toc-element>
+    <toc-element topic="User-interface.md"/>
 </instance-profile>
