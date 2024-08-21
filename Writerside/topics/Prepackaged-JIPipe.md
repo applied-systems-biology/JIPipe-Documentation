@@ -44,7 +44,7 @@ The <path>jipipe.sh</path> script can be run from any location. You can use it t
 </procedure>
 </tab>
 <tab title="macOS">
-<note>macOS comes the <a href="https://support.apple.com/de-de/guide/security/sec5599b66df/web">Gatekeeper</a> feature that may block the startup JIPipe and related features. Please inform yourself on how to configure Gatekeeper to give ImageJ/JIPipe the necessary permissions to function.</note>
+<note>macOS comes with the <a href="https://support.apple.com/de-de/guide/security/sec5599b66df/web">Gatekeeper</a> feature that may block the startup JIPipe and related features. Please inform yourself on how to configure Gatekeeper to give ImageJ/JIPipe the necessary permissions to function.</note>
 <procedure>
 <step>
 Download the <a href="https://jipipe.hki-jena.de/download">macOS App</a> from the JIPipe website.
