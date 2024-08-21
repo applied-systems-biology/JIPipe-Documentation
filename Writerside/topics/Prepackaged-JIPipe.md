@@ -1,7 +1,9 @@
 # Prepackaged JIPipe
 
 <tabs group="os">
-<tab title="Windows">
+<tab title="Windows (Installer)">
+</tab>
+<tab title="Windows (Package)">
 </tab>
 <tab title="Linux">
 </tab>

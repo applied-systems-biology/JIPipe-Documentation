@@ -41,4 +41,12 @@ If applicable, download the <a href="https://jipipe.hki-jena.de/download">JAR pa
 Extract the package and copy its contents into the <path>Fiji.app/plugins/JIPipe</path> directory (create the directory if needed).
 <tip>macOS: Right-click the app and select <control>Show Package Contents</control> to display the plugins directory in Finder.</tip>
 </step>
+<step>Restart Fiji</step>
+<step>To start JIPipe navigate to <ui-path>Plugins | JIPipe | JIPipe GUI</ui-path></step>
 </procedure>
+
+<seealso>
+<category ref="related">
+<a href="User-interface.md">User interface overview</a>
+</category>
+</seealso>
