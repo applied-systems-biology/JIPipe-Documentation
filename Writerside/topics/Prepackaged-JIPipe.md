@@ -14,6 +14,7 @@ JIPipe is now installed and ready to use. You will find a JIPipe and ImageJ icon
 the installer will create desktop icons.
 </step>
 </procedure>
+<img src="installation-guide-windows.png" alt="Installation instructions"/>
 </tab>
 <tab title="Windows (Package)">
 <procedure>
@@ -28,6 +29,7 @@ Navigate into the extracted directory and double-click the <path>JIPipe.bat</pat
 If you want to run ImageJ instead, navigate into the <path>bin</path> directory and start <path>ImageJ-win64.exe</path>.
 </step>
 </procedure>
+<img src="installation-guide-windows-package.png" alt="Installation instructions"/>
 </tab>
 <tab title="Linux">
 <procedure>
@@ -42,6 +44,7 @@ Double-click the <path>jipipe.sh</path> file to start JIPipe. If you want to run
 The <path>jipipe.sh</path> script can be run from any location. You can use it to create an application menu entry. You can utilize the provided icons.
 </step>
 </procedure>
+<img src="installation-guide-linux-package.png" alt="Installation instructions"/>
 </tab>
 <tab title="macOS">
 <note>macOS comes with the <a href="https://support.apple.com/de-de/guide/security/sec5599b66df/web">Gatekeeper</a> feature that may block the startup JIPipe and related features. Please inform yourself on how to configure Gatekeeper to give ImageJ/JIPipe the necessary permissions to function.</note>
@@ -53,12 +56,13 @@ Download the <a href="https://jipipe.hki-jena.de/download">macOS App</a> from th
 Double-click the archive to extract it.
 </step>
 <step>
-Drag the JIPipe app to your <emphasis>desktop</emphasis>.
+Drag the JIPipe app to your <emphasis>desktop</emphasis> (moving it to <emphasis>Applications</emphasis> or the <emphasis>Dock</emphasis> instead might cause issues).
 </step>
 <step>
 Double-click the app to start it.
 </step>
 </procedure>
+<img src="installation-guide-macos-app.png" alt="Installation instructions"/>
 </tab>
 </tabs>
 
