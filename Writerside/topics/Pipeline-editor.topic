@@ -31,12 +31,58 @@
     <tip>If you need a quick reminder on how to begin with the creation of pipelines, go to the <ui-path>Quick help</ui-path>
         panel, which will briefly guide you through the basics.</tip>
     <chapter title="Workflow">
-
+        The workflow contains <a href="Nodes.topic">nodes</a> that are connected into a pipeline.
+        <img src="example_small_pipeline_1.png" alt="Small pipeline"/>
+        <note>You will need to add nodes into the pipeline yourself. You can learn more about the <a href="Adding-nodes.topic"><control>Add nodes</control> panel</a>
+        below.</note>
+        <chapter title="Navigation">
+            <deflist>
+                <def title="Moving the view">
+                    <p>For larger pipelines you can use the <ui-path>scroll bars</ui-path> or the <a href="#ui_sidebar_overview_map"><ui-path>Overview map</ui-path></a> to move the view to a different section.</p>
+                    <p>Alternatively, you can also  <shortcut>🖱 drag the view with the middle mouse button</shortcut>. As the available space is (theoretically) infinite,
+                    JIPipe will automatically enlarge the canvas based on your inputs.</p>
+                </def>
+                <def title="Resetting the view">
+                    If you accidentally got lost while navigating, you can click <img src="zoom-original.png" alt="Icon"/> or press <shortcut>F12</shortcut> to reset the view back to where the
+                    nodes are located.
+                </def>
+                <def title="Zooming">
+                    You can zoom into/out of the pipeline by ...
+                    <list>
+                        <li>Holding <shortcut>Ctrl</shortcut> and <shortcut>🖱 moving the mouse wheels</shortcut>,</li>
+                        <li>Pressing <shortcut>Ctrl + Numpad+</shortcut> (zoom in), <shortcut>Ctrl + Numpad-</shortcut> (zoom out), or <shortcut>Ctrl + Numpad0</shortcut> (reset zoom to 100%),</li>
+                        <li>or by using the zoom control <img src="ui_toolbar_zoom.png" alt="Zoom controls" style="inline"/></li>
+                    </list>
+                </def>
+            </deflist>
+        </chapter>
+        <chapter title="Node editing">
+            <deflist>
+                <def title="Moving nodes">
+                    Nodes can be moved by <shortcut>🖱 dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
+                    selecting them with a <shortcut>🖱 left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
+                    <shortcut>→</shortcut><shortcut>↓</shortcut>.
+                </def>
+                <def title="Selecting nodes">
+                    Nodes can be selected with a <shortcut>🖱 left click</shortcut> or by <shortcut>🖱 dragging</shortcut> a selection rectangle around them.
+                    You can also hold <shortcut>Shift</shortcut> and click/drag to add or remove nodes from the selection.
+                </def>
+                <def title="Connecting nodes">
+                    Node inputs/outputs can be connected by <shortcut>🖱 dragging</shortcut> a line between the input and output.
+                    It does not matter if the connection is started from the output or the input.
+                    We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
+                </def>
+                <def title="Disconnecting nodes">
+                    Node inputs/outputs can be disconnected by <shortcut>🖱 dragging</shortcut> the connection between two already connected nodes <emphasis>again</emphasis>.
+                    We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
+                </def>
+            </deflist>
+        </chapter>
     </chapter>
     <chapter title="Sidebars">
         The following overview will briefly explain the purpose of each side panel. Please note that panels marked with an * are not always shown.
         <tabs>
-            <tab title="Overview map">
+            <tab title="Overview map" id="ui_sidebar_overview_map">
                 <p>The map panel displays an overview of the whole pipeline. Nodes (processing steps) are shown as colored rectangles
                     containing the node's representative icon. If a node is selected, it is highlighted with a thick outline.</p>
                 <p>The blue region represents the currently displayed area. You can move it around by <shortcut>🖱 Dragging it while holding the left mouse button</shortcut>.</p>
@@ -162,6 +208,39 @@
                     <note>The image may be compressed to reduce the performance impact. Generally we recommend to limit the amount of inserted images, as
                     those increase the size of the project file considerably and may impact the performance.</note>
                     <img src="graph_annotation_image.png" alt="Example"/>
+                </def>
+            </deflist>
+        </chapter>
+        <chapter title="❸ Context-based commands">
+            <p>After the graph annotation tools, the toolbar displays actions that are based on the current selection of nodes.
+            This means that none are displayed if you did not select a node.</p>
+        </chapter>
+        <chapter title="❹ Additional commands">
+            Finally, the toolbar contains a variety of additional useful commands. 
+            <deflist>
+                <def title="Center view to nodes">
+                    <img src="zoom-original.png" alt="Icon"/> or <shortcut>F12</shortcut>
+                    <p>Resets the zoom and centers the view back to your nodes. This function will also remove large empty spaces around the bounds of all your nodes.</p>
+                </def>
+                <def title="Undo">
+                    <img src="edit-undo.png" alt="Icon"/> or <shortcut>Ctrl + Z</shortcut>
+                    <p>Reverts the last change made to the pipeline. Can be executed multiple times (up to 50 by default).</p>
+                </def>
+                <def title="Redo">
+                    <img src="edit-redo.png" alt="Icon"/> or <shortcut>Ctrl + Shift + Z</shortcut>
+                    <p>Restores a change that was undone by <ui-path>Undo</ui-path>.</p>
+                </def>
+                <def title="Layout menu">
+                    <img src="sidebar.png" alt="Icon"/>
+                    <p>Opens a menu with a variety of layout (pipeline and UI) options.</p>
+                </def>
+                <def title="Snapshot menu">
+                    <img src="camera.png" alt="Icon"/>
+                    <p>Opens a menu with operations that allow you to create screenshots of the graph and export them to PNG/SVG/Clipboard.</p>
+                </def>
+                <def title="Zoom controls">
+                    <img src="ui_toolbar_zoom.png" alt="Icon"/> or <shortcut>Ctrl + Numpad+</shortcut> or <shortcut>Ctrl + Numpad-</shortcut> or <shortcut>Ctrl + Numpad0</shortcut> or <shortcut>Ctrl + 🖱 Mouse wheel up/down</shortcut>
+                    <p>Allows to zoom into/out of the pipeline. You can also use the mouse wheel and keyboard shortcuts to modify the zoom.</p>
                 </def>
             </deflist>
         </chapter>
