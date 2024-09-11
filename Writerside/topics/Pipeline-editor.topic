@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Pipeline editor" id="Pipeline-editor">
+
+    <img src="ui_pipeline_editor.png" alt="Pipeline editor" thumbnail="true"/>
+    <p>The pipeline/workflow editor is the central component of JIPipe, as it allows you to determine the processing steps and their order. 
+    The user interface can be divided in three main regions:</p>
+    <deflist>
+        <def title="➊ Workflow">
+            The (by default) empty white region is the space where you build a flow graph of the processing steps that should 
+            be applied. 
+        </def>
+        <def title="➋ Sidebars">
+            To the left and to the right are panels that can be opened and closed by clicking the associated button at the 
+            left/right side. The panels contain a variety of tools that are helpful in the process of creation and execution of workflows, 
+            as well as the review of results.
+        </def>
+        <def title="➌ Editing tools">
+            <p>Directly above the pipeline is a toolbar that contains a variety of editing-related tools, including:</p>
+            <list>
+                <li>Tools for only moving processing steps or directly modifying connections</li>
+                <li>Creation of text boxes and other annotations that help in the organization of pipelines</li>
+                <li>Common operations related to the current selection of nodes</li>
+                <li>Other tools like undo/redo, creation of screenshots, and zooming in and out</li>
+            </list>
+        </def>
+    </deflist>
+    <tip>If you need a quick reminder on how to begin with the creation of pipelines, go to the <ui-path>Quick help</ui-path>
+        panel, which will briefly guide you through the basics.</tip>
+    <chapter title="Workflow">
+
+    </chapter>
+    <chapter title="Sidebars">
+        The following overview will briefly explain the purpose of each side panel. Please note that panels marked with an * are not always shown.
+        <tabs>
+            <tab title="Overview map">
+                <p>The map panel displays an overview of the whole pipeline. Nodes (processing steps) are shown as colored rectangles
+                    containing the node's representative icon. If a node is selected, it is highlighted with a thick outline.</p>
+                <p>The blue region represents the currently displayed area. You can move it around by <shortcut>🖱 Dragging it while holding the left mouse button</shortcut>.</p>
+                <img src="ui_sidebar_overview_map.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Add nodes">
+                <p>This panel is the main mode of adding new processing steps (nodes) into the workflow. It is structured into a search bar,
+                    a list of category filters, and the list of nodes that match the search/filters.</p>
+                <p>Nodes can be added into the workflow by either <shortcut>🖱 dragging them out of the list into the workflow</shortcut>, by <shortcut>🖱 double-clicking them</shortcut>, or by
+                    pressing <shortcut>Enter</shortcut> when an item is highlighted in green.</p>
+                <p>To learn more about the <control>Add nodes</control> panel, please take a look at our <a href="Adding-nodes.topic">more comprehensive documentation</a>.</p>
+                <img src="ui_sidebar_add_nodes.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Templates">
+                <p>Contains a customizable list of re-usable pipeline parts to speed up the creation of workflows. Please visit the <a href="Node-templates.topic">node templates</a> page to learn more about this feature. </p>
+                <img src="ui_sidebar_templates.png" alt="Screenshot"/>
+            </tab>
+            <tab title="History">
+                <p>Tracks the list of editing operations that were applied. This panel is directly connected to the undo <shortcut>Ctrl + Z</shortcut> and redo <shortcut>Ctrl + Shift + Z</shortcut> features that allow you to undo mistakes
+                    while editing the workflow.</p>
+                <img src="ui_sidebar_history.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Quick guide">
+                <p>This panel is shown at the first start of JIPipe and briefly explains how to do basic operations. The <control>Start adding nodes</control> button will open the <control>Add nodes</control> panel.</p>
+                <img src="ui_sidebar_quick_guide.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Parameters*">
+                <emphasis>Only shown if exactly one node is selected.</emphasis>
+                <p>All parameters/settings of the selected node are displayed in the <control>Parameters</control> panel. Use it to review and modify the behavior of the selected node.</p>
+                <p>To learn more about how to edit parameters and advanced features of the panel, please take a look at our <a href="Editing-parameters.topic">more comprehensive documentation</a>.</p>
+                <img src="ui_sidebar_parameters.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Slots*">
+                <emphasis>Only shown if exactly one node is selected.</emphasis>
+                <p>The <control>Slots</control> panel contains a list of all inputs and outputs of a <a href="Nodes.topic">node</a>. The panel also allows to edit and reorder slots.</p>
+                <p>To learn more about how to control the inputs and outputs of a node, please take a look at our <a href="Nodes.topic">more comprehensive documentation</a>.</p>
+                <img src="ui_sidebar_slots.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Inputs*">
+                <emphasis>Only shown if exactly one node that supports input management is selected.</emphasis>
+                <p>The <control>Inputs</control> panel allows to review and control the behavior of JIPipe's <a href="Batch-processing.topic">batch processing</a> system.
+                    It showcases which data is processed together in an <emphasis>iteration step</emphasis>, making the feature a powerful tool to debug issues or achieve advanced data processing.</p>
+                <note>We highly recommend to <a href="Batch-processing.topic">learn about JIPipe's way of batch processing</a> and the <a href="Input-manager.topic">input manager</a> feature.</note>
+                <img src="ui_sidebar_inputs.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Results*">
+                <emphasis>Only shown if exactly one node that produces results is selected.</emphasis>
+                <p>Results that are generated by the node via an <ui-path>Update cache</ui-path>/<ui-path>Cache intermediate results</ui-path> <a href="Running-nodes.topic">run</a> can be accessed via the <control>Results</control> panel. </p>
+                <p>To learn more about how to generate and browse results, please take a look at our <a href="Running-nodes.topic">more comprehensive documentation</a>.</p>
+                <img src="ui_sidebar_results.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Documentation*">
+                <emphasis>Only shown if exactly one node is selected. May also be opened by other actions.</emphasis>
+                <p>Displays the documentation of the currently selected node (or other supported item).</p>
+                <img src="ui_sidebar_documentation.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Errors">
+                <p>Displays the latest error messages if any were produced.</p>
+                <img src="ui_sidebar_errors.png" alt="Screenshot"/>
+            </tab>
+            <tab title="Log">
+                <p>If a process is running, displays the current status of the operation.</p>
+                <img src="ui_sidebar_log.png" alt="Screenshot"/>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Editing tools">
+
+    </chapter>
+</topic>
