@@ -104,6 +104,66 @@
         </tabs>
     </chapter>
     <chapter title="Editing tools">
-
+        <img src="ui_toolbar_annotated.png" alt="Annotated toolbar"/>
+        <p>The toolbar displayed above the pipeline editor contains the following commands:</p>
+        <chapter title="❶ Node tools">
+            The first tool category involves operations that are related to moving and connecting nodes.
+            <deflist>
+                <def title="Default tool">
+                    <img src="selection.png" alt="Icon" style="inline"/> or <shortcut>Esc</shortcut> or <shortcut>🖱 Right-click</shortcut>
+                    <p>The default tool that allows you to edit nodes and connections</p>
+                </def>
+                <def title="Move tool">
+                    <img src="transform-move.png" alt="Icon" style="inline"/> or <shortcut>F1</shortcut>
+                    <p>Tool that only allows you to move nodes. You will not be able to accidentally modify connections.</p>
+                </def>
+                <def title="Connection editor tool">
+                    <img src="lines-connector.png" alt="Icon" style="inline"/> or <shortcut>F2</shortcut>
+                    <p>Tool that only allows you to add/remove connections. You will not be able to accidentally move nodes.</p>
+                </def>
+                <def title="Rewire tool">
+                    <img src="editpath.png" alt="Icon" style="inline"/> or <shortcut>F3</shortcut>
+                    <p>
+                        "Grabs" all connections from an input or output and moves the connections to another input/output,
+                        similar to if you unplug a power plug and put it into another socket.
+                    </p>
+                    <note>
+                        Please ensure that you do not plug a node into itself or create a loop. The tool will fail with an error message.
+                    </note>
+                </def>
+            </deflist>
+        </chapter>
+        <chapter title="❷ Graph annotation tools">
+            The second category involves tools for creating graph annotations (e.g. text boxes) that are useful for
+            annotating the pipeline.
+            <tip>Graph annotations are also just (specialized) nodes, meaning that you can edit, copy, and paste them
+            however you wish. You can also create <a href="Node-templates.topic">node templates</a>. 
+            All graph annotations can be further customized via the <a href="Editing-parameters.topic">parameter editor</a>. </tip>
+            <deflist>
+                <def title="Text box">
+                    <img src="insert-text-frame.png" alt="Icon"/> or <shortcut>F4</shortcut>
+                  <p>  <shortcut>🖱 Drag</shortcut> an area with your mouse and insert a text message to create a text box.</p>
+                    <img src="graph_annotation_text_box.png" alt="Example"/>
+                </def>
+                <def title="Group box">
+                    <img src="object-group.png" alt="Icon"/> or <shortcut>F5</shortcut>
+                   <p> <shortcut>🖱 Drag</shortcut> an area with your mouse and insert a text message to create a text box that has a white background
+                    and where the text is located at the top left.</p>
+                    <img src="graph_annotation_group_box.png" alt="Example"/>
+                </def>
+                <def title="Arrow">
+                    <img src="draw-arrow.png" alt="Icon"/> or <shortcut>F5</shortcut>
+                    <p><shortcut>🖱 Drag</shortcut> to create an arrow.</p>
+                    <img src="graph_annotation_arrow.png" alt="Example"/>
+                </def>
+                <def title="Image">
+                    <img src="insert-image.png" alt="Icon"/> or <shortcut>F6</shortcut>
+                    <p><shortcut>🖱 Drag</shortcut> an area with your mouse and provide an image file (PNG/BMP/JPG) to insert it into the pipeline.</p>
+                    <note>The image may be compressed to reduce the performance impact. Generally we recommend to limit the amount of inserted images, as
+                    those increase the size of the project file considerably and may impact the performance.</note>
+                    <img src="graph_annotation_image.png" alt="Example"/>
+                </def>
+            </deflist>
+        </chapter>
     </chapter>
 </topic>
