@@ -25,6 +25,7 @@
         <toc-element topic="Editing-parameters.topic"/>
     </toc-element>
     <toc-element topic="Concepts.topic">
+        <toc-element topic="Visual-programming.topic"/>
         <toc-element topic="Batch-processing.topic"/>
     </toc-element>
 </instance-profile>

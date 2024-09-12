@@ -41,10 +41,12 @@
                     <p>For larger pipelines you can use the <ui-path>scroll bars</ui-path> or the <a href="#ui_sidebar_overview_map"><ui-path>Overview map</ui-path></a> to move the view to a different section.</p>
                     <p>Alternatively, you can also  <shortcut>🖱 drag the view with the middle mouse button</shortcut>. As the available space is (theoretically) infinite,
                     JIPipe will automatically enlarge the canvas based on your inputs.</p>
+                    <video src="video_ui_move_view.mp4" preview-src="video_ui_move_view.png"/>
                 </def>
                 <def title="Resetting the view">
                     If you accidentally got lost while navigating, you can click <img src="zoom-original.png" alt="Icon"/> or press <shortcut>F12</shortcut> to reset the view back to where the
                     nodes are located.
+                    <video src="video_ui_reset_view.mp4" preview-src="video_ui_reset_view.png"/>
                 </def>
                 <def title="Zooming">
                     You can zoom into/out of the pipeline by ...
@@ -53,6 +55,7 @@
                         <li>Pressing <shortcut>Ctrl + Numpad+</shortcut> (zoom in), <shortcut>Ctrl + Numpad-</shortcut> (zoom out), or <shortcut>Ctrl + Numpad0</shortcut> (reset zoom to 100%),</li>
                         <li>or by using the zoom control <img src="ui_toolbar_zoom.png" alt="Zoom controls" style="inline"/></li>
                     </list>
+                    <video src="video_ui_zoom.mp4" preview-src="video_ui_zoom.png"/>
                 </def>
             </deflist>
         </chapter>
@@ -62,19 +65,23 @@
                     Nodes can be moved by <shortcut>🖱 dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
                     selecting them with a <shortcut>🖱 left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
                     <shortcut>→</shortcut><shortcut>↓</shortcut>.
+                    <video src="video_ui_moving_nodes.mp4" preview-src="video_ui_moving_nodes.png"/>
                 </def>
                 <def title="Selecting nodes">
                     Nodes can be selected with a <shortcut>🖱 left click</shortcut> or by <shortcut>🖱 dragging</shortcut> a selection rectangle around them.
                     You can also hold <shortcut>Shift</shortcut> and click/drag to add or remove nodes from the selection.
+                    <video src="video_ui_selecting_nodes.mp4" preview-src="video_ui_selecting_nodes.png"/>
                 </def>
                 <def title="Connecting nodes">
                     Node inputs/outputs can be connected by <shortcut>🖱 dragging</shortcut> a line between the input and output.
                     It does not matter if the connection is started from the output or the input.
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
+                    <video src="video_ui_connecting_nodes.mp4" preview-src="video_ui_connecting_nodes.png"/>
                 </def>
                 <def title="Disconnecting nodes">
                     Node inputs/outputs can be disconnected by <shortcut>🖱 dragging</shortcut> the connection between two already connected nodes <emphasis>again</emphasis>.
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
+                    <video src="video_ui_disconnecting_nodes.mp4" preview-src="video_ui_disconnecting_nodes.png"/>
                 </def>
             </deflist>
         </chapter>
@@ -158,14 +165,19 @@
                 <def title="Default tool">
                     <img src="selection.png" alt="Icon" style="inline"/> or <shortcut>Esc</shortcut> or <shortcut>🖱 Right-click</shortcut>
                     <p>The default tool that allows you to edit nodes and connections</p>
+                    <video src="video_ui_graph_editor_tool_default.mp4"
+                           preview-src="video_ui_graph_editor_tool_default.png"/>
                 </def>
                 <def title="Move tool">
                     <img src="transform-move.png" alt="Icon" style="inline"/> or <shortcut>F1</shortcut>
                     <p>Tool that only allows you to move nodes. You will not be able to accidentally modify connections.</p>
+                    <video src="video_ui_graph_editor_tool_move.mp4" preview-src="video_ui_graph_editor_tool_move.png"/>
                 </def>
                 <def title="Connection editor tool">
                     <img src="lines-connector.png" alt="Icon" style="inline"/> or <shortcut>F2</shortcut>
                     <p>Tool that only allows you to add/remove connections. You will not be able to accidentally move nodes.</p>
+                    <video src="video_ui_graph_editor_tool_connect.mp4"
+                           preview-src="video_ui_graph_editor_tool_connect.png"/>
                 </def>
                 <def title="Rewire tool">
                     <img src="editpath.png" alt="Icon" style="inline"/> or <shortcut>F3</shortcut>
@@ -176,6 +188,8 @@
                     <note>
                         Please ensure that you do not plug a node into itself or create a loop. The tool will fail with an error message.
                     </note>
+                    <video src="video_ui_graph_editor_tool_rewire.mp4"
+                           preview-src="video_ui_graph_editor_tool_rewire.png"/>
                 </def>
             </deflist>
         </chapter>
