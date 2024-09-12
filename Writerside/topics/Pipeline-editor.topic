@@ -6,16 +6,20 @@
        title="Pipeline editor" id="Pipeline-editor">
 
     <img src="ui_pipeline_editor.png" alt="Pipeline editor" thumbnail="true"/>
-    <p>The pipeline/workflow editor is the central component of JIPipe, as it allows you to determine the processing steps and their order. 
-    The user interface can be divided in three main regions:</p>
+    <p>The pipeline/workflow editor is the central component of JIPipe, as it allows you to determine the processing
+        steps and their order.
+        The user interface can be divided in three main regions:</p>
     <deflist>
         <def title="%c1% Workflow">
-            The (by default) empty white region is the space where you build a flow graph of the processing steps that should 
-            be applied. 
+            The (by default) empty white region is the space where you build a flow graph of the processing steps that
+            should
+            be applied.
         </def>
         <def title="%c2% Sidebars">
-            To the left and to the right are panels that can be opened and closed by clicking the associated button at the 
-            left/right side. The panels contain a variety of tools that are helpful in the process of creation and execution of workflows, 
+            To the left and to the right are panels that can be opened and closed by clicking the associated button at
+            the
+            left/right side. The panels contain a variety of tools that are helpful in the process of creation and
+            execution of workflows,
             as well as the review of results.
         </def>
         <def title="%c3% Editing tools">
@@ -28,32 +32,62 @@
             </list>
         </def>
     </deflist>
-    <tip>If you need a quick reminder on how to begin with the creation of pipelines, go to the <ui-path>Quick help</ui-path>
-        panel, which will briefly guide you through the basics.</tip>
+    <tip>If you need a quick reminder on how to begin with the creation of pipelines, go to the
+        <ui-path>Quick help</ui-path>
+        panel, which will briefly guide you through the basics.
+    </tip>
     <chapter title="Workflow">
         The workflow contains <a href="Nodes.topic">nodes</a> that are connected into a pipeline.
         <img src="example_small_pipeline_1.png" alt="Small pipeline"/>
-        <note>You will need to add nodes into the pipeline yourself. You can learn more about the <a href="Adding-nodes.topic"><control>Add nodes</control> panel</a>
-        below.</note>
+        <note>You will need to add nodes into the pipeline yourself. You can learn more about the <a
+                href="Adding-nodes.topic">
+            <control>Add nodes</control>
+            panel</a>
+            below.
+        </note>
         <chapter title="Navigation">
             <deflist>
                 <def title="Moving the view">
-                    <p>For larger pipelines you can use the <ui-path>scroll bars</ui-path> or the <a href="#ui_sidebar_overview_map"><ui-path>Overview map</ui-path></a> to move the view to a different section.</p>
-                    <p>Alternatively, you can also  <shortcut>%mouse% drag the view with the middle mouse button</shortcut>. As the available space is (theoretically) infinite,
-                    JIPipe will automatically enlarge the canvas based on your inputs.</p>
+                    <p>For larger pipelines you can use the
+                        <ui-path>scroll bars</ui-path>
+                        or the <a href="#ui_sidebar_overview_map">
+                            <ui-path>Overview map</ui-path>
+                        </a> to move the view to a different section.
+                    </p>
+                    <p>Alternatively, you can also
+                        <shortcut>%mouse% drag the view with the middle mouse button</shortcut>
+                        . As the available space is (theoretically) infinite,
+                        JIPipe will automatically enlarge the canvas based on your inputs.
+                    </p>
                     <video src="video_ui_move_view.mp4" preview-src="video_ui_move_view.png"/>
                 </def>
                 <def title="Resetting the view">
-                    If you accidentally got lost while navigating, you can click <img src="zoom-original.png" alt="Icon"/> or press <shortcut>F12</shortcut> to reset the view back to where the
+                    If you accidentally got lost while navigating, you can click <img src="zoom-original.png"
+                                                                                      alt="Icon"/> or press
+                    <shortcut>F12</shortcut>
+                    to reset the view back to where the
                     nodes are located.
                     <video src="video_ui_reset_view.mp4" preview-src="video_ui_reset_view.png"/>
                 </def>
                 <def title="Zooming">
                     You can zoom into/out of the pipeline by ...
                     <list>
-                        <li>Holding <shortcut>Ctrl</shortcut> and <shortcut>%mouse% moving the mouse wheels</shortcut>,</li>
-                        <li>Pressing <shortcut>Ctrl + Numpad+</shortcut> (zoom in), <shortcut>Ctrl + Numpad-</shortcut> (zoom out), or <shortcut>Ctrl + Numpad0</shortcut> (reset zoom to 100%),</li>
-                        <li>or by using the zoom control <img src="ui_toolbar_zoom.png" alt="Zoom controls" style="inline"/></li>
+                        <li>Holding
+                            <shortcut>Ctrl</shortcut>
+                            and
+                            <shortcut>%mouse% moving the mouse wheels</shortcut>
+                            ,
+                        </li>
+                        <li>Pressing
+                            <shortcut>Ctrl + Numpad+</shortcut>
+                            (zoom in),
+                            <shortcut>Ctrl + Numpad-</shortcut>
+                            (zoom out), or
+                            <shortcut>Ctrl + Numpad0</shortcut>
+                            (reset zoom to 100%),
+                        </li>
+                        <li>or by using the zoom control <img src="ui_toolbar_zoom.png" alt="Zoom controls"
+                                                              style="inline"/></li>
                     </list>
                     <video src="video_ui_zoom.mp4" preview-src="video_ui_zoom.png"/>
                 </def>
@@ -62,83 +96,159 @@
         <chapter title="Node editing">
             <deflist id="node_editing_deflist">
                 <def title="Moving nodes">
-                    Nodes can be moved by <shortcut>%mouse% dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
-                    selecting them with a <shortcut>%mouse% left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
-                    <shortcut>→</shortcut><shortcut>↓</shortcut>.
+                    Nodes can be moved by
+                    <shortcut>%mouse% dragging</shortcut>
+                    them by the
+                    <emphasis>colored</emphasis>
+                    (central) area or by
+                    selecting them with a
+                    <shortcut>%mouse% left click</shortcut>
+                    and moving them with the arrow keys
+                    <shortcut>%key_left%</shortcut>
+                    <shortcut>%key_up%</shortcut>
+                    <shortcut>%key_right%</shortcut>
+                    <shortcut>%key_down%</shortcut>
+                    .
                     <video src="video_ui_moving_nodes.mp4" preview-src="video_ui_moving_nodes.png"/>
                 </def>
                 <def title="Selecting nodes">
-                    Nodes can be selected with a <shortcut>%mouse% left click</shortcut> or by <shortcut>%mouse% dragging</shortcut> a selection rectangle around them.
-                    You can also hold <shortcut>Shift</shortcut> and click/drag to add or remove nodes from the selection.
+                    Nodes can be selected with a
+                    <shortcut>%mouse% left click</shortcut>
+                    or by
+                    <shortcut>%mouse% dragging</shortcut>
+                    a selection rectangle around them.
+                    You can also hold
+                    <shortcut>Shift</shortcut>
+                    and click/drag to add or remove nodes from the selection.
                     <video src="video_ui_selecting_nodes.mp4" preview-src="video_ui_selecting_nodes.png"/>
                 </def>
                 <def title="Connecting nodes">
-                    Node inputs/outputs can be connected by <shortcut>%mouse% dragging</shortcut> a line between the input and output.
+                    Node inputs/outputs can be connected by
+                    <shortcut>%mouse% dragging</shortcut>
+                    a line between the input and output.
                     It does not matter if the connection is started from the output or the input.
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
                     <video src="video_ui_connecting_nodes.mp4" preview-src="video_ui_connecting_nodes.png"/>
                 </def>
                 <def title="Disconnecting nodes">
-                    Node inputs/outputs can be disconnected by <shortcut>%mouse% dragging</shortcut> the connection between two already connected nodes <emphasis>again</emphasis>.
+                    Node inputs/outputs can be disconnected by
+                    <shortcut>%mouse% dragging</shortcut>
+                    the connection between two already connected nodes
+                    <emphasis>again</emphasis>
+                    .
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
                     <video src="video_ui_disconnecting_nodes.mp4" preview-src="video_ui_disconnecting_nodes.png"/>
                 </def>
             </deflist>
         </chapter>
     </chapter>
-    <chapter title="Sidebars">
-        The following overview will briefly explain the purpose of each side panel. Please note that panels marked with an * are not always shown.
+    <chapter title="Sidebars" id="chapter_sidebar">
+        The following overview will briefly explain the purpose of each side panel. Please note that panels marked with
+        an * are not always shown.
         <tabs>
             <tab title="Overview map" id="ui_sidebar_overview_map">
-                <p>The map panel displays an overview of the whole pipeline. Nodes (processing steps) are shown as colored rectangles
-                    containing the node's representative icon. If a node is selected, it is highlighted with a thick outline.</p>
-                <p>The blue region represents the currently displayed area. You can move it around by <shortcut>%mouse% Dragging it while holding the left mouse button</shortcut>.</p>
+                <p>The map panel displays an overview of the whole pipeline. Nodes (processing steps) are shown as
+                    colored rectangles
+                    containing the node's representative icon. If a node is selected, it is highlighted with a thick
+                    outline.</p>
+                <p>The blue region represents the currently displayed area. You can move it around by
+                    <shortcut>%mouse% Dragging it while holding the left mouse button</shortcut>
+                    .
+                </p>
                 <img src="ui_sidebar_overview_map.png" alt="Screenshot"/>
             </tab>
             <tab title="Add nodes">
-                <p>This panel is the main mode of adding new processing steps (nodes) into the workflow. It is structured into a search bar,
+                <p>This panel is the main mode of adding new processing steps (nodes) into the workflow. It is
+                    structured into a search bar,
                     a list of category filters, and the list of nodes that match the search/filters.</p>
-                <p>Nodes can be added into the workflow by either <shortcut>%mouse% dragging them out of the list into the workflow</shortcut>, by <shortcut>%mouse% double-clicking them</shortcut>, or by
-                    pressing <shortcut>Enter</shortcut> when an item is highlighted in green.</p>
-                <p>To learn more about the <control>Add nodes</control> panel, please take a look at our <a href="Adding-nodes.topic">more comprehensive documentation</a>.</p>
+                <p>Nodes can be added into the workflow by either
+                    <shortcut>%mouse% dragging them out of the list into the workflow</shortcut>
+                    , by
+                    <shortcut>%mouse% double-clicking them</shortcut>
+                    , or by
+                    pressing
+                    <shortcut>Enter</shortcut>
+                    when an item is highlighted in green.
+                </p>
+                <p>To learn more about the
+                    <control>Add nodes</control>
+                    panel, please take a look at our <a href="Adding-nodes.topic">more comprehensive documentation</a>.
+                </p>
                 <img src="ui_sidebar_add_nodes.png" alt="Screenshot"/>
             </tab>
             <tab title="Templates">
-                <p>Contains a customizable list of re-usable pipeline parts to speed up the creation of workflows. Please visit the <a href="Node-templates.topic">node templates</a> page to learn more about this feature. </p>
+                <p>Contains a customizable list of re-usable pipeline parts to speed up the creation of workflows.
+                    Please visit the <a href="Node-templates.topic">node templates</a> page to learn more about this
+                    feature. </p>
                 <img src="ui_sidebar_templates.png" alt="Screenshot"/>
             </tab>
             <tab title="History">
-                <p>Tracks the list of editing operations that were applied. This panel is directly connected to the undo <shortcut>Ctrl + Z</shortcut> and redo <shortcut>Ctrl + Shift + Z</shortcut> features that allow you to undo mistakes
-                    while editing the workflow.</p>
+                <p>Tracks the list of editing operations that were applied. This panel is directly connected to the undo
+                    <shortcut>Ctrl + Z</shortcut>
+                    and redo
+                    <shortcut>Ctrl + Shift + Z</shortcut>
+                    features that allow you to undo mistakes
+                    while editing the workflow.
+                </p>
                 <img src="ui_sidebar_history.png" alt="Screenshot"/>
             </tab>
             <tab title="Quick guide">
-                <p>This panel is shown at the first start of JIPipe and briefly explains how to do basic operations. The <control>Start adding nodes</control> button will open the <control>Add nodes</control> panel.</p>
+                <p>This panel is shown at the first start of JIPipe and briefly explains how to do basic operations. The
+                    <control>Start adding nodes</control>
+                    button will open the
+                    <control>Add nodes</control>
+                    panel.
+                </p>
                 <img src="ui_sidebar_quick_guide.png" alt="Screenshot"/>
             </tab>
             <tab title="Parameters*">
                 <emphasis>Only shown if exactly one node is selected.</emphasis>
-                <p>All parameters/settings of the selected node are displayed in the <control>Parameters</control> panel. Use it to review and modify the behavior of the selected node.</p>
-                <p>To learn more about how to edit parameters and advanced features of the panel, please take a look at our <a href="Editing-parameters.topic">more comprehensive documentation</a>.</p>
+                <p>All parameters/settings of the selected node are displayed in the
+                    <control>Parameters</control>
+                    panel. Use it to review and modify the behavior of the selected node.
+                </p>
+                <p>To learn more about how to edit parameters and advanced features of the panel, please take a look at
+                    our <a href="Editing-parameters.topic">more comprehensive documentation</a>.</p>
                 <img src="ui_sidebar_parameters.png" alt="Screenshot"/>
             </tab>
             <tab title="Slots*">
                 <emphasis>Only shown if exactly one node is selected.</emphasis>
-                <p>The <control>Slots</control> panel contains a list of all inputs and outputs of a <a href="Nodes.topic">node</a>. The panel also allows to edit and reorder slots.</p>
-                <p>To learn more about how to control the inputs and outputs of a node, please take a look at our <a href="Nodes.topic">more comprehensive documentation</a>.</p>
+                <p>The
+                    <control>Slots</control>
+                    panel contains a list of all inputs and outputs of a <a href="Nodes.topic">node</a>. The panel also
+                    allows to edit and reorder slots.
+                </p>
+                <p>To learn more about how to control the inputs and outputs of a node, please take a look at our <a
+                        href="Nodes.topic">more comprehensive documentation</a>.</p>
                 <img src="ui_sidebar_slots.png" alt="Screenshot"/>
             </tab>
             <tab title="Inputs*">
                 <emphasis>Only shown if exactly one node that supports input management is selected.</emphasis>
-                <p>The <control>Inputs</control> panel allows to review and control the behavior of JIPipe's <a href="Batch-processing.topic">batch processing</a> system.
-                    It showcases which data is processed together in an <emphasis>iteration step</emphasis>, making the feature a powerful tool to debug issues or achieve advanced data processing.</p>
-                <note>We highly recommend to <a href="Batch-processing.topic">learn about JIPipe's way of batch processing</a> and the <a href="Input-manager.topic">input manager</a> feature.</note>
+                <p>The
+                    <control>Inputs</control>
+                    panel allows to review and control the behavior of JIPipe's <a href="Batch-processing.topic">batch
+                        processing</a> system.
+                    It showcases which data is processed together in an
+                    <emphasis>iteration step</emphasis>
+                    , making the feature a powerful tool to debug issues or achieve advanced data processing.
+                </p>
+                <note>We highly recommend to <a href="Batch-processing.topic">learn about JIPipe's way of batch
+                    processing</a> and the <a href="Input-manager.topic">input manager</a> feature.
+                </note>
                 <img src="ui_sidebar_inputs.png" alt="Screenshot"/>
             </tab>
             <tab title="Results*">
                 <emphasis>Only shown if exactly one node that produces results is selected.</emphasis>
-                <p>Results that are generated by the node via an <ui-path>Update cache</ui-path>/<ui-path>Cache intermediate results</ui-path> <a href="Running-nodes.topic">run</a> can be accessed via the <control>Results</control> panel. </p>
-                <p>To learn more about how to generate and browse results, please take a look at our <a href="Running-nodes.topic">more comprehensive documentation</a>.</p>
+                <p>Results that are generated by the node via an
+                    <ui-path>Update cache</ui-path>
+                    /
+                    <ui-path>Cache intermediate results</ui-path>
+                    <a href="Running-nodes.topic">run</a> can be accessed via the
+                    <control>Results</control>
+                    panel.
+                </p>
+                <p>To learn more about how to generate and browse results, please take a look at our <a
+                        href="Running-nodes.topic">more comprehensive documentation</a>.</p>
                 <img src="ui_sidebar_results.png" alt="Screenshot"/>
             </tab>
             <tab title="Documentation*">
@@ -163,30 +273,40 @@
             The first tool category involves operations that are related to moving and connecting nodes.
             <deflist>
                 <def title="Default tool">
-                    <img src="selection.png" alt="Icon" style="inline"/> or <shortcut>Esc</shortcut> or <shortcut>%mouse% Right-click</shortcut>
+                    <img src="selection.png" alt="Icon" style="inline"/> or
+                    <shortcut>Esc</shortcut>
+                    or
+                    <shortcut>%mouse% Right-click</shortcut>
                     <p>The default tool that allows you to edit nodes and connections</p>
                     <video src="video_ui_graph_editor_tool_default.mp4"
                            preview-src="video_ui_graph_editor_tool_default.png"/>
                 </def>
                 <def title="Move tool">
-                    <img src="transform-move.png" alt="Icon" style="inline"/> or <shortcut>F1</shortcut>
-                    <p>Tool that only allows you to move nodes. You will not be able to accidentally modify connections.</p>
+                    <img src="transform-move.png" alt="Icon" style="inline"/> or
+                    <shortcut>F1</shortcut>
+                    <p>Tool that only allows you to move nodes. You will not be able to accidentally modify
+                        connections.</p>
                     <video src="video_ui_graph_editor_tool_move.mp4" preview-src="video_ui_graph_editor_tool_move.png"/>
                 </def>
                 <def title="Connection editor tool">
-                    <img src="lines-connector.png" alt="Icon" style="inline"/> or <shortcut>F2</shortcut>
-                    <p>Tool that only allows you to add/remove connections. You will not be able to accidentally move nodes.</p>
+                    <img src="lines-connector.png" alt="Icon" style="inline"/> or
+                    <shortcut>F2</shortcut>
+                    <p>Tool that only allows you to add/remove connections. You will not be able to accidentally move
+                        nodes.</p>
                     <video src="video_ui_graph_editor_tool_connect.mp4"
                            preview-src="video_ui_graph_editor_tool_connect.png"/>
                 </def>
                 <def title="Rewire tool">
-                    <img src="editpath.png" alt="Icon" style="inline"/> or <shortcut>F3</shortcut>
+                    <img src="editpath.png" alt="Icon" style="inline"/> or
+                    <shortcut>F3</shortcut>
                     <p>
-                        "Grabs" all connections from an input or output and moves the connections to another input/output,
+                        "Grabs" all connections from an input or output and moves the connections to another
+                        input/output,
                         similar to if you unplug a power plug and put it into another socket.
                     </p>
                     <note>
-                        Please ensure that you do not plug a node into itself or create a loop. The tool will fail with an error message.
+                        Please ensure that you do not plug a node into itself or create a loop. The tool will fail with
+                        an error message.
                     </note>
                     <video src="video_ui_graph_editor_tool_rewire.mp4"
                            preview-src="video_ui_graph_editor_tool_rewire.png"/>
@@ -197,52 +317,82 @@
             The second category involves tools for creating graph annotations (e.g. text boxes) that are useful for
             annotating the pipeline.
             <tip>Graph annotations are also just (specialized) nodes, meaning that you can edit, copy, and paste them
-            however you wish. You can also create <a href="Node-templates.topic">node templates</a>. 
-            All graph annotations can be further customized via the <a href="Editing-parameters.topic">parameter editor</a>. </tip>
+                however you wish. You can also create <a href="Node-templates.topic">node templates</a>.
+                All graph annotations can be further customized via the <a href="Editing-parameters.topic">parameter
+                    editor</a>.
+            </tip>
             <deflist>
                 <def title="Text box">
-                    <img src="insert-text-frame.png" alt="Icon"/> or <shortcut>F4</shortcut>
-                  <p>  <shortcut>%mouse% Drag</shortcut> an area with your mouse and insert a text message to create a text box.</p>
+                    <img src="insert-text-frame.png" alt="Icon"/> or
+                    <shortcut>F4</shortcut>
+                    <p>
+                        <shortcut>%mouse% Drag</shortcut>
+                        an area with your mouse and insert a text message to create a text box.
+                    </p>
                     <img src="graph_annotation_text_box.png" alt="Example"/>
                 </def>
                 <def title="Group box">
-                    <img src="object-group.png" alt="Icon"/> or <shortcut>F5</shortcut>
-                   <p> <shortcut>%mouse% Drag</shortcut> an area with your mouse and insert a text message to create a text box that has a white background
-                    and where the text is located at the top left.</p>
+                    <img src="object-group.png" alt="Icon"/> or
+                    <shortcut>F5</shortcut>
+                    <p>
+                        <shortcut>%mouse% Drag</shortcut>
+                        an area with your mouse and insert a text message to create a text box that has a white
+                        background
+                        and where the text is located at the top left.
+                    </p>
                     <img src="graph_annotation_group_box.png" alt="Example"/>
                 </def>
                 <def title="Arrow">
-                    <img src="draw-arrow.png" alt="Icon"/> or <shortcut>F5</shortcut>
-                    <p><shortcut>%mouse% Drag</shortcut> to create an arrow.</p>
+                    <img src="draw-arrow.png" alt="Icon"/> or
+                    <shortcut>F5</shortcut>
+                    <p>
+                        <shortcut>%mouse% Drag</shortcut>
+                        to create an arrow.
+                    </p>
                     <img src="graph_annotation_arrow.png" alt="Example"/>
                 </def>
                 <def title="Image">
-                    <img src="insert-image.png" alt="Icon"/> or <shortcut>F6</shortcut>
-                    <p><shortcut>%mouse% Drag</shortcut> an area with your mouse and provide an image file (PNG/BMP/JPG) to insert it into the pipeline.</p>
-                    <note>The image may be compressed to reduce the performance impact. Generally we recommend to limit the amount of inserted images, as
-                    those increase the size of the project file considerably and may impact the performance.</note>
+                    <img src="insert-image.png" alt="Icon"/> or
+                    <shortcut>F6</shortcut>
+                    <p>
+                        <shortcut>%mouse% Drag</shortcut>
+                        an area with your mouse and provide an image file (PNG/BMP/JPG) to insert it into the pipeline.
+                    </p>
+                    <note>The image may be compressed to reduce the performance impact. Generally we recommend to limit
+                        the amount of inserted images, as
+                        those increase the size of the project file considerably and may impact the performance.
+                    </note>
                     <img src="graph_annotation_image.png" alt="Example"/>
                 </def>
             </deflist>
         </chapter>
         <chapter title="❸ Context-based commands">
-            <p>After the graph annotation tools, the toolbar displays actions that are based on the current selection of nodes.
-            This means that none are displayed if you did not select a node.</p>
+            <p>After the graph annotation tools, the toolbar displays actions that are based on the current selection of
+                nodes.
+                This means that none are displayed if you did not select a node.</p>
         </chapter>
         <chapter title="❹ Additional commands">
-            Finally, the toolbar contains a variety of additional useful commands. 
+            Finally, the toolbar contains a variety of additional useful commands.
             <deflist>
                 <def title="Center view to nodes">
-                    <img src="zoom-original.png" alt="Icon"/> or <shortcut>F12</shortcut>
-                    <p>Resets the zoom and centers the view back to your nodes. This function will also remove large empty spaces around the bounds of all your nodes.</p>
+                    <img src="zoom-original.png" alt="Icon"/> or
+                    <shortcut>F12</shortcut>
+                    <p>Resets the zoom and centers the view back to your nodes. This function will also remove large
+                        empty spaces around the bounds of all your nodes.</p>
                 </def>
                 <def title="Undo">
-                    <img src="edit-undo.png" alt="Icon"/> or <shortcut>Ctrl + Z</shortcut>
-                    <p>Reverts the last change made to the pipeline. Can be executed multiple times (up to 50 by default).</p>
+                    <img src="edit-undo.png" alt="Icon"/> or
+                    <shortcut>Ctrl + Z</shortcut>
+                    <p>Reverts the last change made to the pipeline. Can be executed multiple times (up to 50 by
+                        default).</p>
                 </def>
                 <def title="Redo">
-                    <img src="edit-redo.png" alt="Icon"/> or <shortcut>Ctrl + Shift + Z</shortcut>
-                    <p>Restores a change that was undone by <ui-path>Undo</ui-path>.</p>
+                    <img src="edit-redo.png" alt="Icon"/> or
+                    <shortcut>Ctrl + Shift + Z</shortcut>
+                    <p>Restores a change that was undone by
+                        <ui-path>Undo</ui-path>
+                        .
+                    </p>
                 </def>
                 <def title="Layout menu">
                     <img src="sidebar.png" alt="Icon"/>
@@ -250,11 +400,20 @@
                 </def>
                 <def title="Snapshot menu">
                     <img src="camera.png" alt="Icon"/>
-                    <p>Opens a menu with operations that allow you to create screenshots of the graph and export them to PNG/SVG/Clipboard.</p>
+                    <p>Opens a menu with operations that allow you to create screenshots of the graph and export them to
+                        PNG/SVG/Clipboard.</p>
                 </def>
                 <def title="Zoom controls">
-                    <img src="ui_toolbar_zoom.png" alt="Icon"/> or <shortcut>Ctrl + Numpad+</shortcut> or <shortcut>Ctrl + Numpad-</shortcut> or <shortcut>Ctrl + Numpad0</shortcut> or <shortcut>Ctrl + %mouse% Mouse wheel up/down</shortcut>
-                    <p>Allows to zoom into/out of the pipeline. You can also use the mouse wheel and keyboard shortcuts to modify the zoom.</p>
+                    <img src="ui_toolbar_zoom.png" alt="Icon"/> or
+                    <shortcut>Ctrl + Numpad+</shortcut>
+                    or
+                    <shortcut>Ctrl + Numpad-</shortcut>
+                    or
+                    <shortcut>Ctrl + Numpad0</shortcut>
+                    or
+                    <shortcut>Ctrl + %mouse% Mouse wheel up/down</shortcut>
+                    <p>Allows to zoom into/out of the pipeline. You can also use the mouse wheel and keyboard shortcuts
+                        to modify the zoom.</p>
                 </def>
             </deflist>
         </chapter>

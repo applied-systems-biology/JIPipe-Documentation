@@ -5,5 +5,101 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Adding nodes" id="Adding-nodes">
 
-    <p>Start typing here...</p>
+    <p>Nodes can be added via the
+        <ui-path>Add nodes</ui-path>
+        panel or the
+        <ui-path>Find matching node</ui-path>
+        dialog.
+        This article will explain both methods of inserting new processing steps into a pipeline.
+    </p>
+    <chapter title="Add nodes panel">
+        The
+        <ui-path>Add nodes</ui-path>
+        panel can be (by default) found at the left <a href="Pipeline-editor.topic" anchor="chapter_sidebar">sidebar</a>.
+        <img src="ui_sidebar_add_nodes_annotated.png" alt="Add nodes panel"/>
+        The panel has three main components:
+        <deflist>
+            <def title="%c1% Search bar">
+                Here you can type in text to filter the list of nodes. The search will primarily match for the name, but
+                also look through the category and description.
+                <p>Next to the search bar is a <img src="hamburger-menu.png" alt="Icon" style="inline"/> icon that will
+                    open a menu with additional settings:</p>
+                <deflist type="medium">
+                    <def title="Show category browser">Controls if %c2% is displayed.</def>
+                    <def title="Show node descriptions">Determines if nodes in %c3% have a short description.</def>
+                </deflist>
+                <tip>Press
+                    <shortcut>%key_down%</shortcut>
+                    to switch the focus to %c3%.
+                </tip>
+                <tip>Press
+                    <shortcut>Shift + A</shortcut>
+                    to activate the
+                    <ui-path>Add nodes</ui-path>
+                    panel and focus the search bar.
+                </tip>
+            </def>
+            <def title="%c2% Category browser">
+                JIPipe nodes are assigned to one main category (which also determines the color of the node).
+                Additionally, many nodes are also further organized into a hierarchy, e.g.,
+                <ui-path>Images | Threshold | Auto threshold 2D</ui-path>
+                .
+                <p>
+                    The category browser quickly allows you to limit the displayed nodes in %c3% to the selected
+                    category.
+                    On selecting a category, you will also be able to browse through the hierarchy via an additional
+                    panel.
+                </p>
+                <video src="video_add_nodes_category_browser.mp4" preview-src="video_add_nodes_category_browser.png"/>
+                <p>
+                    Each category button also doubles as menu that allows to immediately add nodes without browsing
+                    through the categories.
+                    Nodes will appear at the <img src="target.png" alt="Target location"/> on being added by the menu.
+                </p>
+                <video src="video_add_nodes_menu.mp4" preview-src="video_add_nodes_menu.png"/>
+                <note>The category list also includes a button to show all <a href="Node-templates.topic">node
+                    templates</a>
+                    and another button to list all pinned nodes.
+                </note>
+            </def>
+            <def title="Node list">
+                The search/category filter results are displayed in the node list. Each item is shown with its
+                representative icon,
+                name, category, and a description.
+                <tip>The description can be hidden via a setting.</tip>
+                <p>To add a node from the list into the workflow,
+                    <shortcut>%mouse% drag</shortcut>
+                    it from the list into the pipeline.
+                    Alternatively, you can also
+                    <shortcut>%mouse% double-click</shortcut>
+                    an item to add it at the target <img src="target.png" alt="Target location"/>.
+                    The <img src="target.png" alt="Target location"/> can be moved by clicking the workflow.
+                </p>
+                <p>You can also use the list with keyboard shortcuts. Use
+                    <shortcut>%key_up%</shortcut>
+                    and
+                    <shortcut>%key_down%</shortcut>
+                    to highlight the item of interest and press
+                    <shortcut>%key_enter%</shortcut>
+                    . The node will appear at the <img src="target.png" alt="Target location"/>.
+                </p>
+                <tip>If you highlighted the top item and press
+                    <shortcut>%key_up%</shortcut>
+                    , the focus will jump back to the search bar %c1%.
+                </tip>
+                <video src="video_add_nodes_drag.mp4" preview-src="video_add_nodes_drag.png"/>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Find matching node dialog">
+        An alternative mode of adding new nodes is to use the <ui-path>Find matching node</ui-path> command of a slot.
+        It can be triggered from the context menu that can be opened by right-clicking the slot or by clicking the <img src="configure.png" alt="Configure" style="inline"/> configuration
+        button that is located at the slot's datatype icon and by then navigating to <ui-path>Find matching node ...</ui-path> item.
+        You can also double-click the slot.
+        <p>This will open a dialog with a search bar and a list of matching existing/new nodes. JIPipe ensures that only nodes are displayed
+        that is compatible to the slot.</p>
+        <p>Click an item to open a menu that allows you to either add the node to the pipeline (for new nodes only), or create a connection.
+        If a node does not exist, it will be automatically created.</p>
+        <video src="video_add_nodes_algorithm_finder.mp4" preview-src="video_add_nodes_algorithm_finder.png"/>
+    </chapter>
 </topic>
