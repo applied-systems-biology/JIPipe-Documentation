@@ -4,6 +4,79 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Visual programming" id="Visual-programming">
-
-    <p>Start typing here...</p>
+    <p>JIPipe is a <emphasis>visual programming language</emphasis>, meaning that it allows you to program your advanced own image/data
+    analysis workflows, but without involving any (or only minimal in certain cases) writing of text-based scripts. The main goal is to
+        allow everyone to create <emphasis>reproducible</emphasis> workflows, even if they are not a programmer.</p>
+    <chapter title="From ImageJ to visual flow charts">
+        <p>JIPipe is based on the popular image analysis tool <a href="https://fiji.sc/">ImageJ</a> and inherits a large variety of its functions from this software and related plugins.</p>
+        <p>ImageJ is a very user-friendly <tooltip term="GUI" >GUI</tooltip> that gives users access to image processing via menus.</p>
+        <img src="concepts_imagej.png" alt="Screenshot of ImageJ" />
+        <p>For example, to count particles in an image, one would apply the following operations:</p>
+        <img src="concepts_blobs_3.png" alt="Example image"/>
+        <list type="decimal">
+            <li><ui-path>File | Open</ui-path> and select the image, which will open the image as window</li>
+            <li><ui-path>Process | Filters | Median...</ui-path>, insert the value <code>3</code>, and press <control>OK</control></li>
+            <li><ui-path>Image | Adjust | Threshold...</ui-path>, set the value to <code>Otsu</code>, and press <control>Apply</control></li>
+            <li><ui-path>Analyze | Analyze particles...</ui-path>, enable <control>Display results</control> and <control>Add to Manager</control>, and press <control>OK</control></li>
+        </list>
+        <p>Reproducing such a procedure for hundreds of images is error-prone and cumbersome. This is why ImageJ comes with a macro programming feature that
+        allows you to record the applied operations and convert them into a script:</p>
+        <code-block lang="c">
+            open("Blobs-3.png");
+            selectImage("Blobs-3.png");
+            run("Median...", "radius=3");
+            setAutoThreshold("Default dark no-reset");
+            //run("Threshold...");
+            setAutoThreshold("Otsu dark no-reset");
+            //setThreshold(129, 255);
+            setOption("BlackBackground", true);
+            run("Convert to Mask");
+            run("Close");
+            run("Analyze Particles...", "clear add");
+        </code-block>
+        <p>The code produced by the recorder is not 100% perfect and requires further additions like a <code>for</code> loop to make it suitable for automated batch processing.
+        It is also not very accessible to non-programmers and cannot be easily extended or modified without learning the syntax of the macro language.</p>
+        <tip>LLM chatbots like <a href="https://chatgpt.com">ChatGPT</a> are capable to producing and analyzing simple ImageJ macros. </tip>
+        <p>One additional issue with code is that it is hard to read and to explain, for example in the environment of a publication or conference presentation/poster.
+        A suitable alternative to displaying the code as-is is to create a flow chart:</p>
+        <code-block lang="mermaid">
+            graph TB
+            A[Open image] --> B["Apply median filter (r=3)"]
+            B --> C["Apply auto threshold (Otsu)"]
+            C --> D["Analyze particles"]
+        </code-block>
+        <p>The idea behind a <emphasis>visual programming language</emphasis> is to skip the writing of the script and instead just design the flow-chart.
+        Software like JIPipe then applies all necessary processing steps in the background.</p>
+        <p>The equivalent workflow in JIPipe would look as following:</p>
+        <img src="concepts_blobs_3_workflow.png" alt="concepts_blobs_3_workflow.png" id="example"/>
+        <resource src="blobs_3_example_pipeline.jip">Download JIPipe project (*.jip)</resource>
+    </chapter>
+    <chapter title="Nodes in JIPipe">
+        <p>The building blocks that are formed into a pipeline are called
+            <emphasis>nodes</emphasis>.
+            There are thousands of nodes available in JIPipe, each representing a different data processing step. The
+            visual programmer (you)
+            then combines the building blocks in a suitable order to achieve the desired results.</p>
+        <p>
+            To allow data to be transferred between nodes, each comes with a set of input and output <emphasis>slots</emphasis>.
+            As shown in the <a href="#example">example</a> above, the inputs and outputs can be <a href="Nodes.topic">connected</a>.
+        </p>
+        <p>In JIPipe, inputs %c1% are always located at the <emphasis>top</emphasis> of a node and colored light gray. They are also always named (usually "Input").
+            Any outputs %c2% that are produced by the node are put into the output slots at the <emphasis>bottom</emphasis>. Outputs also have a name, as well as the node itself %c3%.</p>
+        <img src="ui_node_structure.png" alt="General node structure"/>
+    </chapter>
+    <chapter title="Data types">
+        <p>
+            JIPipe is designed to make it as conveniently as possible to work with a variety of different data types, including images, tables, ROI, 3D objects, AI models, and more.
+            This affects the data consumed and produced by various nodes. For example <control>Find particles 2D</control> consumes a <emphasis>Mask</emphasis>, but produces <emphasis>ROI</emphasis> and measurement <emphasis>tables</emphasis>.
+        </p>
+        <p>JIPipe indicates the data type of each slot via a representative icon next to the slot name. Additionally, you can right-click the slot to display a full description of the data type.</p>
+        <img src="concepts_data_types_example.png" alt="Example of the ROI data type"/>
+        <chapter title="Converting data types">
+            The data type system ensures that JIPipe is capable of automatically converting data to the correct format without involving any additional operation by the developer.
+            For example, JIPipe ensures that images are converted to the correct bit depth.
+            <warning>Not all data can be converted automatically. For such non-trivial conversions, there are usually specific nodes that provide the appropriate settings.</warning>
+            <tip>You can manually enforce the automated conversion by utilizing the <ui-path>Convert</ui-path> node.</tip>
+        </chapter>
+    </chapter>
 </topic>
