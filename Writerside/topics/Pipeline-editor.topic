@@ -9,16 +9,16 @@
     <p>The pipeline/workflow editor is the central component of JIPipe, as it allows you to determine the processing steps and their order. 
     The user interface can be divided in three main regions:</p>
     <deflist>
-        <def title="➊ Workflow">
+        <def title="%c1% Workflow">
             The (by default) empty white region is the space where you build a flow graph of the processing steps that should 
             be applied. 
         </def>
-        <def title="➋ Sidebars">
+        <def title="%c2% Sidebars">
             To the left and to the right are panels that can be opened and closed by clicking the associated button at the 
             left/right side. The panels contain a variety of tools that are helpful in the process of creation and execution of workflows, 
             as well as the review of results.
         </def>
-        <def title="➌ Editing tools">
+        <def title="%c3% Editing tools">
             <p>Directly above the pipeline is a toolbar that contains a variety of editing-related tools, including:</p>
             <list>
                 <li>Tools for only moving processing steps or directly modifying connections</li>
@@ -39,7 +39,7 @@
             <deflist>
                 <def title="Moving the view">
                     <p>For larger pipelines you can use the <ui-path>scroll bars</ui-path> or the <a href="#ui_sidebar_overview_map"><ui-path>Overview map</ui-path></a> to move the view to a different section.</p>
-                    <p>Alternatively, you can also  <shortcut>🖱 drag the view with the middle mouse button</shortcut>. As the available space is (theoretically) infinite,
+                    <p>Alternatively, you can also  <shortcut>%mouse% drag the view with the middle mouse button</shortcut>. As the available space is (theoretically) infinite,
                     JIPipe will automatically enlarge the canvas based on your inputs.</p>
                     <video src="video_ui_move_view.mp4" preview-src="video_ui_move_view.png"/>
                 </def>
@@ -51,7 +51,7 @@
                 <def title="Zooming">
                     You can zoom into/out of the pipeline by ...
                     <list>
-                        <li>Holding <shortcut>Ctrl</shortcut> and <shortcut>🖱 moving the mouse wheels</shortcut>,</li>
+                        <li>Holding <shortcut>Ctrl</shortcut> and <shortcut>%mouse% moving the mouse wheels</shortcut>,</li>
                         <li>Pressing <shortcut>Ctrl + Numpad+</shortcut> (zoom in), <shortcut>Ctrl + Numpad-</shortcut> (zoom out), or <shortcut>Ctrl + Numpad0</shortcut> (reset zoom to 100%),</li>
                         <li>or by using the zoom control <img src="ui_toolbar_zoom.png" alt="Zoom controls" style="inline"/></li>
                     </list>
@@ -60,26 +60,26 @@
             </deflist>
         </chapter>
         <chapter title="Node editing">
-            <deflist>
+            <deflist id="node_editing_deflist">
                 <def title="Moving nodes">
-                    Nodes can be moved by <shortcut>🖱 dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
-                    selecting them with a <shortcut>🖱 left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
+                    Nodes can be moved by <shortcut>%mouse% dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
+                    selecting them with a <shortcut>%mouse% left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
                     <shortcut>→</shortcut><shortcut>↓</shortcut>.
                     <video src="video_ui_moving_nodes.mp4" preview-src="video_ui_moving_nodes.png"/>
                 </def>
                 <def title="Selecting nodes">
-                    Nodes can be selected with a <shortcut>🖱 left click</shortcut> or by <shortcut>🖱 dragging</shortcut> a selection rectangle around them.
+                    Nodes can be selected with a <shortcut>%mouse% left click</shortcut> or by <shortcut>%mouse% dragging</shortcut> a selection rectangle around them.
                     You can also hold <shortcut>Shift</shortcut> and click/drag to add or remove nodes from the selection.
                     <video src="video_ui_selecting_nodes.mp4" preview-src="video_ui_selecting_nodes.png"/>
                 </def>
                 <def title="Connecting nodes">
-                    Node inputs/outputs can be connected by <shortcut>🖱 dragging</shortcut> a line between the input and output.
+                    Node inputs/outputs can be connected by <shortcut>%mouse% dragging</shortcut> a line between the input and output.
                     It does not matter if the connection is started from the output or the input.
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
                     <video src="video_ui_connecting_nodes.mp4" preview-src="video_ui_connecting_nodes.png"/>
                 </def>
                 <def title="Disconnecting nodes">
-                    Node inputs/outputs can be disconnected by <shortcut>🖱 dragging</shortcut> the connection between two already connected nodes <emphasis>again</emphasis>.
+                    Node inputs/outputs can be disconnected by <shortcut>%mouse% dragging</shortcut> the connection between two already connected nodes <emphasis>again</emphasis>.
                     We recommend to read more about this in the <a href="Nodes.topic">more comprehensive article</a>.
                     <video src="video_ui_disconnecting_nodes.mp4" preview-src="video_ui_disconnecting_nodes.png"/>
                 </def>
@@ -92,13 +92,13 @@
             <tab title="Overview map" id="ui_sidebar_overview_map">
                 <p>The map panel displays an overview of the whole pipeline. Nodes (processing steps) are shown as colored rectangles
                     containing the node's representative icon. If a node is selected, it is highlighted with a thick outline.</p>
-                <p>The blue region represents the currently displayed area. You can move it around by <shortcut>🖱 Dragging it while holding the left mouse button</shortcut>.</p>
+                <p>The blue region represents the currently displayed area. You can move it around by <shortcut>%mouse% Dragging it while holding the left mouse button</shortcut>.</p>
                 <img src="ui_sidebar_overview_map.png" alt="Screenshot"/>
             </tab>
             <tab title="Add nodes">
                 <p>This panel is the main mode of adding new processing steps (nodes) into the workflow. It is structured into a search bar,
                     a list of category filters, and the list of nodes that match the search/filters.</p>
-                <p>Nodes can be added into the workflow by either <shortcut>🖱 dragging them out of the list into the workflow</shortcut>, by <shortcut>🖱 double-clicking them</shortcut>, or by
+                <p>Nodes can be added into the workflow by either <shortcut>%mouse% dragging them out of the list into the workflow</shortcut>, by <shortcut>%mouse% double-clicking them</shortcut>, or by
                     pressing <shortcut>Enter</shortcut> when an item is highlighted in green.</p>
                 <p>To learn more about the <control>Add nodes</control> panel, please take a look at our <a href="Adding-nodes.topic">more comprehensive documentation</a>.</p>
                 <img src="ui_sidebar_add_nodes.png" alt="Screenshot"/>
@@ -163,7 +163,7 @@
             The first tool category involves operations that are related to moving and connecting nodes.
             <deflist>
                 <def title="Default tool">
-                    <img src="selection.png" alt="Icon" style="inline"/> or <shortcut>Esc</shortcut> or <shortcut>🖱 Right-click</shortcut>
+                    <img src="selection.png" alt="Icon" style="inline"/> or <shortcut>Esc</shortcut> or <shortcut>%mouse% Right-click</shortcut>
                     <p>The default tool that allows you to edit nodes and connections</p>
                     <video src="video_ui_graph_editor_tool_default.mp4"
                            preview-src="video_ui_graph_editor_tool_default.png"/>
@@ -202,23 +202,23 @@
             <deflist>
                 <def title="Text box">
                     <img src="insert-text-frame.png" alt="Icon"/> or <shortcut>F4</shortcut>
-                  <p>  <shortcut>🖱 Drag</shortcut> an area with your mouse and insert a text message to create a text box.</p>
+                  <p>  <shortcut>%mouse% Drag</shortcut> an area with your mouse and insert a text message to create a text box.</p>
                     <img src="graph_annotation_text_box.png" alt="Example"/>
                 </def>
                 <def title="Group box">
                     <img src="object-group.png" alt="Icon"/> or <shortcut>F5</shortcut>
-                   <p> <shortcut>🖱 Drag</shortcut> an area with your mouse and insert a text message to create a text box that has a white background
+                   <p> <shortcut>%mouse% Drag</shortcut> an area with your mouse and insert a text message to create a text box that has a white background
                     and where the text is located at the top left.</p>
                     <img src="graph_annotation_group_box.png" alt="Example"/>
                 </def>
                 <def title="Arrow">
                     <img src="draw-arrow.png" alt="Icon"/> or <shortcut>F5</shortcut>
-                    <p><shortcut>🖱 Drag</shortcut> to create an arrow.</p>
+                    <p><shortcut>%mouse% Drag</shortcut> to create an arrow.</p>
                     <img src="graph_annotation_arrow.png" alt="Example"/>
                 </def>
                 <def title="Image">
                     <img src="insert-image.png" alt="Icon"/> or <shortcut>F6</shortcut>
-                    <p><shortcut>🖱 Drag</shortcut> an area with your mouse and provide an image file (PNG/BMP/JPG) to insert it into the pipeline.</p>
+                    <p><shortcut>%mouse% Drag</shortcut> an area with your mouse and provide an image file (PNG/BMP/JPG) to insert it into the pipeline.</p>
                     <note>The image may be compressed to reduce the performance impact. Generally we recommend to limit the amount of inserted images, as
                     those increase the size of the project file considerably and may impact the performance.</note>
                     <img src="graph_annotation_image.png" alt="Example"/>
@@ -253,7 +253,7 @@
                     <p>Opens a menu with operations that allow you to create screenshots of the graph and export them to PNG/SVG/Clipboard.</p>
                 </def>
                 <def title="Zoom controls">
-                    <img src="ui_toolbar_zoom.png" alt="Icon"/> or <shortcut>Ctrl + Numpad+</shortcut> or <shortcut>Ctrl + Numpad-</shortcut> or <shortcut>Ctrl + Numpad0</shortcut> or <shortcut>Ctrl + 🖱 Mouse wheel up/down</shortcut>
+                    <img src="ui_toolbar_zoom.png" alt="Icon"/> or <shortcut>Ctrl + Numpad+</shortcut> or <shortcut>Ctrl + Numpad-</shortcut> or <shortcut>Ctrl + Numpad0</shortcut> or <shortcut>Ctrl + %mouse% Mouse wheel up/down</shortcut>
                     <p>Allows to zoom into/out of the pipeline. You can also use the mouse wheel and keyboard shortcuts to modify the zoom.</p>
                 </def>
             </deflist>

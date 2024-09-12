@@ -5,5 +5,77 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Nodes" id="Nodes">
 
-    <p>Start typing here...</p>
+    <tip>We highly recommend to learn about the basic principles behind <a href="Visual-programming.topic">visual programming</a> if you are
+    not yet familiar with that concept.</tip>
+    <tip>Graph annotation nodes do not follow the basic structure that will be presented here, as they are only used for visual guidance.</tip>
+    <p>JIPipe allows you to combine processing steps into a pipeline by drawing a flow chart. Processing steps are represented as 
+        <emphasis>nodes</emphasis> that all follow a basic structure.</p>
+    <img src="ui_node_structure.png" alt="Basic node"/>
+    <deflist>
+        <def title="%c1% Input slots">
+            All incoming data is received from the top via input slots. The number of input slots may vary depending on the node type and 
+            for some nodes can be even modified. Each slot features a name and a representative icon of the supported data type (e.g., images, ROI).
+        </def>
+        <def title="%c2% Handle">
+            At the center of each node, there is a (usually colored) handle that contains a button to execute the node (if supported),
+            the representative icon of the node, and the name of the node.
+            <tip>The color depends on the category of the node. You can find more information about this <a href="Adding-nodes.topic">here</a>. </tip>
+        </def>
+        <def title="%c3% Output slots">
+            All data produced by the node are placed in its output slots. Similar to the set of input slots, the number of outputs varies depending on the node.
+            Each slot features a name and a representative icon of the supported data type (e.g., images, ROI).
+            <note>There are also some nodes that synchronize the inputs and outputs. One example is the <ui-path>IO interface</ui-path> node.</note>
+        </def>
+    </deflist>
+    <chapter title="Selecting and moving nodes">
+        Nodes can be selected with a <shortcut>%mouse% left click</shortcut> or by <shortcut>%mouse% dragging</shortcut> a selection rectangle around them.
+        You can also hold <shortcut>Shift</shortcut> and click/drag to add or remove nodes from the selection.
+        <video src="video_ui_selecting_nodes.mp4" preview-src="video_ui_selecting_nodes.png"/>
+        Nodes can be moved by <shortcut>%mouse% dragging</shortcut> them by the <emphasis>colored</emphasis> (central) area or by
+        selecting them with a <shortcut>%mouse% left click</shortcut> and moving them with the arrow keys <shortcut>←</shortcut><shortcut>↑</shortcut>
+        <shortcut>→</shortcut><shortcut>↓</shortcut>.
+        <video src="video_ui_moving_nodes.mp4" preview-src="video_ui_moving_nodes.png"/>
+    </chapter>
+    <chapter title="Connecting and disconnecting nodes">
+        To create a workflow, you need to connect nodes via their input and output slots. JIPipe supports simple (chain) connections,
+        the formation of branches to process data with multiple paths, and due to JIPipe's <a href="Batch-processing.topic">unique way of batch processing</a>
+        also the merging of multiple data sources.
+        <img src="ui_node_connection_types.png" alt="Example of connection types"/>
+        There are multiple ways to create and delete connections between nodes:
+        <deflist>
+            <def title="Using your mouse">
+                Node inputs/outputs can be connected by <shortcut>%mouse% dragging</shortcut> a line between the input and output.
+                It does not matter if the connection is started from the output or the input.
+                <video src="video_ui_connect_disconnect_nodes.mp4" preview-src="video_ui_connect_disconnect_nodes.png"/>
+            </def>
+            <def title="Using the context menu">
+                If nodes are further away, you can also use the slot's context menu that can be opened by clicking <img src="configure.png" alt="Slot context icon"/> or <shortcut>%mouse% right-click</shortcut>.
+                Here you can create new connections, manage existing connections, and also quickly remove all connections at once.
+                <video src="video_ui_connect_disconnect_context_menu.mp4"
+                       preview-src="video_ui_connect_disconnect_context_menu.png"/>
+            </def>
+            <def title="Using the node finder">
+                You can also use the <ui-path>Find matching node</ui-path> function to create connections between existing nodes or even automatically insert new nodes.
+                The function can be accessed from within the slot's context menu or by <shortcut>%mouse% double-clicking the slot</shortcut>.
+                <video src="video_ui_connect_algorithm_finder_existing.mp4"
+                       preview-src="video_ui_connect_algorithm_finder_existing.png"/>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Rewiring connections">
+        If you want to move all connections from one input/output to another input/output, you can use the <ui-path>Rewire</ui-path> tool
+        that can be accessed via <img src="editpath.png" alt="Icon" style="inline"/> or by pressing <shortcut>F3</shortcut>.
+        <p>
+            This tool "grabs" all connections from an input or output and moves the connections to another input/output,
+            similar to if you unplug a power plug and put it into another socket.
+        </p>
+        <note>
+            Please ensure that you do not plug a node into itself or create a loop. The tool will fail with an error message.
+        </note>
+        <tip>
+            A less interactive, but more fine-grained version of the tool can be found in <ui-path>Slot context menu | Manage existing connections ... | Rewire to different input/output ...</ui-path>.
+        </tip>
+        <video src="video_ui_graph_editor_tool_rewire.mp4"
+               preview-src="video_ui_graph_editor_tool_rewire.png"/>
+    </chapter>
 </topic>

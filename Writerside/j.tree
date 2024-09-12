@@ -15,8 +15,8 @@
     <toc-element topic="User-interface.md">
         <toc-element topic="Getting-started.md"/>
         <toc-element topic="Pipeline-editor.topic"/>
-        <toc-element topic="Adding-nodes.topic"/>
         <toc-element topic="Nodes.topic">
+            <toc-element topic="Adding-nodes.topic"/>
             <toc-element topic="Running-nodes.topic"/>
             <toc-element topic="Input-manager.topic"/>
         </toc-element>

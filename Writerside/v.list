@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE vars SYSTEM "https://resources.jetbrains.com/writerside/1.0/vars.dtd">
 <vars>
-    <var name="product" value="Writerside"/>
+    <var name="product" value="JIPipe"/>
+    <var name="mouse" value="🖱"/>
+    <var name="c1" value="➊"/>
+    <var name="c2" value="➋"/>
+    <var name="c3" value="➌"/>
+    <var name="c4" value="❹"/>
+    <var name="c5" value="❺"/>
 </vars>
