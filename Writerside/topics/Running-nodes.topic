@@ -4,6 +4,48 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Running nodes" id="Running-nodes">
-
-    <p>Start typing here...</p>
+    <note>If you want to follow along without creating a project from scratch, you
+        can download an
+        <resource src="blobs-example-single.zip">example project</resource>
+        . Just
+        extract the *.zip file and open the blobs-example.jip in JIPipe.
+    </note>
+    <note>This article is about running a single node. If you want to run the whole project, you can find a guide <a
+            href="Running-projects.topic">here</a>.
+    </note>
+    Each runnable node has a <img src="run-play.png" alt="Play" style="inline"/> button that opens a menu with various
+    commands to execute the pipeline up to the specified node. This is useful if you want to only run specific parts of
+    your workflow, for example to export specific results or to evaluate an intermediate step.
+    <img src="ui_run_nodes_context_menu.png" alt="Menu displayed on running a node"/>
+    <tip>Output slots with a <img src="database.png" alt="Database icon" style="inline"/> indicator show that results are stored in the  <a href="Memory-management.topic">memory cache</a>. </tip>
+    <deflist>
+        <def title="Update cache">
+            (Commonly used) Executes the workflow up until the selected node and stores <emphasis>only</emphasis>
+            the results of the selected node to a <a href="Memory-management.topic">memory cache</a>.
+            After running this command, you will be able to <a href="Results-browser.topic">browse the results</a>.
+            <img src="ui_run_nodes_update_cache.png" alt="Update cache"/>
+        </def>
+        <def title="Cache intermediate results">
+            (Commonly used) Executes the workflow up until the selected node and stores
+            the results of the selected node <emphasis>and</emphasis> its predecessors to a <a href="Memory-management.topic">memory cache</a>.
+            After running this command, you will be able to <a href="Results-browser.topic">browse the results</a>.
+            <img src="ui_run_nodes_cache_intermediate_results.png" alt="Cache intermediate results"/>
+        </def>
+        <def title="Update predecessor cache">
+            Executes the workflow up until the <emphasis>predecessors</emphasis> of the selected node and store
+            their results into a <a href="Memory-management.topic">memory cache</a>.
+            The selected node is not executed.
+            After running this command, you will be able to <a href="Results-browser.topic">browse the results of the predecessors</a>.
+            <img src="ui_run_nodes_cache_predecessors.png" alt="Update predecessor cache"/>
+        </def>
+        <def title="Run &amp; show results">
+            Same as <ui-path>Update cache</ui-path>, but stores the results to the hard drive. Use this if you expect very large results.
+        </def>
+        <def title="Show intermediate results">
+            Same as <ui-path>Cache intermediate results</ui-path>, but stores the results to the hard drive. Use this if you expect very large results.
+        </def>
+        <def title="Clear cache">
+            Clear results stored in the <a href="Memory-management.topic">memory cache</a> for this node.
+        </def>
+    </deflist>
 </topic>

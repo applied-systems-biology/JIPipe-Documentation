@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Memory management" id="Memory-management">
+
+    <p>Due to the relatively large size of images compared to other data, the high number of images, and
+        the limitations in available system memory, it is important to keep an eye on how much is used by JIPipe.</p>
+    <p>Computers have three main memory types:</p>
+    <list type="decimal">
+        <li>Hard drive (HDD) space / SSD space</li>
+        <li>System memory (RAM)</li>
+        <li>Graphics card memory (vRAM)</li>
+    </list>
+    If you run out of memory in one of these categories, you will experience problems like crashes and slowdowns.
+    <chapter title="Preventing HDD/SSD space issues">
+        While most modern PCs are equipped with sufficient hard drive space, you still may want to regularly
+        remove temporary files left behind by JIPipe workflows.
+        <p>If you save a project into a directory and execute it in any form, you will notice a <path>JIPipe.tmp.dir</path>
+        directory next to the project file.</p>
+        <img src="concepts_memory_tmp_dir.png" alt="JIPipe tmp dir"/>
+        This directory contains various files that JIPipe uses to execute workflows.
+        And while JIPipe usually automatically removes unnecessary files, some may be left behind for various reasons, for
+        example if a workflow crashes.
+        <p>It is thus a good idea to regularly remove such directories if you are sure that JIPipe is currently not running.</p>
+    </chapter>
+    <chapter title="Monitoring RAM usage">
+        The available random access memory (RAM) of a PC is usually considerably lower than the available disk space.
+        For example, current consumer PCs have over 1TB HDD space, but may only have up to 16GB RAM.
+        <p>JIPipe and all other programs use the RAM to store data. This includes the <emphasis>memory cache</emphasis>
+        results produced by <a href="Running-nodes.topic">nodes</a>. </p>
+        We highly recommend to monitor how much RAM JIPipe is utilizing via the dedicated UI at the bottom right:
+        <img src="concepts_memory_ram.png" alt="RAM indicator" style="block"/>
+        If the bar reaches nearly 100%, JIPipe will slow down or may crash.
+        <p>You can prevent this by following a few tips:</p>
+        <list>
+            <li>Avoid using <a href="Running-nodes.topic">Cache immediate results</a> for larger batch processing
+                pipelines or use it strategically. You can use <ui-path>Update cache</ui-path> on an earlier step to "stop"
+                the function from propagating to the beginning.
+            </li>
+            <li>JIPipe's <a href="Batch-processing.topic">way of batch processing</a> makes it susceptible to unnecessarily using
+            large amounts of memory for batch processing tasks. Use <a href="Graph-partitions.topic">graph partitions</a> to
+            create loops.</li>
+            <li>You can also split up your data yourself and run it in batches if you do not want to use <a href="Graph-partitions.topic">graph partitions</a>.</li>
+        </list>
+    </chapter>
+    <chapter title="Monitoring vRAM usage">
+        JIPipe itself does not actively allocate memory space on your graphics card. This is usually done by
+        third-party tools, especially ones that are related to AI/deep learning (e.g., Cellpose) if they are
+        running in GPU mode.
+        <p>As the monitoring of vRAM is not trivial (especially as there may be multiple GPUs), JIPipe currently does
+        not provide any interface to track the allocated memory.</p>
+        Please research the appropriate tools for your operating system (e.g., <code>nvidia-smi</code> for Linux and
+        the task manager for Windows).
+    </chapter>
+</topic>

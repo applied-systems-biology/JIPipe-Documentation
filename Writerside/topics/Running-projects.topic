@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Running projects" id="Running-projects">
+    <note>If you want to follow along without creating a project from scratch, you
+        can download an
+        <resource src="blobs-example-single.zip">example project</resource>
+        . Just
+        extract the *.zip file and open the blobs-example.jip in JIPipe.
+    </note>
+    <note>This article is about running the whole project. If you want to run a single node, you can find a guide <a
+            href="Running-nodes.topic">here</a>.
+    </note>
+</topic>

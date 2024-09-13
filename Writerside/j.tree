@@ -6,7 +6,6 @@
                  name="JIPipe"
                  start-page="starter.md">
 
-    <toc-element topic="FAQ.topic"/>
     <toc-element topic="starter.md"/>
     <toc-element topic="Installation.md">
         <toc-element topic="Prepackaged-JIPipe.md"/>
@@ -18,15 +17,21 @@
         <toc-element topic="Pipeline-editor.topic"/>
         <toc-element topic="Nodes.topic">
             <toc-element topic="Adding-nodes.topic"/>
+            <toc-element topic="Editing-parameters.topic"/>
             <toc-element topic="Running-nodes.topic"/>
             <toc-element topic="Input-manager.topic"/>
+            <toc-element topic="Results-browser.topic"/>
         </toc-element>
         <toc-element topic="Node-templates.topic">
         </toc-element>
-        <toc-element topic="Editing-parameters.topic"/>
+        <toc-element topic="Running-projects.topic"/>
     </toc-element>
     <toc-element topic="Concepts.topic">
         <toc-element topic="Visual-programming.topic"/>
         <toc-element topic="Batch-processing.topic"/>
+        <toc-element topic="Memory-management.topic"/>
+        <toc-element topic="Graph-compartments.topic"/>
+        <toc-element topic="Graph-partitions.topic"/>
     </toc-element>
+    <toc-element topic="FAQ.topic"/>
 </instance-profile>
