@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Frequently asked questions" id="FAQ">
+
+    <deflist>
+        <def title="Can I convert a JIPipe workflow into an ImageJ macro?">
+            No, JIPipe has its own implementation of a workflow engine (the component that runs the pipeline) that
+            does not involve ImageJ macros in any form. This way, we ensure that JIPipe is not limited by the design of
+            the ImageJ macro language that was not made for visual pipelines. Additionally, we gain a lot of additional
+            flexibility regarding data types (for example, ImageJ does not understand what a Cellpose model is).
+        </def>
+        <def title="How do I use my own installation of Python/Conda/R?">
+            You can override environments on a node, project, and application level.
+            <warning>This will make the project harder to reproduce for other people. Please do not forget to
+            provide appropriate instructions.</warning>
+            <deflist type="medium">
+                <def title="Overriding on a node level">
+                    To for example make a node use a custom Python version, select the node, and enable the
+                    <ui-path>Override Python environment</ui-path> parameter. Click the <control>Configure...</control>
+                    button and select one of the provided options.
+                </def>
+                <def title="Overriding on a project level">
+                    To change the Python environment for a whole project, click the <control>Info &amp; Settings</control>
+                    button at the top right of the window and go to the <ui-path>Settings</ui-path> tab on the right-hand side.
+                    Go to the <ui-path>Plugins | Python integration</ui-path> page and click the <control>Configure...</control>
+                    button at the <ui-path>Project default environment</ui-path> item. Select one of the provided options.
+                </def>
+                <def title="Overriding on an application level">
+                    <note>This will only affect new projects, unless the project's <ui-path>Project default environment</ui-path>
+                    item is turned off.</note>
+                    Navigate to <ui-path>Project | Application settings | Plugins | Python integration</ui-path>
+                    and edit the default environment.
+                </def>
+            </deflist>
+        </def>
+        <def title="JIPipe is available as plugin. Why do you provide installers/packages instead?">
+            We experienced multiple times already that when ImageJ updates plugins/components, some functionality might break.
+            This is avoided by providing a JIPipe installation as-is.
+            <tip>You can still use the ImageJ updater to update/install plugins. Please note that when you distribute the pipeline,
+            you should provide the whole ImageJ package to ensure that the reviewers/readers can still run your pipeline.
+                <p>As such a package is large, we recommend the usage of repositories like <a href="https://figshare.com/">Figshare</a>.</p>
+            </tip>
+        </def>
+    </deflist>
+</topic>

@@ -6,6 +6,7 @@
                  name="JIPipe"
                  start-page="starter.md">
 
+    <toc-element topic="FAQ.topic"/>
     <toc-element topic="starter.md"/>
     <toc-element topic="Installation.md">
         <toc-element topic="Prepackaged-JIPipe.md"/>
