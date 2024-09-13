@@ -47,6 +47,9 @@
         </code-block>
         <p>The idea behind a <emphasis>visual programming language</emphasis> is to skip the writing of the script and instead just design the flow-chart.
         Software like JIPipe then applies all necessary processing steps in the background.</p>
+        <warning>This doesn't mean that JIPipe writes an ImageJ macro in the background that can be extracted from the visual pipeline.
+        JIPipe has its own internal way of handling data that is distinct from ImageJ.
+        This allows JIPipe to support a higher variety of different data types compared to ImageJ1.</warning>
         <p>The equivalent workflow in JIPipe would look as following:</p>
         <img src="concepts_blobs_3_workflow.png" alt="concepts_blobs_3_workflow.png" id="example"/>
         <resource src="blobs_3_example_pipeline.jip">Download JIPipe project (*.jip)</resource>
@@ -77,6 +80,7 @@
             For example, JIPipe ensures that images are converted to the correct bit depth.
             <warning>Not all data can be converted automatically. For such non-trivial conversions, there are usually specific nodes that provide the appropriate settings.</warning>
             <tip>You can manually enforce the automated conversion by utilizing the <ui-path>Convert</ui-path> node.</tip>
+            <tip>To learn more about which data types can be converted from/to each other, go to <ui-path>Help | Open data type documentation</ui-path></tip>
         </chapter>
     </chapter>
 </topic>
