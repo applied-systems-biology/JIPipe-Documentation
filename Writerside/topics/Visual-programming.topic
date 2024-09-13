@@ -49,7 +49,7 @@
         Software like JIPipe then applies all necessary processing steps in the background.</p>
         <warning>This doesn't mean that JIPipe writes an ImageJ macro in the background that can be extracted from the visual pipeline.
         JIPipe has its own internal way of handling data that is distinct from ImageJ.
-        This allows JIPipe to support a higher variety of different data types compared to ImageJ1.</warning>
+        This allows JIPipe to support a higher variety of different data types compared to ImageJ1 and apply its own optimizations.</warning>
         <p>The equivalent workflow in JIPipe would look as following:</p>
         <img src="concepts_blobs_3_workflow.png" alt="concepts_blobs_3_workflow.png" id="example"/>
         <resource src="blobs_3_example_pipeline.jip">Download JIPipe project (*.jip)</resource>
