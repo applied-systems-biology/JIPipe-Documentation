@@ -4,6 +4,44 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Editing parameters" id="Editing-parameters">
+    All parameters relevant to a node are displayed in the <ui-path>Parameters</ui-path> tab that can be accessed
+    by selecting exactly one node. By default, it can be found on the right-hand side of the interface.
+    <img src="ui_sidebar_parameters_annotated.png" alt="Screenshot"/>
+    <deflist>
+        <def title="%c1% Search bar">
+            Here you can search for parameters.
+        </def>
+        <def title="%c2% Advanced parameter options">
+            At the right-hand side of the search bar you can find more advanced parameter options, including
+            <a href="#chapter_adaptive_parameters">adaptive</a> and <a href="#chapter_external_parameters">external</a>
+            parameter modes.
+            <p>For certain nodes, you will also find a <img src="quickopen.png" alt="Icon"/> <control>Quick action</control> button
+            that contains a variety of useful node-related tools.</p>
+        </def>
+        <def title="%c3% Categories">
+            Depending on the node type, there can be a very large number of parameters.
+            To make the navigation easier, parameters are grouped into categories.
+            <p>Each category has an <control>Info</control> button that will display the documentation of the
+            category and all its parameters.</p>
+            <p>You can also hide a category by clicking the <control>Hide content</control> button.</p>
+        </def>
+        <def title="%c4% Parameter list">
+            Parameters are listed below the category. Use the provided controls to change the parameter.
+            To open the documentation of the parameter, click the <img src="help.png" alt="Help"/> button next to the parameter.
+            <p>Next to the <img src="help.png" alt="Help"/> button, you can find a <img src="caret-down.png" alt="Menu"/> menu button
+            that offers a variety of commands related to the parameter, including copy/paste, resetting the parameter to the default value,
+            and making the parameter <a href="#chapter_adaptive_parameters">adaptive</a>.</p>
+        </def>
+    </deflist>
+    <chapter title="Adaptive parameters" id="chapter_adaptive_parameters">
+        Adaptive parameters allow to dynamically calculate the parameter values using an <a href="Expressions.topic">expression</a> ,
+        even if the parameter itself is not expression-based. The feature is for example useful, if you want to set
+        the radius of a median filter based on a precalculated value stored within <a href="Annotations.topic">annotations</a>.
+    </chapter>
+    <chapter title="External parameters" id="chapter_external_parameters">
+        External parameters are used if you want to run a node for multiple parameter sets. For example, you want to run
+        a median filter with radii 3, 5, 7, and 12 without creating four copies of the node. As the feature was designed to
+        handle parameter <emphasis>set</emphasis>, you even make more advanced arrangements of multiple parameter combinations to be tested.
 
-    <p>Start typing here...</p>
+    </chapter>
 </topic>

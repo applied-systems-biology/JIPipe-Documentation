@@ -28,7 +28,9 @@
     </toc-element>
     <toc-element topic="Concepts.topic">
         <toc-element topic="Visual-programming.topic"/>
+        <toc-element topic="Annotations.topic"/>
         <toc-element topic="Batch-processing.topic"/>
+        <toc-element topic="Expressions.topic"/>
         <toc-element topic="Memory-management.topic"/>
         <toc-element topic="Graph-compartments.topic"/>
         <toc-element topic="Graph-partitions.topic"/>
