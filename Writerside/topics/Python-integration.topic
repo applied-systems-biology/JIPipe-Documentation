@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Python integration" id="Python-integration">
+
+    JIPipe provides nodes that allow to execute
+    <var name="id_postfix"></var>
+    <emphasis>native</emphasis>
+    Python (CPython) code and use it to process data.
+    All nodes that are relevant to Python processing can be found in the
+    <ui-path>Miscellaneous | Python script</ui-path>
+    <a href="Adding-nodes.topic">category</a>. The following nodes are available:
+    <deflist>
+        <def title="Python script (iterating) %recommended%">
+            (Most commonly used node)
+            <p>
+                Executes the Python script for each <a href="Batch-processing.topic">iteration step</a>.
+                Each slot receives
+                <emphasis>exactly one</emphasis>
+                data item per step.
+            </p>
+        </def>
+        <def title="Python script (merging)">
+            Executes the Python script for each <a href="Batch-processing.topic">iteration step</a>.
+            Each slot receives
+            <emphasis>multiple</emphasis>
+            data items per step if they cannot be separated by annotations.
+        </def>
+        <def title="Python script (multi-parameter capable, custom)">
+            (Rarely used special case)
+            <p>
+                Executes the Python script exactly
+                <emphasis>once</emphasis>
+                that will receive all the data at once.
+            </p>
+        </def>
+    </deflist>
+    <tip>A variety of example nodes are also available in the
+        <control>Add nodes</control>
+        panel. You can use them
+        to get started.
+    </tip>
+    <chapter title="Background">
+        The JIPipe Python integration basically works by applying the following steps:
+        <procedure>
+            <step>Create temporary directories for inputs and outputs</step>
+            <step>Write all input data to its temporary directory in <a href="JIPipe-data-table-format.topic">JIPipe's
+                data table format</a>.
+            </step>
+            <step>Run the Python script, but also tell it where it can find the input and output folders</step>
+            <step>Let JIPipe read all data from the output directory. The data must be in <a
+                    href="JIPipe-data-table-format.topic">JIPipe's data table format</a>.
+            </step>
+        </procedure>
+        Most of the steps are already covered by the Python integration node and the <a
+            href="https://github.com/applied-systems-biology/jipipe-python">JIPipe Python adapter library</a>
+        that is automatically injected into the Python script.
+    </chapter>
+    <chapter title="Writing Python scripts">
+        Generally, you can use all Python libraries that are available to you in the currently configured Python
+        environment.
+        But to facilitate the data transfer between JIPipe and Python, you will need to use the functionality provided
+        by
+        JIPipe's adapter libraries and injected variables.
+        <chapter title="JIPipe-generated variables">
+            On executing a Python script, JIPipe will automatically inject the following global variables into the
+            Python script:
+            <table style="header-row">
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td><code>jipipe_inputs</code></td>
+                    <td>Dictionary where the keys are named according to the node's input slots and the
+                        values contain a representation of the data contained within the slot.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>jipipe_outputs</code></td>
+                    <td>Dictionary where the keys are named according to the node's output slots and the
+                        values contain an object that will allow to write outputs.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>jipipe_annotations</code></td>
+                    <td>Dictionary (string to string) that contains the text annotations associated to the current
+                        iteration step.
+                        <note>Data annotations are currently not supported. Only text annotations can be passed.</note>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>jipipe_variables</code></td>
+                    <td>Dictionary that contains variables from the
+                        <control>Script parameters</control>
+                        parameter of the node.
+                    </td>
+                </tr>
+            </table>
+        </chapter>
+    </chapter>
+    <chapter title="Importing data from JIPipe into Python">
+        To copy data from the JIPipe into a Python variable you will need to get the correct input slot from the <code>jipipe_inputs</code>
+        variable. For example, to obtain the input slot
+        <control>Input</control>
+        as variable <code>ds</code>, write:
+        <code-block lang="python">
+            ds = jipipe_inputs["Input"]
+        </code-block>
+        Depending on which kind of data and which libraries you want to use, you will have the following options:
+        <tabs>
+            <tab title="Importing images">
+                The <code>jipipe.imagej</code> module provided by JIPipe's Python adapter offers a convenient functions
+                to
+                either obtain a file path to an image or directly load it using <code>skimage.io.imread</code>.
+                <code-block lang="python">
+                    # Do not forget to import
+                    from jipipe.imagej import *
+
+                    # Get the data table
+                    ds = jipipe_inputs["Input"]
+
+                    # Option 1: Load the image with skimage
+                    img = load_image_file(ds, row=0)
+
+                    # Option 2: Get the path to the image and use it with any library
+                    # It will likely be a TIFF or OME TIFF, but can also be PNG/BMP/JPG
+                    img_path = get_image_file(ds, row=0)
+                </code-block>
+
+            </tab>
+            <tab title="Importing tables">
+                The <code>jipipe.imagej</code> module provided by JIPipe's Python adapter offers a convenient functions
+                to
+                either obtain a file path to the CSV exported table or directly load it as <code>pandas.DataFrame</code>.
+                <code-block lang="python">
+                    # Do not forget to import
+                    from jipipe.imagej import *
+
+                    # Get the data table
+                    ds = jipipe_inputs["Input"]
+
+                    # Option 1: Load the CSV table with Pandas
+                    df = load_table_file(ds, row=0)
+
+                    # Option 2: Get the path to the CSV table and use it with any library
+                    img_path = get_table_file(ds, row=0)
+                </code-block>
+            </tab>
+            <tab title="Other data types">
+                If the data type is neither a table nor an image, you can obtain the <a
+                    href="JIPipe-data-table-format.topic">row folder</a>
+                that contains the file(s) that represent the data.
+                <note id="data_storage_info%id_postfix%">You can read about how JIPipe stores a specific data type by navigating to
+                    <ui-path>Help | Data type documentation</ui-path>
+                    .
+                    Go to the
+                    <ui-path>Data storage</ui-path>
+                    section to find a description of the way how JIPipe saves the particular data to the file system.
+                </note>
+                <code-block lang="python">
+                    # Get the data table
+                    ds = jipipe_inputs["Input"]
+
+                    # Get the path where the data is stored
+                    folder = data_slot.get_row_storage_path(row=0)
+
+                    # You can use for example folder.glob("*.csv") to extract all csv files
+                    # Please adapt this for your data
+                </code-block>
+            </tab>
+        </tabs>
+        <note>In the case if you are using the
+            <emphasis>Python script (iterating)</emphasis>
+            node,
+            always set <code>row=0</code>. This parameter is used for nodes that may receive multiple data at once.
+        </note>
+    </chapter>
+    <chapter title="Exporting data from Python into JIPipe">
+        JIPipe expects that data is placed at very specific locations, following a highly standardized format.
+        To do this conveniently, you will need to get the correct output slot from the <code>jipipe_outputs</code>
+        variable.
+        For example, to obtain the output slot
+        <control>Output</control>
+        as variable <code>dso</code>, write:
+        <code-block lang="python">
+            dso = jipipe_outputs["Output"]
+        </code-block>
+        <note>One important difference between inputs and outputs is that JIPipe always allows to write multiple outputs
+            rows.
+            For example, if you have a node that processes an image obtained via a slot "Input", you can output
+            <emphasis>multiple</emphasis>
+            images per step into "Output". JIPipe was designed to handle such operations.
+        </note>
+        Depending on which kind of data and which libraries you want to export, you will have the following options:
+        <tabs>
+            <tab title="Numpy array (image)">
+                The <code>jipipe.imagej</code> module provided by JIPipe's Python adapter offers a convenient functions
+                to add a Numpy array as image into an output slot.
+                <code-block lang="python">
+                    # Do not forget to import
+                    from jipipe.imagej import *
+
+                    # Assume we have an image img
+
+                    # Get the data table
+                    dso = jipipe_outputs["Output"]
+
+                    # Add the image into the slot (without annotations)
+                    add_image(img, dso)
+
+                    # You can also create text annotations (set annotation "test" to the value "value")
+                    add_image(img, dso, text_annotations={"test", "value"})
+                </code-block>
+
+            </tab>
+            <tab title="Pandas data frame (table)">
+                The <code>jipipe.imagej</code> module provided by JIPipe's Python adapter offers a convenient functions
+                to add a Pandas DataFrame as Results Table into an output slot.
+                <code-block lang="python">
+                    # Do not forget to import
+                    from jipipe.imagej import *
+
+                    # Assume we have a data frame df
+
+                    # Get the data table
+                    dso = jipipe_outputs["Output"]
+
+                    # Add the image into the slot (without annotations)
+                    add_table(df, dso)
+
+                    # You can also create text annotations (set annotation "test" to the value "value")
+                    add_table(df, dso, text_annotations={"test", "value"})
+                </code-block>
+            </tab>
+            <tab title="Custom image export">
+                If you utilize a library that does not convert images into Numpy arrays, you will
+                have to export the image manually into TIFF or PNG. To do this, you will have to
+                add a new row into the output table and manually save data into the <a
+                    href="JIPipe-data-table-format.topic">row folder</a>.
+                <include from="Python-integration.topic" element-id="data_storage_info"><var name="id_postfix" value="-70ea2"/></include>
+                <code-block lang="python">
+                    from pathlib import Path
+
+                    # For example we have a matplotlib plot
+
+                    # Get the data table
+                    dso = jipipe_outputs["Output"]
+
+                    # Add the row into the output
+                    output_row = dso.add_row() # Here we can also add text_annotations if needed
+
+                    # We get the path where JIPipe expects the data
+                    output_row_path = dso.get_row_storage_path(output_row)
+
+                    # Export the image via our library
+                    # For example with matplotlib
+                    plt.savefig(output_row_path / Path("data.png"))
+                </code-block>
+            </tab>
+            <tab title="Other data types">
+                If you are working with other data types, please read about how JIPipe stores this particular type
+                by navigating to <ui-path>Help | Data type documentation</ui-path> and  going to the
+                <ui-path>Data storage</ui-path>
+                section.
+                <code-block lang="python">
+                    from pathlib import Path
+
+                    # Get the data table
+                    dso = jipipe_outputs["Output"]
+
+                    # Add the row into the output
+                    output_row = dso.add_row() # Here we can also add text_annotations if needed
+
+                    # We get the path where JIPipe expects the data
+                    output_row_path = dso.get_row_storage_path(output_row)
+
+                    # Export everything into output_row_path
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Debugging Python scripts">
+        While JIPipe currently does not have any advanced debugging features, you can utilize the log entry generated by
+        JIPipe to identify errors and even run your pipeline outside JIPipe.
+        <deflist>
+            <def title="Full script printout">
+                As JIPipe applies modifications to your script, it will print the final script into the log window:
+                <img src="python_debug_full_code.png" alt="Screenshot of the log window" thumbnail="true"/>
+            </def>
+            <def title="Commandline run command">
+                JIPipe will also log all environment variables and the full run command:
+                <img src="python_debug_run_command.png" alt="Screenshot of the log window" thumbnail="true"/>
+            </def>
+            <def title="Python stdout/stderr output">
+                JIPipe will also log all standard out and standard error messages directly after the run command.
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Setup">
+        JIPipe will automatically take care of setting up Python for you and select the newest available <a
+            href="Plugins-and-artifacts.topic">artifact</a>
+        for you.
+        <chapter title="Customizing the Python version">
+            You can always override the utilized Python version on a node, project, and application level.
+            <warning>We recommend to not change the application settings, as nodes and projects are capable of
+                tracking the dependencies. Generally, it is most convenient to change the project parameters.
+            </warning>
+            <tabs>
+                <tab title="Project %recommended%">
+                    <procedure>
+                        <step>Click the
+                            <control>Infos &amp; Settings</control>
+                            button at the top right.
+                        </step>
+                        <step>Go to the
+                            <control>Settings</control>
+                            tab on the right-hand side and select
+                            <ui-path>Plugins | Python integration</ui-path>
+                            .
+                        </step>
+                        <step>Ensure that
+                            <control>Project default environment</control>
+                            is enabled.
+                        </step>
+                        <step>Click the
+                            <control>Configure ...</control>
+                            button and select one of the options.
+                        </step>
+                    </procedure>
+                </tab>
+                <tab title="Node">
+                    <procedure>
+                        <step>Select the node you want to change</step>
+                        <step>Go to the
+                            <ui-path>Parameters</ui-path>
+                            panel and
+                            <emphasis>activate</emphasis>
+                            the
+                            parameter
+                            <ui-path>Override Python environment</ui-path>
+                            .
+                        </step>
+                        <step>Click the
+                            <control>Configure ...</control>
+                            button located next to the
+                            <ui-path>Override Python environment</ui-path>
+                            parameter and select one of the options.
+                        </step>
+                    </procedure>
+                </tab>
+                <tab title="Application-wide">
+                    <procedure>
+                        <step>Navigate to
+                            <ui-path>Project | Application settings</ui-path>
+                        </step>
+                        <step>Select
+                            <ui-path>Plugins | Python integration</ui-path>
+                        </step>
+                        <step>
+                            Click the
+                            <control>Configure ...</control>
+                            button located next to
+                            <ui-path>Default Python environment</ui-path>
+                            and select one of the options.
+                            <note>If you want to reset this setting, click the arrow next to the help symbol and select
+                                <control>Restore to default value</control>
+                                . If this didn't help, <a href="Troubleshooting.topic" anchor="resetting_app_settings">reset
+                                    the application settings</a>.
+                            </note>
+                        </step>
+                    </procedure>
+                </tab>
+            </tabs>
+        </chapter>
+    </chapter>
+</topic>

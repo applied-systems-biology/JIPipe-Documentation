@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Troubleshooting" id="Troubleshooting">
+
+    <chapter title="Resetting the application settings" id="resetting_app_settings">
+        <p>This might be needed if you accidentally misconfigured something and want to restore the default behavior.</p>
+        <note>Your node templates will not be deleted, as those are saved in separate files.</note>
+        <tabs>
+            <tab title="Windows">
+                <procedure>
+                    <step>Close all instances of JIPipe</step>
+                    <step>Press <shortcut>Windows + R</shortcut> and type into the run dialog:
+                    <code-block>
+                        %\appdata%\JIPipe\profiles
+                    </code-block> and press <shortcut>Enter</shortcut>
+                    </step>
+                    <step>Navigate to the directory that corresponds to your JIPipe version, e.g. <code>4.0.0</code>.</step>
+                    <step>Delete the file <path>settings.json</path></step>
+                    <step>Start JIPipe. It will generate a new settings file.</step>
+                </procedure>
+            </tab>
+            <tab title="MacOS">
+                <procedure>
+                    <step>Close all instances of JIPipe</step>
+                    <step>Open Finder and navigate to <path>Home/Library/Application Support/JIPipe/profiles</path>.
+                    </step>
+                    <step>Navigate to the directory that corresponds to your JIPipe version, e.g. <code>4.0.0</code>.</step>
+                    <step>Delete the file <path>settings.json</path></step>
+                    <step>Start JIPipe. It will generate a new settings file.</step>
+                </procedure>
+            </tab>
+            <tab title="Linux">
+                <note>This assumes that XDG_DATA_HOME is <path>~/.local/share</path></note>
+                <procedure>
+                    <step>Close all instances of JIPipe</step>
+                    <step>Open Finder and navigate to <path>~/.local/share/JIPipe/profiles</path>.
+                    </step>
+                    <step>Navigate to the directory that corresponds to your JIPipe version, e.g. <code>4.0.0</code>.</step>
+                    <step>Delete the file <path>settings.json</path></step>
+                    <step>Start JIPipe. It will generate a new settings file.</step>
+                </procedure>
+            </tab>
+        </tabs>
+
+    </chapter>
+</topic>

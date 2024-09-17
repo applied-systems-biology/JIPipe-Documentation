@@ -34,7 +34,14 @@
         <toc-element topic="Running-projects.topic"/>
         <toc-element topic="Graph-partitions.topic"/>
         <toc-element topic="Graph-compartments.topic"/>
+        <toc-element topic="Plugins-and-artifacts.topic"/>
     </toc-element>
-    <toc-element topic="Features.topic"/>
+    <toc-element topic="Features.topic">
+        <toc-element topic="Python-integration.topic"/>
+    </toc-element>
     <toc-element topic="FAQ.topic"/>
+    <toc-element topic="Troubleshooting.topic"/>
+    <toc-element topic="References.topic">
+        <toc-element topic="JIPipe-data-table-format.topic"/>
+    </toc-element>
 </instance-profile>
