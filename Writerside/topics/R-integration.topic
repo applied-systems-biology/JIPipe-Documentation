@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="R integration" id="R-integration">
+    <var name="id_postfix"></var>
+    JIPipe provides nodes that allow to execute
+    <emphasis>native</emphasis>
+    R code and use it to process data.
+    All nodes that are relevant to R processing can be found in the
+    <ui-path>Miscellaneous | R script</ui-path>
+    <a href="Adding-nodes.topic">category</a>. The following nodes are available:
+    <deflist>
+        <def title="R script (iterating) %recommended%">
+            (Most commonly used node)
+            <p>
+                Executes the R script for each <a href="Batch-processing.topic">iteration step</a>.
+                Each slot receives
+                <emphasis>exactly one</emphasis>
+                data item per step.
+            </p>
+        </def>
+        <def title="R script (merging)">
+            Executes the R script for each <a href="Batch-processing.topic">iteration step</a>.
+            Each slot receives
+            <emphasis>multiple</emphasis>
+            data items per step if they cannot be separated by annotations.
+        </def>
+    </deflist>
+    <tip>A variety of example nodes are also available in the
+        <control>Add nodes</control>
+        panel. You can use them
+        to get started.
+    </tip>
+    <chapter title="Background">
+        The JIPipe R integration basically works by applying the following steps:
+        <procedure>
+            <step>Create temporary directories for inputs and outputs</step>
+            <step>Write all input data to its temporary directory in <a href="JIPipe-data-table-format.topic">JIPipe's
+                data table format</a>.
+            </step>
+            <step>Run a modified R script that has additional variables and functions provided (injected) by JIPipe</step>
+            <step>Let JIPipe read all data from the output directory. The data must be in <a
+                    href="JIPipe-data-table-format.topic">JIPipe's data table format</a>.
+            </step>
+        </procedure>
+    </chapter>
+    <chapter title="Writing R scripts">
+        Generally, you can use all R libraries that are available to you in the currently configured R
+        environment. But to facilitate the data transfer between JIPipe and R, you will need to use the functionality
+        provided by the JIPipe-specific R code.
+        <chapter title="JIPipe-generated variables">
+            On executing the R script, JIPipe will automatically inject the following global variables into the
+            R script:
+            <table style="header-row">
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.InputSlotRowCounts</code></td>
+                    <td>
+                        Named list of the number of input data provided by the given input (always 1 for <emphasis>R script (iterating)</emphasis>).
+                        <code-block lang="python">
+                            count &lt;- JIPipe.InputSlotRowCounts$Input
+                        </code-block>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.TextAnnotations</code></td>
+                    <td>Named list of the text annotations associated to the current iteration step.
+                        <code-block lang="python">
+                            value &lt;- JIPipe.TextAnnotations$key
+                        </code-block>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.InputSlotRowTextAnnotations</code></td>
+                    <td>Named list of the text annotations associated to the input slot row.
+                        This may be helpful if you want to access the annotations before merging them.
+                        <code-block lang="python">
+                            value &lt;- JIPipe.InputSlotRowTextAnnotations$key
+                        </code-block>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.Variables</code></td>
+                    <td>
+                        Named list of variables from the <control>Script variables</control>
+                        parameter of the node.
+                    </td>
+                </tr>
+            </table>
+        </chapter>
+        <chapter title="JIPipe-generated functions">
+            The R script will also have the following functions:
+            <table style="header-row">
+                <tr>
+                    <td>Signature</td>
+                    <td>Description</td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.GetInputFolder(slot, row=0)</code></td>
+                    <td>
+                        Returns the row storage folder where the data of the given slot and row are stored.
+                        <deflist type="medium">
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="row">
+                                (Integer) The row index, defaults to 0
+                            </def>
+                            <def title="<Returns>">
+                                (String) The path to the storage directory
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.GetInputAsDataFrame(slot, row=0)</code></td>
+                    <td>
+                        Returns the data of the given input slot and row as data frame.
+                        Please note that the input should be a <emphasis>Results table</emphasis>.
+                        <deflist type="medium">
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="row">
+                                (Integer) The row index, defaults to 0
+                            </def>
+                            <def title="<Returns>">
+                                (data.frame) The data
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.AddOutputFolder(slot, annotations=list())</code></td>
+                    <td>
+                        Adds a new output folder into the specified output slot and returns the folder path.
+                        Optionally, you can assign annotations to add as list of named strings.
+                        Please note that the folder must contain data according to the slot's data type (an image file or a CSV file respectively)
+                        <deflist type="medium">
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="annotations">
+                                (Named list) The text annotations
+                            </def>
+                            <def title="<Returns>">
+                                (String) The output directory path. You will need to store supported data into it.
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.AddOutputDataFrame(data, slot, annotations=list())</code></td>
+                    <td>
+                        Adds the specified data frame into the specified output slot (must be a <emphasis>Results table</emphasis>). Optionally, you can add annotations to the data.
+                        <deflist type="medium">
+                            <def title="data">
+                                (data.frame) The data
+                            </def>
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="annotations">
+                                (Named list) The text annotations
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.AddOutputPNGImagePath(ignored, slot, annotations=list())</code></td>
+                    <td>
+                        Generates an image file path to be added as output and return the path.
+                        Please note that you must use png() or other functions to actually write this file.
+                        Optionally, you can add annotations to the data.
+                        <deflist type="medium">
+                            <def title="ignored">
+                                Can be ignored. Set it to <code>NULL</code>.
+                            </def>
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="annotations">
+                                (Named list) The text annotations
+                            </def>
+                            <def title="<Returns>">
+                                (String) The output file path. Please export a PNG file to this path.
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>JIPipe.AddOutputTIFFImagePath(ignored, slot, annotations=list())</code></td>
+                    <td>
+                        Generates an image file path to be added as output and return the path.
+                        Please note that you must use tiff() or other functions to actually write this file.
+                        Optionally, you can add annotations to the data.
+                        <deflist type="medium">
+                            <def title="ignored">
+                                Can be ignored. Set it to <code>NULL</code>.
+                            </def>
+                            <def title="slot">
+                                (String) The slot name
+                            </def>
+                            <def title="annotations">
+                                (Named list) The text annotations
+                            </def>
+                            <def title="<Returns>">
+                                (String) The output file path. Please export a TIFF file to this path.
+                            </def>
+                        </deflist>
+                    </td>
+                </tr>
+            </table>
+        </chapter>
+    </chapter>
+    <chapter title="Importing data from JIPipe into R">
+        To copy data from the JIPipe into an R variable you will need to use the JIPipe-provided functions
+        to either directly import a <emphasis>data.frame</emphasis> or manually load data from the <a href="JIPipe-data-table-format.topic">row storage path</a>.
+        <note id="data_storage_info%id_postfix%">You can read about how JIPipe stores a specific data type by navigating to
+            <ui-path>Help | Data type documentation</ui-path>
+            .
+            Go to the
+            <ui-path>Data storage</ui-path>
+            section to find a description of the way how JIPipe saves the particular data to the file system.
+        </note>
+        <tabs>
+            <tab title="Importing data.frames">
+                The JIPipe adapter code provides a convenient function to read a data.frame from a Results table input:
+                <code-block lang="python">
+                    # Import as from input "Input"
+                    df &lt;- JIPipe.GetInputAsDataFrame("Input")
+                </code-block>
+            </tab>
+            <tab title="Other data types">
+                If the input is not a data frame, you can obtain the <a
+                    href="JIPipe-data-table-format.topic">row folder</a>
+                that contains the file(s) that represent the data.
+                <code-block lang="python">
+                    # Get the path where the data is stored
+                    folder &lt;- JIPipe.GetInputFolder("Input", row=0)
+
+                    # You can use for example Sys.glob(file.path(folder, "*.tif")) to find all TIFF files
+                    # Please adapt this for your data
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Exporting data from R into JIPipe">
+        JIPipe expects that data is placed at very specific locations, which can be achieved by utilizing the JIPipe-provided
+        functions and variables.
+        <note>One important difference between inputs and outputs is that JIPipe always allows to write multiple outputs
+            rows.
+            For example, if you have a node that processes an image obtained via a slot "Input", you can output
+            <emphasis>multiple</emphasis>
+            images per step into "Output". JIPipe was designed to handle such operations.
+        </note>
+        Depending on which kind of data you want to export, you will have the following options:
+        <tabs>
+            <tab title="Exporting data.frames">
+                You can use a JIPipe-provided function to conveniently output a data.frame back into JIPipe:
+                <code-block lang="python">
+                    # Assume we have a data.frame df
+
+                    # Output it into the slot "Output"
+                    JIPipe.AddOutputDataFrame(slot="Output", data=df)
+                </code-block>
+
+            </tab>
+            <tab title="Exporting images">
+                For images to be detected by JIPipe, you will need to export an image file (PNG/TIFF/JPG/BMP) into
+                a specific directory. You can obtain the path via the JIPipe-provided functions.
+                <code-block lang="python">
+                    # For example we have a ggplot plot
+
+                    # Get the output directory
+                    folder &lt;- JIPipe.AddOutputFolder("Output", annotations=list())
+
+                    # Save the file
+                    # The file name is not important, just the extension
+                    ggsave(folder + "/data.png")
+                </code-block>
+            </tab>
+            <tab title="Other data types">
+                If you are working with other data types, please read about how JIPipe stores this particular type
+                by navigating to <ui-path>Help | Data type documentation</ui-path> and  going to the
+                <ui-path>Data storage</ui-path>
+                section.
+                <code-block lang="python">
+                    # Get the output directory
+                    folder &lt;- JIPipe.AddOutputFolder("Output", annotations=list())
+
+                    # Export everything into folder
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Debugging R scripts">
+        While JIPipe currently does not have any advanced debugging features, you can utilize the log entry generated by
+        JIPipe to identify errors and even run your pipeline outside JIPipe.
+        <deflist>
+            <def title="Full script printout">
+                As JIPipe applies modifications to your script, it will print the final script into the log window:
+                <img src="r_debug_full_code.png" alt="Screenshot of the log window" thumbnail="true"/>
+            </def>
+            <def title="Commandline run command">
+                JIPipe will also log all environment variables and the full run command:
+                <img src="r_debug_run_command.png" alt="Screenshot of the log window" thumbnail="true"/>
+            </def>
+            <def title="R stdout/stderr output">
+                JIPipe will also log all standard out and standard error messages directly after the run command.
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="JIPipe-provided python">
+        JIPipe will automatically take care of setting up R for you and select the newest available <a
+            href="Plugins-and-artifacts.topic">artifact</a>
+        for you. The following R versions with the specified libraries are available:
+        <tabs>
+            <tab title="R 4.4.0.1000 %recommended%">
+                <code-block>
+                    abind
+                    askpass
+                    backports
+                    base64enc
+                    bit
+                    bit64
+                    blob
+                    brio
+                    broom
+                    bslib
+                    cachem
+                    callr
+                    car
+                    carData
+                    caret
+                    cellranger
+                    cli
+                    clipr
+                    clock
+                    colorspace
+                    conflicted
+                    cpp11
+                    crayon
+                    curl
+                    data.table
+                    DBI
+                    dbplyr
+                    desc
+                    diagram
+                    dials
+                    DiceDesign
+                    diffobj
+                    digest
+                    doFuture
+                    dplyr
+                    dtplyr
+                    e1071
+                    ellipsis
+                    evaluate
+                    fansi
+                    farver
+                    fastmap
+                    fontawesome
+                    forcats
+                    foreach
+                    fs
+                    furrr
+                    future
+                    future.apply
+                    gargle
+                    generics
+                    ggforce
+                    ggplot2
+                    ggraph
+                    ggrepel
+                    globals
+                    glue
+                    googledrive
+                    googlesheets4
+                    gower
+                    GPfit
+                    graphlayouts
+                    gridExtra
+                    gtable
+                    hardhat
+                    haven
+                    highr
+                    hms
+                    htmltools
+                    httr
+                    ids
+                    igraph
+                    infer
+                    ipred
+                    isoband
+                    iterators
+                    jquerylib
+                    jsonlite
+                    knitr
+                    labeling
+                    lava
+                    lhs
+                    lifecycle
+                    listenv
+                    lme4
+                    lubridate
+                    magrittr
+                    MatrixModels
+                    memoise
+                    mime
+                    minqa
+                    modeldata
+                    modelenv
+                    ModelMetrics
+                    modelr
+                    multcomp
+                    munsell
+                    mvtnorm
+                    nloptr
+                    numDeriv
+                    openssl
+                    parallelly
+                    parsnip
+                    patchwork
+                    pbkrtest
+                    pillar
+                    pkgbuild
+                    pkgconfig
+                    pkgload
+                    plyr
+                    polyclip
+                    praise
+                    prettyunits
+                    pROC
+                    processx
+                    prodlim
+                    progress
+                    progressr
+                    proxy
+                    ps
+                    purrr
+                    quantreg
+                    R6
+                    ragg
+                    rappdirs
+                    RColorBrewer
+                    Rcpp
+                    RcppArmadillo
+                    RcppEigen
+                    readr
+                    readxl
+                    recipes
+                    rematch
+                    rematch2
+                    reprex
+                    reshape2
+                    rjson
+                    rlang
+                    rmarkdown
+                    rprojroot
+                    rsample
+                    rstudioapi
+                    rvest
+                    sandwich
+                    sass
+                    scales
+                    selectr
+                    shape
+                    slider
+                    SparseM
+                    SQUAREM
+                    stringi
+                    stringr
+                    sys
+                    systemfonts
+                    testthat
+                    textshaping
+                    TH.data
+                    tibble
+                    tidygraph
+                    tidymodels
+                    tidyr
+                    tidyselect
+                    tidyverse
+                    timechange
+                    timeDate
+                    tinytex
+                    tune
+                    tweenr
+                    tzdb
+                    utf8
+                    uuid
+                    vctrs
+                    viridis
+                    viridisLite
+                    vroom
+                    waldo
+                    warp
+                    withr
+                    workflows
+                    workflowsets
+                    xfun
+                    xml2
+                    yaml
+                    yardstick
+                    zoo
+
+                </code-block>
+            </tab>
+            <tab title="R 4.4.0">
+                Same packages as 4.4.0.1000.
+                <warning>Should not be used, as there is a bug in the Linux/macOS implementation.</warning>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Overriding the R version">
+        You can always override the utilized R version on a node, project, and application level.
+        <warning>We recommend to not change the application settings, as nodes and projects are capable of
+            tracking the dependencies. Generally, it is most convenient to change the project parameters.
+        </warning>
+        <tabs>
+            <tab title="Project %recommended%">
+                <procedure>
+                    <step>Click the
+                        <control>Infos &amp; Settings</control>
+                        button at the top right.
+                    </step>
+                    <step>Go to the
+                        <control>Settings</control>
+                        tab on the right-hand side and select
+                        <ui-path>Plugins | R integration</ui-path>
+                        .
+                    </step>
+                    <step>Ensure that
+                        <control>Project default environment</control>
+                        is enabled.
+                    </step>
+                    <step>Click the
+                        <control>Configure ...</control>
+                        button and select one of the options.
+                    </step>
+                </procedure>
+            </tab>
+            <tab title="Node">
+                <procedure>
+                    <step>Select the node you want to change</step>
+                    <step>Go to the
+                        <ui-path>Parameters</ui-path>
+                        panel and
+                        <emphasis>activate</emphasis>
+                        the
+                        parameter
+                        <ui-path>Override R environment</ui-path>
+                        .
+                    </step>
+                    <step>Click the
+                        <control>Configure ...</control>
+                        button located next to the
+                        <ui-path>Override R environment</ui-path>
+                        parameter and select one of the options.
+                    </step>
+                </procedure>
+            </tab>
+            <tab title="Application-wide">
+                <procedure>
+                    <step>Navigate to
+                        <ui-path>Project | Application settings</ui-path>
+                    </step>
+                    <step>Select
+                        <ui-path>Plugins | R integration</ui-path>
+                    </step>
+                    <step>
+                        Click the
+                        <control>Configure ...</control>
+                        button located next to
+                        <ui-path>Default R environment</ui-path>
+                        and select one of the options.
+                        <note>If you want to reset this setting, click the arrow next to the help symbol and select
+                            <control>Restore to default value</control>
+                            . If this didn't help, <a href="Troubleshooting.topic" anchor="resetting_app_settings">reset
+                                the application settings</a>.
+                        </note>
+                    </step>
+                </procedure>
+            </tab>
+        </tabs>
+    </chapter>
+</topic>

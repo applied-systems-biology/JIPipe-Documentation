@@ -38,6 +38,7 @@
     </toc-element>
     <toc-element topic="Features.topic">
         <toc-element topic="Python-integration.topic"/>
+        <toc-element topic="R-integration.topic"/>
     </toc-element>
     <toc-element topic="FAQ.topic"/>
     <toc-element topic="Troubleshooting.topic"/>

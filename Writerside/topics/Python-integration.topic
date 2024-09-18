@@ -109,7 +109,7 @@
         <code-block lang="python">
             ds = jipipe_inputs["Input"]
         </code-block>
-        Depending on which kind of data and which libraries you want to use, you will have the following options:
+        Depending on which kind of data you want to use, you will have the following options:
         <tabs>
             <tab title="Importing images">
                 The <code>jipipe.imagej</code> module provided by JIPipe's Python adapter offers a convenient functions
@@ -304,7 +304,7 @@
             href="Plugins-and-artifacts.topic">artifact</a>
         for you. The following Python versions with the specified libraries are available:
         <tabs>
-            <tab title="Python 3.10.15 %recommended%">
+            <tab title="Python 3.10.15.1000 %recommended%">
                 <code-block>
                     asciitree==0.3.3
                     contourpy==1.3.0
