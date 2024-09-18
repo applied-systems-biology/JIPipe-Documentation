@@ -299,81 +299,157 @@
             </def>
         </deflist>
     </chapter>
-    <chapter title="Setup">
+    <chapter title="JIPipe-provided python">
         JIPipe will automatically take care of setting up Python for you and select the newest available <a
             href="Plugins-and-artifacts.topic">artifact</a>
-        for you.
-        <chapter title="Customizing the Python version">
-            You can always override the utilized Python version on a node, project, and application level.
-            <warning>We recommend to not change the application settings, as nodes and projects are capable of
-                tracking the dependencies. Generally, it is most convenient to change the project parameters.
-            </warning>
-            <tabs>
-                <tab title="Project %recommended%">
-                    <procedure>
-                        <step>Click the
-                            <control>Infos &amp; Settings</control>
-                            button at the top right.
-                        </step>
-                        <step>Go to the
-                            <control>Settings</control>
-                            tab on the right-hand side and select
-                            <ui-path>Plugins | Python integration</ui-path>
-                            .
-                        </step>
-                        <step>Ensure that
-                            <control>Project default environment</control>
-                            is enabled.
-                        </step>
-                        <step>Click the
-                            <control>Configure ...</control>
-                            button and select one of the options.
-                        </step>
-                    </procedure>
-                </tab>
-                <tab title="Node">
-                    <procedure>
-                        <step>Select the node you want to change</step>
-                        <step>Go to the
-                            <ui-path>Parameters</ui-path>
-                            panel and
-                            <emphasis>activate</emphasis>
-                            the
-                            parameter
-                            <ui-path>Override Python environment</ui-path>
-                            .
-                        </step>
-                        <step>Click the
-                            <control>Configure ...</control>
-                            button located next to the
-                            <ui-path>Override Python environment</ui-path>
-                            parameter and select one of the options.
-                        </step>
-                    </procedure>
-                </tab>
-                <tab title="Application-wide">
-                    <procedure>
-                        <step>Navigate to
-                            <ui-path>Project | Application settings</ui-path>
-                        </step>
-                        <step>Select
-                            <ui-path>Plugins | Python integration</ui-path>
-                        </step>
-                        <step>
-                            Click the
-                            <control>Configure ...</control>
-                            button located next to
-                            <ui-path>Default Python environment</ui-path>
-                            and select one of the options.
-                            <note>If you want to reset this setting, click the arrow next to the help symbol and select
-                                <control>Restore to default value</control>
-                                . If this didn't help, <a href="Troubleshooting.topic" anchor="resetting_app_settings">reset
-                                    the application settings</a>.
-                            </note>
-                        </step>
-                    </procedure>
-                </tab>
-            </tabs>
-        </chapter>
+        for you. The following Python versions with the specified libraries are available:
+        <tabs>
+            <tab title="Python 3.10.15 %recommended%">
+                <code-block>
+                    asciitree==0.3.3
+                    contourpy==1.3.0
+                    cycler==0.12.1
+                    fasteners==0.19
+                    filelock==3.13.1
+                    fonttools==4.53.1
+                    fsspec==2024.2.0
+                    imageio==2.35.1
+                    Jinja2==3.1.3
+                    joblib==1.4.2
+                    kiwisolver==1.4.7
+                    lazy_loader==0.4
+                    looseversion==1.3.0
+                    MarkupSafe==2.1.5
+                    matplotlib==3.9.2
+                    mpmath==1.3.0
+                    networkx==3.3
+                    numcodecs==0.13.0
+                    numpy==2.1.1
+                    opencv-python==4.10.0.84
+                    packaging==24.1
+                    pandas==2.2.2
+                    patsy==0.5.6
+                    pillow==10.4.0
+                    plotly==5.24.1
+                    Pygments==2.18.0
+                    pyparsing==3.1.4
+                    python-dateutil==2.9.0.post0
+                    pytz==2024.2
+                    PyYAML==6.0.2
+                    scikit-image==0.24.0
+                    scikit-learn==1.5.2
+                    scipy==1.14.1
+                    seaborn==0.13.2
+                    SimpleITK==2.4.0
+                    six==1.16.0
+                    statsmodels==0.14.3
+                    sympy==1.12
+                    tenacity==9.0.0
+                    threadpoolctl==3.5.0
+                    tifffile==2024.8.30
+                    torch==2.4.1+cpu
+                    torchaudio==2.4.1+cpu
+                    torchvision==0.19.1+cpu
+                    trackpy==0.6.4
+                    typing_extensions==4.12.2
+                    tzdata==2024.1
+                    vedo==2024.5.2
+                    vtk==9.3.1
+                    zarr==2.18.3
+                </code-block>
+            </tab>
+            <tab title="Python 3.8.12">
+                <code-block>
+                    imageio==2.19.3
+                    joblib==1.1.0
+                    networkx==2.8.4
+                    numpy==1.23.1
+                    packaging==21.3
+                    Pillow==9.2.0
+                    pyparsing==3.0.9
+                    python-dateutil==2.8.2
+                    pytz==2022.1
+                    PyWavelets==1.3.0
+                    scikit-image==0.19.3
+                    scikit-learn==1.1.1
+                    scipy==1.8.1
+                    six==1.16.0
+                    threadpoolctl==3.1.0
+                    tifffile==2022.5.4
+                </code-block>
+            </tab>
+        </tabs>
+    </chapter>
+    <chapter title="Overriding the Python version">
+        You can always override the utilized Python version on a node, project, and application level.
+        <warning>We recommend to not change the application settings, as nodes and projects are capable of
+            tracking the dependencies. Generally, it is most convenient to change the project parameters.
+        </warning>
+        <tabs>
+            <tab title="Project %recommended%">
+                <procedure>
+                    <step>Click the
+                        <control>Infos &amp; Settings</control>
+                        button at the top right.
+                    </step>
+                    <step>Go to the
+                        <control>Settings</control>
+                        tab on the right-hand side and select
+                        <ui-path>Plugins | Python integration</ui-path>
+                        .
+                    </step>
+                    <step>Ensure that
+                        <control>Project default environment</control>
+                        is enabled.
+                    </step>
+                    <step>Click the
+                        <control>Configure ...</control>
+                        button and select one of the options.
+                    </step>
+                </procedure>
+            </tab>
+            <tab title="Node">
+                <procedure>
+                    <step>Select the node you want to change</step>
+                    <step>Go to the
+                        <ui-path>Parameters</ui-path>
+                        panel and
+                        <emphasis>activate</emphasis>
+                        the
+                        parameter
+                        <ui-path>Override Python environment</ui-path>
+                        .
+                    </step>
+                    <step>Click the
+                        <control>Configure ...</control>
+                        button located next to the
+                        <ui-path>Override Python environment</ui-path>
+                        parameter and select one of the options.
+                    </step>
+                </procedure>
+            </tab>
+            <tab title="Application-wide">
+                <procedure>
+                    <step>Navigate to
+                        <ui-path>Project | Application settings</ui-path>
+                    </step>
+                    <step>Select
+                        <ui-path>Plugins | Python integration</ui-path>
+                    </step>
+                    <step>
+                        Click the
+                        <control>Configure ...</control>
+                        button located next to
+                        <ui-path>Default Python environment</ui-path>
+                        and select one of the options.
+                        <note>If you want to reset this setting, click the arrow next to the help symbol and select
+                            <control>Restore to default value</control>
+                            . If this didn't help, <a href="Troubleshooting.topic" anchor="resetting_app_settings">reset
+                                the application settings</a>.
+                        </note>
+                    </step>
+                </procedure>
+            </tab>
+        </tabs>
     </chapter>
 </topic>
