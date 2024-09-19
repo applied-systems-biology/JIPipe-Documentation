@@ -299,13 +299,13 @@
             </def>
         </deflist>
     </chapter>
-    <chapter title="JIPipe-provided python">
+    <chapter title="JIPipe-provided Python">
         JIPipe will automatically take care of setting up Python for you and select the newest available <a
             href="Plugins-and-artifacts.topic">artifact</a>
         for you. The following Python versions with the specified libraries are available:
         <tabs>
             <tab title="Python 3.10.15.1000 %recommended%">
-                <code-block>
+                <code-block collapsible="true" collapsed-title="Show libraries">
                     asciitree==0.3.3
                     contourpy==1.3.0
                     cycler==0.12.1
@@ -359,7 +359,7 @@
                 </code-block>
             </tab>
             <tab title="Python 3.8.12">
-                <code-block>
+                <code-block collapsible="true" collapsed-title="Show libraries">
                     imageio==2.19.3
                     joblib==1.1.0
                     networkx==2.8.4
@@ -382,9 +382,6 @@
     </chapter>
     <chapter title="Overriding the Python version">
         You can always override the utilized Python version on a node, project, and application level.
-        <warning>We recommend to not change the application settings, as nodes and projects are capable of
-            tracking the dependencies. Generally, it is most convenient to change the project parameters.
-        </warning>
         <tabs>
             <tab title="Project %recommended%">
                 <procedure>
@@ -405,8 +402,10 @@
                     <step>Click the
                         <control>Configure ...</control>
                         button and select one of the options.
+                        <note>Here you should also have a list of available JIPipe-provided Python versions</note>
                     </step>
                 </procedure>
+
             </tab>
             <tab title="Node">
                 <procedure>
@@ -429,6 +428,9 @@
                 </procedure>
             </tab>
             <tab title="Application-wide">
+                <warning>We recommend to not change the application settings, as nodes and projects are capable of
+                    tracking the dependencies. Generally, it is most convenient to change the project parameters.
+                </warning>
                 <procedure>
                     <step>Navigate to
                         <ui-path>Project | Application settings</ui-path>

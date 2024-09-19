@@ -316,13 +316,13 @@
             </def>
         </deflist>
     </chapter>
-    <chapter title="JIPipe-provided python">
+    <chapter title="JIPipe-provided R">
         JIPipe will automatically take care of setting up R for you and select the newest available <a
             href="Plugins-and-artifacts.topic">artifact</a>
         for you. The following R versions with the specified libraries are available:
         <tabs>
             <tab title="R 4.4.0.1000 %recommended%">
-                <code-block>
+                <code-block collapsible="true" collapsed-title="Show libraries">
                     abind
                     askpass
                     backports
@@ -520,9 +520,7 @@
     </chapter>
     <chapter title="Overriding the R version">
         You can always override the utilized R version on a node, project, and application level.
-        <warning>We recommend to not change the application settings, as nodes and projects are capable of
-            tracking the dependencies. Generally, it is most convenient to change the project parameters.
-        </warning>
+
         <tabs>
             <tab title="Project %recommended%">
                 <procedure>
@@ -563,10 +561,14 @@
                         button located next to the
                         <ui-path>Override R environment</ui-path>
                         parameter and select one of the options.
+                        <note>Here you should also have a list of available JIPipe-provided R versions</note>
                     </step>
                 </procedure>
             </tab>
             <tab title="Application-wide">
+                <warning>We recommend to not change the application settings, as nodes and projects are capable of
+                    tracking the dependencies. Generally, it is most convenient to change the project parameters.
+                </warning>
                 <procedure>
                     <step>Navigate to
                         <ui-path>Project | Application settings</ui-path>
