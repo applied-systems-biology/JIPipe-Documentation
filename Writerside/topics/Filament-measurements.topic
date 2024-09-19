@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Filament measurements" id="Filament-measurements">
+    The filament toolkit can calculate measurements for vertices, edges, and filament components.
+    <img src="filaments_measurement_nodes.png" alt="Nodes overview"/>
+    <chapter title="Measuring vertices" id="vertices">
+        Use the
+        <control>Measure filament vertices</control>
+        node to extract the measurements of all vertices into a
+        table. The following measurements will be generated:
+        <table style="header-column">
+            <tr>
+                <td><code>uuid</code></td>
+                <td>The unique identifier of the vertex</td>
+            </tr>
+            <tr>
+                <td><code>x</code></td>
+                <td>The X location of the vertex centroid in pixels</td>
+            </tr>
+            <tr>
+                <td><code>y</code></td>
+                <td>The Y location of the vertex centroid in pixels</td>
+            </tr>
+            <tr>
+                <td><code>z</code></td>
+                <td>The Z location of the vertex centroid in pixels</td>
+            </tr>
+            <tr>
+                <td><code>c</code></td>
+                <td>The Channel location of the vertex</td>
+            </tr>
+            <tr>
+                <td><code>t</code></td>
+                <td>The Frame location of the vertex</td>
+            </tr>
+            <tr>
+                <td><code>radius</code></td>
+                <td>The vertex radius in pixels</td>
+            </tr>
+            <tr>
+                <td><code>value</code></td>
+                <td>The vertex value (numeric)</td>
+            </tr>
+            <tr>
+                <td><code>color</code></td>
+                <td>The vertex color (Hex string), for example <code>#FF0000</code></td>
+            </tr>
+            <tr>
+                <td><code>degree</code></td>
+                <td>The vertex
+                    <tooltip term="Vertex degree">degree</tooltip>
+                </td>
+            </tr>
+            <tr>
+                <td><code>vsx</code></td>
+                <td>The physical voxel size in X direction, for example <code>1 pixel</code></td>
+            </tr>
+            <tr>
+                <td><code>vsy</code></td>
+                <td>The physical voxel size in Y direction, for example <code>1 pixel</code></td>
+            </tr>
+            <tr>
+                <td><code>vsz</code></td>
+                <td>The physical voxel size in Z direction, for example <code>1 pixel</code></td>
+            </tr>
+            <tr>
+                <td>Metadata keys</td>
+                <td>Additional columns are added based on available vertex metadata keys. The
+                    columns are named according to the metadata key. The column contains numbers if all vertex
+                    metadata values can be converted into numbers, otherwise the column contains strings.
+                    <warning>Please note for your further processing that columns may be missing if the metadata is not
+                        present.
+                        Use the
+                        <control>Add table columns</control>
+                        node to add missing columns back into the table if needed.
+                    </warning>
+                </td>
+            </tr>
+            <tr>
+                <td>Value backups</td>
+                <td>If you stored vertex value backups, they will be placed into columns <code>.value.[backup
+                    key]</code></td>
+            </tr>
+        </table>
+    </chapter>
+    <chapter title="Measuring edges" id="edges">
+        Use the
+        <control>Measure filament edges</control>
+        node to generate a results table containing edge measurements.
+        <note>As each vertex has its own physical size information, as consensus unit is determined by checking if all vertices
+        have the same unit; otherwise the unit falls back to pixels.</note>
+        The table will have the following structure:
+        <table style="header-column">
+            <tr>
+                <td><code>uuid</code></td>
+                <td>The unique identifier of the vertex</td>
+            </tr>
+            <tr>
+                <td><code>color</code></td>
+                <td>The edge color (Hex string), for example <code>#FF0000</code></td>
+            </tr>
+            <tr>
+                <td><code>length</code></td>
+                <td>The edge length (in pixels)</td>
+            </tr>
+            <tr>
+                <td><code>ulength</code></td>
+                <td>The edge length (in physical size if available)</td>
+            </tr>
+            <tr>
+                <td><code>unit</code></td>
+                <td>The unit of physical sizes (consensus unit that is calculated over all vertices)</td>
+            </tr>
+            <tr>
+                <td><code>source.*</code></td>
+                <td>All <a href="#vertices">measurements</a> of the source vertex, but the columns are prefixed with
+                    <code>source.</code>,
+                    for example <code>source.value</code></td>
+            </tr>
+            <tr>
+                <td><code>target.*</code></td>
+                <td>All <a href="#vertices">measurements</a> of the target vertex, but the columns are prefixed with
+                    <code>target.</code>,
+                    for example <code>target.value</code></td>
+            </tr>
+            <tr>
+                <td>Metadata keys</td>
+                <td>Additional columns are added based on available edge metadata keys. The
+                    columns are named according to the metadata key. The column contains numbers if all edge
+                    metadata values can be converted into numbers, otherwise the column contains strings.
+                    <warning>Please note for your further processing that columns may be missing if the metadata is not
+                        present.
+                        Use the
+                        <control>Add table columns</control>
+                        node to add missing columns back into the table if needed.
+                    </warning>
+                </td>
+            </tr>
+        </table>
+    </chapter>
+    <chapter title="Measuring filament components">
+        Use the
+        <control>Measure filament components</control>
+        node to generate measurements for each filament component.
+        <note>As each vertex has its own physical size information, as consensus unit is determined by checking if all vertices
+            have the same unit; otherwise the unit falls back to pixels.</note>
+        The table will have one row per component and has the following structure:
+        <table style="header-column">
+            <tr>
+                <td><code>Component</code></td>
+                <td>Numerical component id (starting with zero)</td>
+            </tr>
+            <tr>
+                <td><code>numVertices</code></td>
+                <td>The number of vertices in the component</td>
+            </tr>
+            <tr>
+                <td><code>numEdges</code></td>
+                <td>The number of edges in the component</td>
+            </tr>
+            <tr>
+                <td><code>lengthPixels</code></td>
+                <td>The sum of all edge lengths (in pixels)</td>
+            </tr>
+            <tr>
+                <td><code>lengthUnit</code></td>
+                <td>The sum of all edge lengths (in physical unit)</td>
+            </tr>
+            <tr>
+                <td><code>lengthPixelsRadiusCorrected</code></td>
+                <td>The sum of all edge lengths (in pixels).
+                    Learn more about radius correction <a href="#radius_correction_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>lengthUnitRadiusCorrected</code></td>
+                <td>The sum of all edge lengths (in physical unit).
+                    Learn more about radius correction <a href="#radius_correction_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>simplifiedLengthPixels</code></td>
+                <td>The sum of all edge lengths (in pixels) of the <a href="#simplified_graph_info">simplified graph</a>.</td>
+            </tr>
+            <tr>
+                <td><code>simplifiedLengthUnit</code></td>
+                <td>The sum of all edge lengths (in physical unit) of the <a href="#simplified_graph_info">simplified graph</a>.</td>
+            </tr>
+            <tr>
+                <td><code>simplifiedLengthPixelsRadiusCorrected</code></td>
+                <td>The sum of all edge lengths (in pixels) of the <a href="#simplified_graph_info">simplified graph</a>. Additional
+                    <a href="#radius_correction_info">radius correction</a> is applied.</td>
+            </tr>
+            <tr>
+                <td><code>simplifiedLengthUnitRadiusCorrected</code></td>
+                <td>The sum of all edge lengths (in physical unit) of the <a href="#simplified_graph_info">simplified graph</a>. Additional
+                    <a href="#radius_correction_info">radius correction</a> is applied.</td>
+            </tr>
+            <tr>
+                <td><code>confinementRatio</code></td>
+                <td>
+                    The confinement ratio calculated by:
+                    <code-block lang="tex">
+                       \frac{\text{simplifiedLengthPixels}}{\text{lengthPixels}}
+                    </code-block>
+                </td>
+            </tr>
+            <tr>
+                <td><code>confinementRatioRadiusCorrected</code></td>
+                <td>
+                    The confinement ratio calculated by:
+                    <code-block lang="tex">
+                        \frac{\text{simplifiedLengthPixelsRadiusCorrected}}{\text{lengthPixelsRadiusCorrected}}
+                    </code-block>
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree0</code></td>
+                <td>
+                    Number of vertices with degree zero (single vertices).
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree1</code></td>
+                <td>
+                    Number of vertices with degree one (end points).
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree2</code></td>
+                <td>
+                    Number of vertices with degree two (line segments).
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree3</code></td>
+                <td>
+                    Number of vertices with degree three.
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree4</code></td>
+                <td>
+                    Number of vertices with degree four.
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegree5</code></td>
+                <td>
+                    Number of vertices with degree five.
+                </td>
+            </tr>
+            <tr>
+                <td><code>numVerticesWithDegreeMoreThan5</code></td>
+                <td>
+                    Number of vertices with degree six or higher.
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxDegree</code></td>
+                <td>
+                    The maximum degree over all vertices in the component.
+                </td>
+            </tr>
+            <tr>
+                <td><code>minDegree</code></td>
+                <td>
+                    The minimum degree over all vertices in the component.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMinX</code></td>
+                <td>
+                    The minimum per-vertex centroid X over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMinY</code></td>
+                <td>
+                    The minimum per-vertex centroid Y over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMinZ</code></td>
+                <td>
+                    The minimum per-vertex centroid Z over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMaxX</code></td>
+                <td>
+                    The maximum per-vertex centroid X over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMaxY</code></td>
+                <td>
+                    The maximum per-vertex centroid Y over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centerMaxZ</code></td>
+                <td>
+                    The maximum per-vertex centroid Z over all vertices in the component, in pixels.
+                    <warning>This is not the centroid of the whole component!</warning>
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMinX</code></td>
+                <td>
+                    The minimum per-vertex X (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMinY</code></td>
+                <td>
+                    The minimum per-vertex Y (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMinZ</code></td>
+                <td>
+                    The minimum per-vertex Z (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMaxX</code></td>
+                <td>
+                    The maximum per-vertex X (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMaxY</code></td>
+                <td>
+                    The maximum per-vertex Y (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sphereMaxZ</code></td>
+                <td>
+                    The maximum per-vertex Z (including the radius) over all vertices in the component, in pixels.
+                    Learn more about bounding box measurements <a href="#bounding_measurements_info">here</a>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centroidX</code></td>
+                <td>
+                   The centroid (X coordinate) of the whole filament component, in pixels.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centroidY</code></td>
+                <td>
+                    The centroid (Y coordinate) of the whole filament component, in pixels.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centroidZ</code></td>
+                <td>
+                    The centroid (Z coordinate) of the whole filament component, in pixels.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centroidC</code></td>
+                <td>
+                    The centroid (Channel coordinate) of the whole filament component.
+                </td>
+            </tr>
+            <tr>
+                <td><code>centroidT</code></td>
+                <td>
+                    The centroid (Frame coordinate) of the whole filament component.
+                </td>
+            </tr>
+            <tr>
+                <td><code>minEdgeLengthPixels</code></td>
+                <td>
+                    The minimum edge length (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>minEdgeLengthUnit</code></td>
+                <td>
+                    The minimum edge length (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxEdgeLengthPixels</code></td>
+                <td>
+                    The maximum edge length (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxEdgeLengthUnit</code></td>
+                <td>
+                    The maximum edge length (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>avgEdgeLengthPixels</code></td>
+                <td>
+                    The average edge length (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>avgEdgeLengthUnit</code></td>
+                <td>
+                    The average edge length (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>minVertexRadiusPixels</code></td>
+                <td>
+                    The minimum vertex radius (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>minVertexRadiusUnit</code></td>
+                <td>
+                    The minimum vertex radius (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxVertexRadiusPixels</code></td>
+                <td>
+                    The maximum vertex radius (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxVertexRadiusUnit</code></td>
+                <td>
+                    The maximum vertex radius (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>avgVertexRadiusPixels</code></td>
+                <td>
+                    The average vertex radius (in pixels).
+                </td>
+            </tr>
+            <tr>
+                <td><code>avgVertexRadiusUnit</code></td>
+                <td>
+                    The average vertex radius (in physical unit).
+                </td>
+            </tr>
+            <tr>
+                <td><code>minVertexValue</code></td>
+                <td>
+                    The minimum vertex value.
+                </td>
+            </tr>
+            <tr>
+                <td><code>maxVertexValue</code></td>
+                <td>
+                    The maximum vertex value.
+                </td>
+            </tr>
+            <tr>
+                <td><code>avgVertexValue</code></td>
+                <td>
+                    The average vertex value.
+                </td>
+            </tr>
+            <tr>
+                <td><code>physicalSizeUnit</code></td>
+                <td>
+                    The consensus physical size unit.
+                </td>
+            </tr>
+        </table>
+        <chapter title="Radius correction" id="radius_correction_info">
+            Classic length measurement just summarizes the length of all edges. This may yield shorter than expected lengths, as
+            the radius of end points is not considered in the calculations.
+            <p>Radius-corrected length measurements add the radius of each degree-1 vertex, and twice the radius for degree-0 vertices to the calculated length.</p>
+            <img src="filaments_measurement_radius_corrected.png" alt="Explanation" thumbnail="true"/>
+        </chapter>
+        <chapter title="Simplified graph" id="simplified_graph_info">
+            The simplified graph is calculated by skipping all degree-2 vertices and directly connecting the lines.
+            You can explicitly calculate the simplified graph by using the node <control>Simplify filaments</control>.
+            <img src="filaments_simplified_example.png" alt="Example"/>
+        </chapter>
+        <chapter title="Bounding box measurements" id="bounding_measurements_info">
+            There are two possible bounding box measurements for filaments, one that is based around the vertex center,
+            and another that also incorporates the vertex radius.
+            <p>The following illustration showcases the difference for the X coordinate:</p>
+            <img src="filaments_min_max_measurements.png" alt="Example" thumbnail="true"/>
+        </chapter>
+    </chapter>
+</topic>

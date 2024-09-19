@@ -4,4 +4,8 @@
     <term name="GUI">
         Graphical User Interface
     </term>
+    <term name="Vertex degree">
+        The number of connections of a vertex is a degree. For example a vertex without any connections has degree zero,
+        with one connection degree one, etc.
+    </term>
 </terms>

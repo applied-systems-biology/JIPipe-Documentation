@@ -39,6 +39,9 @@
         <toc-element topic="Plugins-and-artifacts.topic"/>
     </toc-element>
     <toc-element topic="Features.topic">
+        <toc-element topic="Filament-processing.topic">
+            <toc-element topic="Filament-measurements.topic"/>
+        </toc-element>
         <toc-element topic="Python-integration.topic"/>
         <toc-element topic="R-integration.topic"/>
     </toc-element>
