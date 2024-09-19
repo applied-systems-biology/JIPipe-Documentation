@@ -6,40 +6,47 @@
        title="Filament processing" id="Filament-processing">
 
     JPipe comes with its own 5D filament processing library that was custom-built from scratch.
-    <chapter title="Background">
-        The filament processing toolkit is capable of working with filaments and their components on different levels:
-        <deflist>
-            <def title="Vertex">
-                Vertices are the building blocks of filaments. They have a 3D spatial location (X, Y, and Z) and
-                two non-spatial location components (Channel and Frame).
-                <p>Additionally, vertices have a radius (in pixels), a numeric value (no unit), a color, and string and numeric metadata fields.</p>
-                <p>Each vertex has a physical voxel size in each direction (X, Y, and Z) that is by default <code>1 pixel</code> that
+    The filament processing toolkit is capable of working with filaments and their components on different levels:
+    <deflist>
+        <def title="Vertex">
+            Vertices are the building blocks of filaments. They have a 3D spatial location (X, Y, and Z) and
+            two non-spatial location components (Channel and Frame).
+            <p>Additionally, vertices have a radius (in pixels), a numeric value (no unit), a color, and string and
+                numeric metadata fields.</p>
+            <p>Each vertex has a physical voxel size in each direction (X, Y, and Z) that is by default <code>1
+                pixel</code> that
                 allows to calculate the physical location and radius.</p>
-                <img src="filaments_vertices_example.png" alt="Example"/>
-            </def>
-            <def title="Edge">
-                Vertices can be connected with <emphasis>undirected</emphasis> edges.
-                <p>Each edge has a color and string metadata fields.</p>
-                <img src="filaments_edges_example.png" alt="Example"/>
-            </def>
-            <def title="Graph">
-                All vertices and edges are part of a <img src="data-type-filaments.png" alt="Icon"/> <control>Filaments 3D</control> graph data object.
-                <img src="filaments_graph_example.png" alt="Example"/>
-            </def>
-            <def title="Filament/Component">
-                A filament or filament component is the set of all vertices that have a path between each other. The
-                 following example has two components:
-                <img src="filaments_components_example.png" alt="Example"/>
-            </def>
-            <def title="Line">
-                A line is a filament component where the <tooltip term="Vertex degree">degree</tooltip> of all its vertices is at most two (either it is an endpoint or a line segment).
-                <img src="filaments_lines_example.png" alt="Example"/>
-            </def>
-        </deflist>
-    </chapter>
-    <chapter title="Calculating measurements">
-        The filament toolkit can calculate measurements for vertices, edges, and filament components.
-        You can find more information about there generated measurements <a href="Filament-measurements.topic">here</a>.
-        <img src="filaments_measurement_nodes.png" alt="Nodes overview"/>
-    </chapter>
+            <img src="filaments_vertices_example.png" alt="Example"/>
+        </def>
+        <def title="Edge">
+            Vertices can be connected with
+            <emphasis>undirected</emphasis>
+            edges.
+            <p>Each edge has a color and string metadata fields.</p>
+            <img src="filaments_edges_example.png" alt="Example"/>
+        </def>
+        <def title="Graph">
+            All vertices and edges are part of a <img src="data-type-filaments.png" alt="Icon"/>
+            <control>Filaments 3D</control>
+            graph data object.
+            <img src="filaments_graph_example.png" alt="Example"/>
+        </def>
+        <def title="Filament/Component">
+            A filament or filament component is the set of all vertices that have a path between each other. The
+            following example has two components:
+            <img src="filaments_components_example.png" alt="Example"/>
+        </def>
+        <def title="Line">
+            A line is a filament component where the
+            <tooltip term="Vertex degree">degree</tooltip>
+            of all its vertices is at most two (either it is an endpoint or a line segment).
+            <img src="filaments_lines_example.png" alt="Example"/>
+        </def>
+    </deflist>
+    <seealso>
+        <category ref="followup">
+            <a href="Filament-creation.topic">Creating filaments</a>
+            <a href="Filament-measurements.topic">Measuring filaments</a>
+        </category>
+    </seealso>
 </topic>

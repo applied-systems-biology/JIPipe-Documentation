@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Generating filaments" id="Filament-creation">
+
+    <p>The standard way of generating a filament graph requires an already existing mask image or ROI that
+    contains the objects to be converted into filaments.</p>
+    <chapter title="Converting masks to filaments">
+        The most commonly used mode of obtaining filament data involves an existing mask/skeleton image. 
+        <procedure>
+            <step>
+                Ensure that the mask is a skeleton. If this is not the case, you can utilize the <control>Morphological skeletonize 2D</control> or <control>Morphological skeletonize 3D</control> node.</step>
+            <step>
+                Convert the skeleton image into a filament graph via the <control>Binary skeleton to 2D filaments</control> or <control>Binary skeleton to 3D filaments</control> node.
+                <note>Both nodes produce the same data type. The difference is that the 2D filament converter marks the filaments as 2D by setting the Z voxel size to zero.</note>
+            </step>
+            <step>
+                The resulting filament has a very high resolution, as the conversion algorithm generates vertices on a pixel-level.
+                To make filament-based operations more performant and to suppress issues caused by the skeletonization,
+                post-process the filament data with <control>Smooth filaments</control> that will merge vertices based on distance (by default 5 pixels).
+            </step>
+        </procedure>
+        <chapter title="Example">
+            <tabs>
+                <tab title="Input">
+                    <img src="filaments_create_from_mask_example_mask.png" alt="Input image"/>
+                </tab>
+                <tab title="Pipeline">
+                    <img src="filaments_create_from_mask_example_nodes.png" alt="Pipeline"/>
+                </tab>
+                <tab title="Result">
+                    <img src="filaments_create_from_mask_example_result.png" alt="Result"/>
+                </tab>
+            </tabs>
+            <resource src="filaments-create-from-mask-example.zip">Download pipeline</resource>
+        </chapter>
+    </chapter>
+    <chapter title="Converting ROI to filaments">
+        ImageJ 2D ROIs are points that are connected to form an outline around an area. This similarity enables the
+        direct conversion of ROIs to filaments.
+        <warning>
+            This currently only will yield the <emphasis>outline</emphasis>, not the <emphasis>skeleton</emphasis> of ROIs. If you need
+            a skeleton, convert the ROIs to a mask first and use convert the mask into filaments.
+            <p>In the case you have overlapping ROIs, you can first split them via <control>Split into individual 2D ROI lists</control> and merge the
+            filaments later via <control>Merge filaments</control>.</p>
+        </warning>
+        <procedure>
+            <step>
+               Obtain a 2D ImageJ ROI, for example via <control>Find particles 2D</control>.
+            </step>
+            <step>
+                Convert the ROI data into filaments via <control>Convert 2D ROI to filaments</control>.
+            </step>
+            <step>
+                The resulting filament may have a very high resolution. While optional for ROI to filament conversion,
+                a <control>Smooth filaments</control> that will merge vertices based on distance (by default 5 pixels) can be useful.
+            </step>
+        </procedure>
+        <chapter title="Example">
+            <tabs>
+                <tab title="ROI">
+                    <img src="filaments_create_from_roi_roi.png" alt="Input image"/>
+                </tab>
+                <tab title="Pipeline (including import)">
+                    <img src="filaments_create_from_roi_nodes.png" alt="Pipeline"/>
+                </tab>
+                <tab title="Result">
+                    <img src="filaments_create_from_roi_result.png" alt="Result"/>
+                </tab>
+            </tabs>
+            <resource src="filaments-create-from-roi-example.zip">Download pipeline</resource>
+        </chapter>
+    </chapter>
+</topic>
