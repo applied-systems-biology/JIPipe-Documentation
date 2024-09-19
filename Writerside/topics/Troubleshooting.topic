@@ -46,4 +46,8 @@
         </tabs>
 
     </chapter>
+    <chapter title="Linux: When JIPipe is started from a *.desktop file, it hangs during startup">
+        This is a known issue caused by the Weka filter. It will be fixed in
+        the next version after 4.0.0.
+    </chapter>
 </topic>
