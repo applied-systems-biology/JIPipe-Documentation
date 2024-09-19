@@ -80,8 +80,18 @@
             <tip>You can theoretically add parameters from completely unrelated nodes. JIPipe will ignore parameters that are unknown to a node.
                 To be safe, avoid doing this, as parameters with the same ID may have different data types.</tip>
         </chapter>
-        <chapter title="Multiplying parameter sets">
 
-        </chapter>
+    </chapter>
+    <chapter title="Multiplying parameter sets">
+        Often it is necessary to test all possible parameter combinations. And while it is possible to use the parameter set
+        editor to manually define the parameter sets, this process can be very cumbersome with an increasing number of parameters.
+        <p>An example is the testing of the r1 and r2 parameters of the <control>Morphological Feature Contrast (MFC) 2D</control> algorithm, where
+            the filter response is greatly influenced by the combination of the parameters. For example, one wants to test all 49 combinations of r1
+            <code>[1,3,5,7,11,15,21]</code> and r2 <code>[1,3,5,7,11,15,21]</code>.</p>
+        <p>To make the setup easier, one can make use of the <control>Multiply parameters</control> node that receives two or more inputs and generates
+            the combinations of all parameter sets. In our case, we would create one <control>Define multiple parameters</control> node for only the r1 values
+            and another node only for the r2 values. Then the two parameter sets are combined with <control>Multiply parameters</control>.</p>
+        <img src="ui_external_parameters_multiply_example.png" alt="Screenshot"/>
+        <resource src="multiplying-external-parameters-example.zip">Download example project</resource>
     </chapter>
 </topic>
