@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Adaptive parameters" id="Adaptive-parameters">
+    Adaptive parameters allow to dynamically calculate the parameter values using an <a href="Expressions.topic">expression</a>
+    ,
+    even if the parameter itself is not expression-based. The feature is for example useful, if you want to set
+    the radius of a median filter based on a precalculated value stored within <a href="Annotations.topic">annotations</a>.
+    <chapter title="Creating an adaptive parameter">
+        <p>To make a parameter adaptive, click the <img src="caret-down.png" alt="Button"/> button next to the
+            parameter
+            and select
+            <control>Make parameter adaptive</control>
+            .
+        </p>
+        <img src="ui_edit_parameters_make_adaptive_parameter.png" alt="Screenshot"/>
+        The parameter editor will be changed to an <a href="Expressions.topic">expression</a> editor:
+        <img src="ui_edit_parameters_adaptive_parameter.png" alt="Screenshot"/>
+        <warning>Due to bugs with some older nodes, this may not always work as expected. In such a case,
+            the parameter is indeed adaptive, but the status is not reflected in the user interface.
+            <p>In such a case, you can find the expression editor by navigating to
+                <ui-path>Adaptive | Configure | Overridden parameters</ui-path>
+                .
+            </p>
+            <img src="ui_edit_parameters_adaptive_configuration.png" alt="Screenshot" thumbnail="true"/>
+        </warning>
+    </chapter>
+    <chapter title="Removing adaptive parameters">
+        To make a parameter static again, click the <img src="caret-down.png" alt="Button"/> button next to the
+        parameter
+        and select
+        <control>Make parameter static</control>
+        .
+        <img src="ui_edit_parameters_make_adaptive_static.png" alt="Screenshot"/>
+        <note>You can also do this from within the adaptive parameter configuration window that can be opened by
+            navigating to
+            <ui-path>Adaptive | Configure | Overridden parameters</ui-path>
+            .
+        </note>
+    </chapter>
+    <chapter title="Editing adaptive parameters">
+        Adaptive parameters are parameters that are generated just before the workload is executed. They are
+        generated
+        <emphasis>after</emphasis>
+        <a href="External-parameters.topic">external parameters</a> are obtained, meaning that
+        you can override/modify those. Adaptive parameters are also applied per <a href="Batch-processing.topic">iteration
+        step</a> and
+        thus can be generated from annotations.
+        <p>By default, the expression provided by the adaptive parameter editor is </p>
+        <code-block lang="java">
+            default
+        </code-block>
+        ,
+        where <code>default</code> is always assigned to the current static parameter value or the value obtained
+        from <a href="External-parameters.topic">external parameters</a>.
+        <p>For simple parameter types, including booleans, numbers, and text, you can just type in or generate the
+            value:</p>
+        <table style="header-row">
+            <tr>
+                <td>Parameter type</td>
+                <td>Examples</td>
+            </tr>
+            <tr>
+                <td>Text</td>
+                <td>
+                    <code-block lang="java">
+                        "This is a text"
+                    </code-block>
+                    <code-block lang="java">
+                        #LoadTextFromAnnotation
+                    </code-block>
+                    <code-block lang="java">
+                        #FirstAnnotationValue + "_" + #OtherAnnotationValue
+                    </code-block>
+                </td>
+            </tr>
+            <tr>
+                <td>Numbers</td>
+                <td>
+                    <code-block lang="java">
+                        42
+                    </code-block>
+                    <code-block lang="java">
+                        NUM(SomeAnnotation)
+                    </code-block>
+                    <code-block lang="java">
+                        MAX(NUM(SomeAnnotation), 42)
+                    </code-block>
+                </td>
+            </tr>
+            <tr>
+                <td>Booleans</td>
+                <td>
+                    <code-block lang="java">
+                        true
+                    </code-block>
+                    <code-block lang="java">
+                        #SomeAnnotation == "the value"
+                    </code-block>
+                    <code-block lang="java">
+                        #SomeAnnotation == "the value" OR OtherAnnotation == "other value"
+                    </code-block>
+                </td>
+            </tr>
+        </table>
+        The JIPipe parameter system supports a wide variety of different parameter types that cannot always be
+        represented as simple numbers, text, or booleans. To generate an appropriate adaptive parameter value for
+        more complex types, you will need to generate <a
+            href="https://www.w3schools.com/js/js_json_intro.asp">JSON</a>
+        code in the format expected by the parameter type.
+        <p>
+            To learn about the required JSON syntax for a parameter, we recommend to use the
+            <control>Parameter explorer</control>
+            window
+            that can be opened by right-clicking the node and selecting
+            <control>Explore parameters</control>
+            . Here you can select the
+            parameter of interest and use the
+            <control>Value tester</control>
+            to find out which JSON code corresponds to which value.
+        </p>
+        <img src="ui_parameter_explorer_example.png" alt="Parameter explorer" thumbnail="true"/>
+        Based on the knowledge gained from the parameter explorer, adapt the adaptive parameter expression to
+        generate
+        anb appropriate JSON string.
+        <chapter title="Example">
+            In this example, we want to make the parameter <control>Threshold annotation</control> of the <control>Auto threshold 2D</control>
+            node adaptive.
+            <img src="ui_edit_parameters_adaptive_custom_complex_parameter_example.png"
+                 alt="Screenshot"/>
+            The parameter explorer reveals that the parameter is complex due to the JSON code involving objects or lists.
+            <img src="ui_edit_parameters_adaptive_custom_complex_parameter_example.png" alt="Screenshot"/>
+            In this example, we want to determine the written annotation name via an adaptive parameter.
+            Additionally, we enable the generation of a threshold annotation by setting the value of <code>enabled</code> to
+            <code>true</code>.
+            <code-block lang="json">
+                {"content":"THIS WILL BE CHANGED", "enabled": true}
+            </code-block>
+            The JIPipe expression code that generates this text will fill the <code>content</code> with the value of an
+            annotation <code>MyAnnotation</code>:
+            <code-block lang="java">
+                "{"content\":\"" + MyAnnotation + "\", \"enabled\": true}"
+            </code-block>
+            As you can see, the code may be hard to read due to the required escaping of quotation marks.
+            Thus, it may be more convenient to instead use the expression language's functions for creating JSON data:
+            <code-block lang="java">
+                TO_JSON( MAP( PAIR("content", MyAnnotation), PAIR("enabled", true)) )
+            </code-block>
+            This will create a Java dictionary (map) that contains two key-value pairs (entries) <code>content</code> and <code>enabled</code>.
+            Those are then converted into JSON code.
+        </chapter>
+    </chapter>
+</topic>

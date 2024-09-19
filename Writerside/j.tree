@@ -25,6 +25,8 @@
         <toc-element topic="Nodes.topic">
             <toc-element topic="Adding-nodes.topic"/>
             <toc-element topic="Editing-parameters.topic"/>
+            <toc-element topic="Adaptive-parameters.topic"/>
+            <toc-element topic="External-parameters.topic"/>
             <toc-element topic="Running-nodes.topic"/>
             <toc-element topic="Input-manager.topic"/>
             <toc-element topic="Results-browser.topic"/>

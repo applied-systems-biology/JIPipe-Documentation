@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="External parameters" id="External-parameters">
+    External parameters are used if you want to run a node for multiple parameter sets. For example, you want to run
+    a <control>Median filter 2D</control> with radii 3, 5, 7, and 12 without creating four copies of the node. As the feature was designed
+    to
+    handle parameter
+    <emphasis>set</emphasis>
+    , you even make more advanced arrangements of multiple parameter combinations to be tested.
+    <chapter title="Enabling external parameters">
+        External parameters are deactivated by default and must be enabled by selecting
+        <ui-path>External | Enable external parameters</ui-path> from within the parameter editor.
+        <img src="ui_edit_parameters_enable_external_parameters.png" alt="Screenshot"/>
+        You will notice that the node gains an additional slot <control>Parameters</control> that has a different
+        coloring, indicating that the received data is used for parameter operations.
+        <img src="ui_edit_parameters_enable_external_parameters_node.png" alt="Node with external parameters slot"/>
+        The node now expects that you provide it with parameter sets.
+    </chapter>
+    <chapter title="Creating parameter sets">
+        JIPipe handles parameter sets just like any other data, meaning that you can create, merge, and process them using
+        the nodes available through the <a href="Adding-nodes.topic">Add nodes</a> panel.
+        <p>The easiest way of creating a new parameter set can be accessed by right-clicking an empty space
+            within the pipeline and selecting the <ui-path>Add parameter sets here ...</ui-path> or by pressing <shortcut>Ctrl+Shift+A</shortcut>.
+        </p>
+        <img src="ui_edit_parameters_create_external_parameters.png" alt="Screenshot"/>
+        You will be prompted with a dialog that contains all existing and available nodes. Select the node of interest and
+        select the parameters that should be controlled via external parameters.
+        <tip>Hold <shortcut>Shift</shortcut> to select multiple parameters in the list on the right-hand side.</tip>
+        <img src="ui_edit_parameters_create_external_parameters_dialog.png" alt="Screenshot"/>
+        In this example, we selected only <code>Radius</code>.
+        <p>After confirming by clicking <control>Select</control>, a new <control>Define multiple parameters</control> node will appear in the pipeline.
+            Connect it to the <control>Parameters</control> input of the <control>Median filter 2D</control>.</p>
+        <tip>You can connect the same <control>Define multiple parameters</control> for multiple nodes. Feel free to save parameter sets
+            as <a href="Node-templates.topic">node template</a> and re-use them in other projects. </tip>
+        <img src="ui_edit_parameters_external_parameters_connected_example.png" alt="Screenshot"/>
+        Then the <control>Define multiple parameters</control> must be configured with the desired parameter sets by selecting the node and
+        navigating to the <control>Parameters</control> tab and clicking the <control>Edit parameters</control> button.
+        <img src="ui_edit_parameters_external_parameters_edit_parameter_sets.png" alt="Screenshot"/>
+    </chapter>
+    <chapter title="Parameter set editor interface">
+        The parameter editor interface allows you to add/remove parameter sets (rows) and determine which parameters should be
+        controlled via external parameters (columns).
+        <img src="ui_parameter_set_editor_annotated.png" alt="Parameter set editor" thumbnail="true"/>
+        The editor has three main interface components:
+        <deflist>
+            <def title="%c1% Toolbar">
+                The toolbar/ribbon contains all functions needed to modify the structure of the parameter set table.
+                <p>It has two categories:</p>
+                <list type="decimal">
+                    <li>Targeted parameters (columns): functions for modifying which parameters are overwritten by an external parameter.</li>
+                    <li>Parameter sets (rows): the parameter sets themselves (adding/removing parameter sets).</li>
+                </list>
+            </def>
+            <def title="%c2% Parameter set table">
+                A table that contains all parameter sets. Each column represents a parameter to be overwritten by the parameter set,
+                while a row represents one parameter set.
+            </def>
+            <def title="%c3% Parameter editor">
+                On selecting a cell in the parameter set table, you will be able to edit its value via an interface
+                that appears in the <control>Edit value</control> sidebar.
+            </def>
+        </deflist>
+        <chapter title="Adding and editing parameter sets">
+            To add more parameter sets, click the <ui-path>Parameter sets (rows) | Add parameter set</ui-path> button, which will add one additional row into the table.
+            Then you will be able to one-by-one edit the values.
+            <video src="video_parameter_set_editor_add_edit_sets.mp4"
+                   preview-src="video_parameter_set_editor_add_edit_sets.png"/>
+            For certain parameter types, you can also generate values by selecting one cell and clicking the <ui-path>Parameter sets (rows) | Generate rows</ui-path> button.
+            <video src="video_parameter_set_editor_generate_sets.mp4"
+                   preview-src="video_parameter_set_editor_generate_sets.png"/>
+        </chapter>
+        <chapter title="Adding parameter overrides">
+            To include another parameter into the parameter set table, navigate to <ui-path>Targeted parameters (columns) | Add from node</ui-path>, select the node and parameter(s),
+            and confirm the selection.
+            <video src="video_parameter_set_editor_add_column.mp4"
+                   preview-src="video_parameter_set_editor_add_column.png"/>
+            <tip>You can theoretically add parameters from completely unrelated nodes. JIPipe will ignore parameters that are unknown to a node.
+                To be safe, avoid doing this, as parameters with the same ID may have different data types.</tip>
+        </chapter>
+        <chapter title="Multiplying parameter sets">
+
+        </chapter>
+    </chapter>
+</topic>
