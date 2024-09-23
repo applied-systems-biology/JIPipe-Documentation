@@ -4,7 +4,24 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
-
+    <chapter title="Cache resets unexpectedly">
+        <note>This can also happen if your cached nodes are running in a loop, as
+        loop iterations cannot access cached items. You can identify if the node is running in a loop by
+        looking for <code>Looped partition</code> in the log viewer.
+        <p>In such a case, please deactivate loops for the <a href="Graph-partitions.topic">partition</a>.</p></note>
+        <p>Usually, cached data stays within the memory until there is a change in a predecessor or the current node.
+        Due to bugs with some nodes, the cache might fully reset.</p>
+        <p>Please report this on <a href="https://github.com/applied-systems-biology/jipipe/issues">the JIPipe GitHub</a> if you can
+            reproduce the issue. Do the following steps:</p>
+        <procedure>
+            <step>Update the cache to the point of failure</step>
+            <step>Click the <ui-path>Cache</ui-path> button at the top right and
+                select <ui-path>Clear outdated</ui-path></step>
+            <step>Open the <control>Logs</control> viewer (button at the top right) and export the
+            newest log called <control>Clear outdated cache items</control></step>
+            <step>Provide the exported file in the issue report</step>
+        </procedure>
+    </chapter>
     <chapter title="Resetting the application settings" id="resetting_app_settings">
         <p>This might be needed if you accidentally misconfigured something and want to restore the default behavior.</p>
         <note>Your node templates will not be deleted, as those are saved in separate files.</note>
