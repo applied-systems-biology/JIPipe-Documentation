@@ -4,6 +4,15 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
+    <chapter title="Unable to find compatible artifact">
+        This can happen if you use projects from other operating systems are utilized.
+        There is also a known bug with JIPipe versions 4.0.0 and 4.1.0 where an error with the automatic
+        artifact selection fails to find a replacement.
+        <p>If you encounter issues with artifacts, please open the artifact settings by navigating to
+        <ui-path>Info &amp; settings | Settings | Plugins</ui-path> and selecting the affected third-party artifact.
+        Select another artifact via the <control>Configure ...</control> button.</p>
+        <a href="Plugins-and-artifacts.topic">Here</a> you can learn more about artifacts.
+    </chapter>
     <chapter title="Cellpose/Omnipose: no images found">
         According to our tests, this can happen on Linux (and maybe macOS) if your project's path contains a <emphasis>space</emphasis>.
         We could not yet find out why this bug happens.

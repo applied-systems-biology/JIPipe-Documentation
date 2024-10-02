@@ -5,5 +5,33 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Plugins and artifacts" id="Plugins-and-artifacts">
 
-    <p>Start typing here...</p>
+    <p>Similar to ImageJ, JIPipe is modular and can be extended with a variety of functions.
+    Plugins add new nodes, data types, and more features. When you install JIPipe, it ships with all plugins provided by
+    us. All plugins are enabled and work as-is. No additional configuration is needed.</p>
+    <p>Artifacts are JIPipe's way to distribute third-party tools like Ilastik, Cellpose, Python, or R.
+        We uploaded these tools to a <a href="https://jipipe.hki-jena.de/nexus/">centralized repository</a>, so users do not have
+    to download and install them manually. </p>
+    <img src="ui_plugins_overview.png" alt="Overview"/>
+    <chapter title="Managing artifacts">
+        JIPipe auto-selects artifacts based on a variety of criteria that include your operating system, preferred acceleration
+        methods, and supported CUDA version. The version that was found is then automatically written into <emphasis>newly created</emphasis>
+        projects, so JIPipe can restore the exact (or best fitting approximation) artifacts on other computers.
+        <p>To review/configure the artifacts utilized in your project, navigate to <ui-path>Info &amp; settings | Settings</ui-path> and browse
+        through the entries in the <ui-path>Plugins</ui-path> category.</p>
+        <img src="ui_artifacts_project_management.png" alt="Artifact configuration in projects"/>
+        Clicking the <control>Configure ...</control> button reveals a variety of options, including the manual setup of
+    </chapter>
+    <chapter title="Managing plugins">
+        <note>The plugin manager is only required if you installed a JIPipe plugin from another developer.
+        All plugins that ship with JIPipe are automatically activated on installation.</note>
+        The plugin manager can be found by navigating to <ui-path>Plugins | JIPipe plugins</ui-path>.
+        <img src="ui_plugins_manage_jipipe_plugins.png" alt="JIPipe plugin manager"/>
+        In the window you can see a list of all available JIPipe plugins with the status.
+        Select an item in the list to display more information, including the authors and license.
+        Here you can also enable or disable plugins.
+        <p>After you made changes, you will be prompted to restart JIPipe.</p>
+        <warning>Some JIPipe plugins may require the installation of ImageJ plugins. Please use the ImageJ updater to
+        install the plugins as requested. You can open the ImageJ updater by navigating to <ui-path>Plugins | ImageJ plugins</ui-path>.</warning>
+        <img src="ui_plugins_jipipe_plugin_manager_window.png" alt="JIPipe plugin manager"/>
+    </chapter>
 </topic>
