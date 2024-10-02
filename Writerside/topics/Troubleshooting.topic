@@ -4,6 +4,21 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
+    <chapter title="Cellpose/Omnipose: no images found">
+        According to our tests, this can happen on Linux (and maybe macOS) if your project's path contains a <emphasis>space</emphasis>.
+        We could not yet find out why this bug happens.
+        Please rename directories to ensure that the path to your project does not contain any spaces.
+        <chapter title="Example">
+            Rename directories so that the path
+            <code-block>
+                /data/projects/important collaborator/my project/
+            </code-block>
+            is
+            <code-block>
+                /data/projects/important-collaborator/my-project/
+            </code-block>
+        </chapter>
+    </chapter>
     <chapter title="Cache resets unexpectedly">
         <note>This can also happen if your cached nodes are running in a loop, as
         loop iterations cannot access cached items. You can identify if the node is running in a loop by
