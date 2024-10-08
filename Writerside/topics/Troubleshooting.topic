@@ -4,6 +4,13 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
+    <chapter title="Windows: crashes during data saving with long paths">
+        This is often happens during training/inference using Deep Learning tools like Cellpose, but can also happen
+        if your projects are deep within the hierarchy of directories. The cause is the (by default) very short supported
+        path length of 260 characters on Windows. You can follow the <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation">official tutorial</a>
+        to support long paths.
+        <note>Linux and macOS also have path length limits, but they are higher compared to the default Windows settings.</note>
+    </chapter>
     <chapter title="Unable to find compatible artifact">
         This can happen if you use projects from other operating systems are utilized.
         There is also a known bug with JIPipe versions 4.0.0 and 4.1.0 where an error with the automatic
