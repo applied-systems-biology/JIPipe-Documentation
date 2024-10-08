@@ -22,8 +22,8 @@
     </chapter>
     <chapter title="Cellpose/Omnipose: no images found">
         According to our tests, this can happen on Linux (and maybe macOS) if your project's path contains a <emphasis>space</emphasis>.
-        We could not yet find out why this bug happens.
-        Please rename directories to ensure that the path to your project does not contain any spaces.
+        This bug will be fixed in JIPipe 5.0.0.
+        Until this software is released, please rename directories to ensure that the path to your project does not contain any spaces.
         <chapter title="Example">
             Rename directories so that the path
             <code-block>
