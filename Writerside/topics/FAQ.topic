@@ -4,7 +4,10 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Frequently asked questions" id="FAQ">
-
+    <chapter title="What is the JIPipe.tmp.dir directory?">
+        JIPipe stores temporary files into this directory. You can delete it safely if no JIPipe project in the containing directory
+        is currently open.
+    </chapter>
     <chapter title="Can I convert a JIPipe workflow into an ImageJ macro?">
         No, JIPipe has its own implementation of a workflow engine (the component that runs the pipeline) that
         does not involve ImageJ macros in any form. This way, we ensure that JIPipe is not limited by the design of
