@@ -10,6 +10,7 @@
         path length of 260 characters on Windows. You can follow the <a href="https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation">official tutorial</a>
         to support long paths.
         <note>Linux and macOS also have path length limits, but they are higher compared to the default Windows settings.</note>
+        JIPipe will mitigate some issues starting with version 5.0.0 due to the usage of shorter paths.
     </chapter>
     <chapter title="Unable to find compatible artifact">
         This can happen if you use projects from other operating systems are utilized.
