@@ -36,6 +36,7 @@
             Feel free to add more partition types or (not) use pre-made partitions as you see fit.</note>
     </chapter>
     <chapter title="Creating loops">
+        <tip>If you have a relatively small and self-contained set of nodes, you can also create a looped <a href="Group-nodes.topic">group</a>. </tip>
         To create a looped partition, assign a set of connected nodes to the partition that should be looped.
         <tip>As it is quite common that the majority of the workload involves memory-intensive image processing,
         we recommend to use the "Default" partition that is always assigned to newly created nodes as a looped partition.</tip>
