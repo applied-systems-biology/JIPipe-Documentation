@@ -5,5 +5,72 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Graph partitions" id="Graph-partitions">
 
-    <p>Start typing here...</p>
+    <p>JIPipe allows to <emphasis>partition</emphasis> the workflow into units that are executed one-after-the other.
+    The feature should not be mixed up with <a href="Graph-compartments.topic">graph compartments</a> that instead
+    separate the pipeline <emphasis>visually</emphasis></p>
+    <p>The functionality behind partitions can be explained easier by an example:</p>
+    <p>Assuming there is a pipeline that has to process hundreds or thousands of images, JIPipe's default behaviour
+    of executing all <a href="Batch-processing.topic">iteration steps</a> of a node in one go before continuing with the next operation.
+    This would require that all the images would be stored in memory, thus likely crashing the workflow.</p>
+    <p>Partitions allow the creation of <emphasis>loops</emphasis> by functionally splitting a pipeline into parts that
+    are executed in a standard way and parts that are repeated per iteration step.</p>
+    <img src="ui_graph_partitions_concept.png" alt="Concept behind partitions"/>
+    In the example above we have four partitions:
+   <list type="decimal">
+       <li>One containing all operations related to handling files,</li>
+       <li>Another partition that is repeated <emphasis>per file</emphasis>,</li>
+       <li>A partition that receives all data from the looped partition and is not looped anymore,</li>
+       <li>and finally a partition that receives all generated statistics and processes them.</li>
+   </list>
+    As you can see, only the "Default" partition is set to loop.
+    <p>When JIPipe runs a workflow with multiple partitions, it splits the pipeline by the partition <emphasis>borders</emphasis>,
+    meaning that you can re-use partitions. Then the software will determine the order of the partitions based on
+    inter-dependence and execute the <emphasis>partitions</emphasis> in the correct order.</p>
+    <p>In the provided example, JIPipe would first execute all nodes in "File system", then proceed to loop over "Default",
+     and pass <emphasis>all</emphasis> the collected results to the visualization and statistics nodes.</p>
+
+    <chapter title="Assigning partitions">
+        To assign nodes to a different partition, right-click a node or selection and choose an option in the <ui-path>Move to partition ...</ui-path> menu.
+        <img src="ui_graph_partitions_assign.png" alt="Assigning graph partitions"/>
+        <note>JIPipe provides a variety of pre-made partitions that can be assigned. You do not have to in any form adhere to those presets.
+            Feel free to add more partition types or (not) use pre-made partitions as you see fit.</note>
+    </chapter>
+    <chapter title="Creating loops">
+        To create a looped partition, assign a set of connected nodes to the partition that should be looped.
+        <tip>As it is quite common that the majority of the workload involves memory-intensive image processing,
+        we recommend to use the "Default" partition that is always assigned to newly created nodes as a looped partition.</tip>
+        The partition then needs to be configured to operate as a loop by right-clicking a node assigned to the looped partition
+        and selecting the <ui-path>Edit partition</ui-path> button.
+        <img thumbnail="true" src="ui_graph_partitions_edit.png" alt="Editing partitions"/>
+        This will open a dialog where the <control>Iteration mode</control> can be set from <control>Passthrough</control>
+        to <control>Loop (single data per slot)</control> or <control>Loop (multiple data per slot)</control>.
+        <note>If you are unsure, set the mode to <control>Loop (single data per slot)</control>. You can read more
+        about iteration modes in the <a href="Batch-processing.topic">batch processing guide</a>.</note>
+        <tip>We highly recommend to enable the option <control>Disable iteration in 'Update cache'</control>, while you
+        are still developing your pipeline. In this case, the loop will only apply if you run the whole pipeline with the
+        <control>Run</control> option (top-right of the JIPipe window). If you use <control>Update cache</control> or related operations,
+        no looping will be applied. This is useful, as looped partitions cannot "continue" from cached data.</tip>
+        <chapter title="Recommended structure">
+            Due to the data-oriented workflow of JIPipe, loops can be tricky to set up in more complex scenarios that would
+            yield unexpected results. Additionally, as of now, there is not yet an <a href="Input-manager.topic">input manager</a>
+            available for debugging looped graph partitions. We <emphasis>highly recommend</emphasis> to structure the
+            pipeline using <control>Check iteration steps</control> nodes that would act as <emphasis>single entry point</emphasis>
+            into a looped partition.
+            <p>For <control>Loop (single data per slot)</control> partitions, add a <control>Check iteration steps (one data per slot)</control>
+            before all data that is passed into the loop and ensure that this interface is the only entry point. Then you can use
+            the  <a href="Input-manager.topic">input manager</a> of that node to check the iteration steps. Also, please do not forget
+            to <emphasis>assign the interface to the previous partition</emphasis>.</p>
+            <img src="ui_graph_partitions_loop_interface_example.png" alt="Example of using an interface for looped partitions" thumbnail="true"/>
+
+        </chapter>
+    </chapter>
+    <chapter title="Continue on failure">
+        Partitions can be used to mark sections of the JIPipe workflow as "failable", meaning that the pipeline
+        will continue to run even if the section or a loop iteration failed. JIPipe will generate notifications in the user interface
+        and log and can be setup to store the inputs of the failed section for later analysis.
+        <tip>Since JIPipe 4.2.0: We recommend to enable the option that disabled the feature for <control>Update cache</control> and related operations,
+        as the "Continue on failure" feature might mask issues with the pipeline.</tip>
+    </chapter>
+
+
 </topic>
