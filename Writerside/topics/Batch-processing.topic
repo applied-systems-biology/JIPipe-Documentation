@@ -40,8 +40,16 @@
         As such a node receives a table of data, it is trivial to iterate through the table rows and apply the underlying workload per
         row.
         <p>An example of such a node is <control>Auto threshold 2D</control></p>
+        <img src="concepts_batch_processing_simple_iteration.png" alt="Example" />
     </chapter>
     <chapter title="Single data per slot iteration">
+        The node requires that each iteration step has exactly one data per slot (for example, one image needs to be assigned to one set of ROIs).
+        To ensure this, JIPipe analyzes the <a href="Annotations.topic">text annotations</a> of the inputs and uses them to group the data together.
+        <img src="concepts_batch_processing_iteration.png" alt="Example" />
+        By default, JIPipe only considers text annotations that start with a "#" sign, thus making a clear distinction between "important" and "non-important" annotations.
+        You can configure this behavior via the <a href="Input-manager.topic">input manager</a> interface.
+        <tip>Aside from the default behavior <control>Use columns prefixed with '#' (union, default)</control>, you can also choose <control>Custom</control> to
+        specifically set the important annotations. </tip>
         <note>The default case for missing constraints (i.e. JIPipe cannot find a unique mapping between data) is the creation of
         pair-wise iteration steps.
         <p>For example, if you have data A, B, C, and D, and it is combined with data 1, 2, 3, and 4 without annotations that indicate which data belongs together,
@@ -49,6 +57,13 @@
         </note>
     </chapter>
     <chapter title="Multiple data per slot iteration (merging)">
+        Similar to <control>Single data per slot iteration</control>, JIPipe uses text annotations to find groups within the data. But as the node
+        can handle multiple data items per slot, JIPipe will not do any further postprocessing.
+        <p>This type of iteration is usually encountered in nodes that merge data, for example <control>Merge table rows</control>.</p>
+        <img src="concepts_batch_processing_merging.png" alt="Example" />
+        <tip>The <a href="Input-manager.topic">input manager</a> allows you to configure which annotations should be considered for grouping.
+        You can either choose <control>All into one batch</control> to just create one iteration step with every data or use the <control>Custom</control> setting to
+        have full control over the merging behavior.</tip>
         <note>The default case for missing constraints (i.e. JIPipe cannot find a unique mapping between data) is the merging of the data into the most constrained, or into a single
             iteration step.
             <p>For example, if you have data A, B, C, and D, and it is combined with data 1, 2, 3, and 4 without annotations that indicate which data belongs together,
@@ -64,5 +79,4 @@
         <p>For example, if an <control>Auto threshold 2D</control> node executes its workload 10 times, as it receives 10 images, given 3 inputs from the
         <control>Parameters</control> slot, the workload would be executed 30 times, once per parameter set.</p>
     </chapter>
-    <!-- also talk about the iteration modes -->
 </topic>
