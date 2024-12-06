@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Group nodes" id="Group-nodes">
+
+    <p>Group nodes are a way to convert a set of nodes into a single node, thus making
+    the algorithm easier to re-use and share. Groups can be also setup to repeat their contents per
+    input (loop) for memory efficiency.</p>
+    <note>Groups are independent pipelines and thus do not have access to the project cache. This means that
+    you cannot run nodes inside a group, but only the whole group at once. If you are looking for a way to
+    visually organize your pipeline, please use <a href="Graph-compartments.topic">graph compartments</a>. </note>
+    <chapter title="Creating a group">
+        You can create groups manually by adding the <control>Group</control> node into the pipeline:
+        <img src="features_group_empty.png" alt="A new group node"/>
+        Alternatively, you can also select a set of nodes and group them via a context menu action.
+        <p>To edit the contents of a group, <control>%mouse% double-click</control> the node
+        or open the <a href="Editing-parameters.topic">node parameters</a> and click the <control>Edit graph</control> button.</p>
+        This will open a dedicated pipeline editor that by default has only two nodes <control>Group input</control> and
+        <control>Group output</control>.
+        <img src="features_group_io.png" alt="IO nodes"/>
+        Use the <control>+</control> buttons to add the desired inputs and outputs to the interface nodes.
+        The changes will be reflected in the group node:
+        <img src="features_group_slots.png" alt="Configured slots" thumbnail="true"/>
+
+    </chapter>
+    <chapter title="Creating a loop">
+        Groups can be configured to loop over their inputs, meaning if for example a group receives 10 image files,
+        you can configure that the group's content is executed 10 times, once per image file.
+        <tip>If you want to loop a section of your existing workflow (that is not in a group), you can
+        use <a href="Graph-partitions.topic">graph partitions</a>.
+
+        </tip>
+        To enable the loop feature, set the <control>Graph iteration mode</control> to <control>Loop (single data per slot)</control> or <control>Loop (multiple data per slot)</control>.
+        <note>If you are unsure, set the mode to <control>Loop (single data per slot)</control>. You can read more
+            about iteration modes in the <a href="Batch-processing.topic">batch processing guide</a>.</note>
+        <img thumbnail="true" src="features_group_looped.png" alt="Loop configuration"/>
+    </chapter>
+    <chapter title="Continue on failure">
+        Similar to <a href="Graph-partitions.topic">graph partitions</a>, group nodes support the "Continue on failure"
+        feature that would ignore failed loop iterations and instead create a notification.
+    </chapter>
+
+
+</topic>

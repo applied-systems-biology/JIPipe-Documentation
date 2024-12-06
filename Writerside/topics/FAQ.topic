@@ -46,4 +46,15 @@
             <p>As such a package is large, we recommend the usage of repositories like <a href="https://figshare.com/">Figshare</a>.</p>
         </tip>
     </chapter>
+    <chapter title="I have many files to process. How can I make a loop?">
+        You have two options:
+        <list type="decimal">
+            <li>If you have a small and self-contained set of nodes that should be looped, create a looped <a href="Group-nodes.topic">group</a>. </li>
+            <li>If you want to loop a section of your pipeline, setup <a href="Graph-partitions.topic">graph partitions</a>.</li>
+        </list>
+    </chapter>
+    <chapter title="Question not listed?">
+        Please visit the <a href="https://forum.image.sc/">image.sc forum</a>. Here you can ask the community,
+        including JIPipe users and developers for solutions.
+    </chapter>
 </topic>
