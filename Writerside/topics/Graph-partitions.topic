@@ -8,6 +8,8 @@
     <p>JIPipe allows to <emphasis>partition</emphasis> the workflow into units that are executed one-after-the other.
     The feature should not be mixed up with <a href="Graph-compartments.topic">graph compartments</a> that instead
     separate the pipeline <emphasis>visually</emphasis></p>
+    <tip>Partitions are tracked across <a href="Graph-compartments.topic">compartments</a>. Just ensure that
+    the output node(s) are assigned to the correct partition.</tip>
     <p>The functionality behind partitions can be explained easier by an example:</p>
     <p>Assuming there is a pipeline that has to process hundreds or thousands of images, JIPipe's default behaviour
     of executing all <a href="Batch-processing.topic">iteration steps</a> of a node in one go before continuing with the next operation.
