@@ -5,6 +5,64 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Batch processing" id="Batch-processing">
 
-    <p>Start typing here...</p>
+    <p>JIPipe is a workflow language designed for batch processing and thus implements a variety of features that
+    are designed to make batch processing convenient to implement while ensuring maximum flexibility.</p>
+    <p>Generally, all JIPipe relies on two core concepts regarding the batch processing:</p>
+    <list type="decimal">
+        <li>The inputs and outputs are <a href="Annotations.topic">tables</a>, thus making the processing of multiple data the default case </li>
+        <li>Nodes process all of their inputs before the pipeline continues with the next step</li>
+    </list>
+    These concepts ensure that existing single-data pipelines can be easily converted into batch processing workflows (zero-cost scalability),
+    although by sacrificing efficiency (memory- and runtime-wise).
+    <tip>If you need to implement a loop, please read about <a href="Graph-partitions.topic">graph partitions</a> and <a href="Group-nodes.topic">group nodes</a> .</tip>
+    <video src="video_concepts_batch_processing_iteration_concept.mp4"
+           preview-src="video_concepts_batch_processing_iteration_concept.png"
+    />
+    <chapter title="Iteration modes">
+        Due to the variety in how nodes can process data (simple iteration, merging, etc.), most JIPipe nodes follow
+        one of the basic <emphasis>iteration modes</emphasis>, which determine how JIPipe creates the <emphasis>iteration steps</emphasis>
+        that are applied when the workflow is running.
+        <p>An iteration step is a bundle of inputs that will be processed by the actual workload function. For example,
+        a simple iteration step could consist only of one image that will be thresholded. A more complex iteration step might be
+        required for training deep learning networks where raw data, labels, and other information need to be present.</p>
+        <note>To preview the iteration steps of a node, use the <a href="Input-manager.topic">input manager</a>.</note>
+        The three basic ways how JIPipe iterates through data are as follows:
+        <list>
+            <li>Row-wise iteration through a single input (simple iteration)</li>
+            <li>Matching the data of multiple inputs to ensure that the underlying workload receives only one data per slot</li>
+            <li>Matching the data of multiple inputs, but without any restrictions, so the workload can merge or work with multiple data per slot</li>
+        </list>
+        Some functionality of JIPipe like <a href="External-parameters.topic">external parameters</a> or node-specific
+        setups (e.g., deep learning models) introduce additional parametric iteration.
+    </chapter>
+    <chapter title="Simple iteration">
+        This mode is a special case of <control>Single data per slot iteration</control> where a node has exactly one (non-parametric) input.
+        As such a node receives a table of data, it is trivial to iterate through the table rows and apply the underlying workload per
+        row.
+        <p>An example of such a node is <control>Auto threshold 2D</control></p>
+    </chapter>
+    <chapter title="Single data per slot iteration">
+        <note>The default case for missing constraints (i.e. JIPipe cannot find a unique mapping between data) is the creation of
+        pair-wise iteration steps.
+        <p>For example, if you have data A, B, C, and D, and it is combined with data 1, 2, 3, and 4 without annotations that indicate which data belongs together,
+        JIPipe would generate iteration steps A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, and C4.</p>
+        </note>
+    </chapter>
+    <chapter title="Multiple data per slot iteration (merging)">
+        <note>The default case for missing constraints (i.e. JIPipe cannot find a unique mapping between data) is the merging of the data into the most constrained, or into a single
+            iteration step.
+            <p>For example, if you have data A, B, C, and D, and it is combined with data 1, 2, 3, and 4 without annotations that indicate which data belongs together,
+                JIPipe would generate a single iteration step ABCD1234.</p>
+        </note>
+    </chapter>
+    <chapter title="Parameteric iteration">
+        Features like <a href="External-parameters.topic">external parameters</a> introduce parametric input slots that are highlighted by
+        a different color.
+        <img src="concepts_batch_processing_parametric_slots.png" alt="Example of parametric slots"/>
+        Such slots may be <emphasis>excluded</emphasis> from the calculations applied by JIPipe's standard iteration step generation method and
+        act as additional layer of iteration.
+        <p>For example, if an <control>Auto threshold 2D</control> node executes its workload 10 times, as it receives 10 images, given 3 inputs from the
+        <control>Parameters</control> slot, the workload would be executed 30 times, once per parameter set.</p>
+    </chapter>
     <!-- also talk about the iteration modes -->
 </topic>
