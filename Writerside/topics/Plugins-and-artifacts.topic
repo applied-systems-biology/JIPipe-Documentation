@@ -24,14 +24,18 @@
     <chapter title="Managing plugins">
         <note>The plugin manager is only required if you installed a JIPipe plugin from another developer.
         All plugins that ship with JIPipe are automatically activated on installation.</note>
-        The plugin manager can be found by navigating to <ui-path>Plugins | JIPipe plugins</ui-path>.
+        The plugin manager can be found by navigating to <ui-path>Plugins | JIPipe plugins</ui-path> (JIPipe 4.1.0 or older)
+        or <ui-path>Tools | Plugins | JIPipe plugins</ui-path> (since JIPipe 4.2.0).
         <img src="ui_plugins_manage_jipipe_plugins.png" alt="JIPipe plugin manager"/>
         In the window you can see a list of all available JIPipe plugins with the status.
         Select an item in the list to display more information, including the authors and license.
         Here you can also enable or disable plugins.
         <p>After you made changes, you will be prompted to restart JIPipe.</p>
-        <warning>Some JIPipe plugins may require the installation of ImageJ plugins. Please use the ImageJ updater to
-        install the plugins as requested. You can open the ImageJ updater by navigating to <ui-path>Plugins | ImageJ plugins</ui-path>.</warning>
+        <warning>Some JIPipe plugins may require the installation of ImageJ plugins.
+            Please use the ImageJ updater to
+        install the plugins as requested.
+            You can open the ImageJ updater by navigating to <ui-path>Plugins | ImageJ plugins</ui-path> (JIPipe 4.1.0 or older)
+            <ui-path>Tools | Plugins | ImageJ plugins</ui-path> (since JIPipe 4.2.0).</warning>
         <img src="ui_plugins_jipipe_plugin_manager_window.png" alt="JIPipe plugin manager"/>
     </chapter>
 </topic>
