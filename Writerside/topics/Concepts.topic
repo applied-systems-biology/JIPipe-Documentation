@@ -5,5 +5,14 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Basics" id="Concepts">
 
-    <p>Start typing here...</p>
+    <section-starting-page>
+        <title>Learn about basic concepts and features</title>
+        <description>If you are new to JIPipe or visual programming, we highly recommend
+        to read about some basic ideas.</description>
+        <spotlight>
+            <a href="Visual-programming.topic">Learn about visual programming</a>
+            <a href="Batch-processing.topic">Learn about JIPipe's batch processing</a>
+        </spotlight>
+
+    </section-starting-page>
 </topic>

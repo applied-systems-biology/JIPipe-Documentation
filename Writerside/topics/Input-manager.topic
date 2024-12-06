@@ -5,5 +5,72 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Input manager" id="Input-manager">
 
-    <p>Start typing here...</p>
+    <p>The input manager (or <control>Inputs</control> panel) is the main way to debug and control the
+    generation of <a href="Batch-processing.topic">iteration steps</a>. The panel can be accessed by selecting
+    a node and navigating to the <control>Inputs</control> panel.</p>
+    <p>The input manager is organized into three parts:</p>
+    <deflist>
+        <def title="%c1% Input and annotation overview">
+            This panel shows an overview of all input slots (one box per slot) and their contained data with
+            associated text annotations. An additional <control>Iteration step</control> column indicates
+            the iteration step(s) that the specific data is assigned to.
+            <p>All text annotations that contributed towards constraining the iteration step assignment are
+            highlighted in green.</p>
+        </def>
+        <def title="%c2% Settings panel">
+            Shows settings that allow to changes how JIPipe assigns data to iteration steps.
+            By default, only the most important settings are displayed. You can use the <control>Advanced settings</control>
+            control to display all settings.
+        </def>
+        <def title="%c3% Iteration step preview">
+            The preview of all iteration steps that will be applied by the algorithm workload.
+            Additionally, it is indicated if data is missing or if an iteration step receives only one
+            or multiple data per slot.
+        </def>
+    </deflist>
+    <img src="ui_input_manager_overview.png" alt="Input manager overview" thumbnail="true" />
+    <chapter title="Ignoring incomplete iteration steps">
+        By default, JIPipe expects that all iteration steps are complete, i.e. each non-optional input
+        receives at least one data. If an incomplete iteration step is found,
+        the pipeline will crash. There are certain scenarios where it may be useful to ignore such incomplete steps.
+        You can enable this behaviour via the <control>Skip incomplete data sets</control> checkbox.
+        <note>This feature may cause confusion if used unwisely. We recommend to maybe look into nodes that
+        filter out data before processing (e.g., via annotations) or add missing data.</note>
+    </chapter>
+    <chapter title="Custom columns">
+        You can freely customize the columns JIPipe use for generating iteration steps. You can learn more about this
+        in the <a href="Batch-processing.topic">batch processing documentation</a>.
+        <p>If you set the <control>Grouping method</control> to <control>Custom</control>, the <control>Custom grouping columns</control>
+        <a href="Expressions.topic">expression</a> will appear (the control is always visible with enabled Advanced settings).</p>
+        <p>The expression is executed <emphasis>per available column</emphasis> (accessible via a variable <code>value</code>), meaning that
+        to select specific columns you should use the expression as following:</p>
+        <code-block lang="JavaScript">
+            value == "My custom column" // For selecting one column
+            value IN ARRAY("My column 1", "#Dataset", "Other column") // Selecting multiple columns
+        </code-block>
+    </chapter>
+    <chapter title="Limit iteration steps">
+        Via the advanced settings you can limit the iteration steps after generation, for example to
+        run a node only on the first ten items.
+        <p>Enable the <control>Limit</control> control and enter a range of indices (starting from zero):</p>
+        <list>
+            <li>Select the first 10 steps: <code>0-9</code></li>
+            <li>Select the first step: <code>0</code></li>
+            <li>Select the first, third, and fifth step: <code>0;2;4</code></li>
+            <li>Select the steps 1-5 and the 7th step: <code>0-4;6</code></li>
+        </list>
+    </chapter>
+    <chapter title="Controlling annotation merging">
+        In the advanced settings, you can determine via <control>Merge same annotation values</control> and <control>Merge data annotation values</control> how annotation values are merged if there are value conflicts.
+        <tip>You can learn about the merging behaviors in the <a href="Batch-processing.topic">batch processing documentation</a>.</tip>
+    </chapter>
+    <chapter title="More advanced operations">
+        The advanced settings panel offers additional options that should be only used in certain circumstances:
+        <list>
+            <li><control>Annotation matching method</control> allows to provide a custom expression that determines
+            the equality of annotation values; for example you can use it to make annotation matching case-insensitive.</li>
+            <li><control>Force flow graph solver</control> forces JIPipe's to always use a slower iteration step solver. This is only
+            required if JIPipe's optimized solver (only if there is exactly one important annotation) misbehaves.</li>
+        </list>
+    </chapter>
 </topic>
