@@ -5,5 +5,146 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Annotations" id="Annotations">
 
-    <p>Start typing here...</p>
+    <p>JIPipe organizes data in tables that have a specific format:</p>
+    <list>
+        <li>Each table contains at least one column that contains the primary data of this row. The type of data allowed to be stored in
+        this column is determined by this table (e.g., images, plots, ROI, ...)</li>
+        <li>A data table can have additional columns that contain <emphasis>text annotations</emphasis></li>
+        <li>Tables also support annotations that contain any kind of other data. These <emphasis>data annotations</emphasis> are managed independently of
+        the set of text annotations. This means that there can be a data and a text annotation column with the same name.</li>
+    </list>
+    <img src="concepts_data_table.png" alt="Schema of a data table" />
+    <chapter title="Text annotations">
+        Text annotations can be created by a variety of nodes that are present in the <control>Annotations</control> category.
+        A commonly used operator is the <control>Add path to annotations</control> node that annotates the file name or other path information
+        to an existing path data.
+        <img src="concepts_annotations_add_path_to_annotations.png" alt="Add path to annotations example" thumbnail="true"/>
+        In the node parameters you can freely name the text annotation.
+    </chapter>
+    <chapter title="Data annotations">
+        Data can be annotated to other data via the <control>Annotate with data</control> node. The data annotation will then appear
+        in a dedicated column.
+        <img src="concepts_annotations_data_annotations.png" alt="Data annotations example" thumbnail="true" />
+        In the node parameters you can freely name the data annotation.
+    </chapter>
+    <chapter title="Annotation propagation">
+        A core concept of JIPipe is that annotations <emphasis>propagate</emphasis> through the pipeline unless they are manually
+        removed.
+        <img src="concepts_annotations_propagation.png" alt="Annotation propagation" thumbnail="true" />
+        An important aspect of annotation propagation is the behavior if multiple annotations with the same column name, but different values
+        are <emphasis>merged</emphasis>.
+        <tip>To configure the merge behavior for node inputs, use the <a href="Input-manager.topic">input manager's</a> advanced settings.</tip>
+        <chapter title="Text annotation merge modes">
+            <deflist>
+                <def title="Merge %default%">
+                    If there are multiple values, output a list containing both values in JSON format.
+                    <table style="header-row">
+                        <tr>
+                            <td>Input 1</td>
+                            <td>Input 2</td>
+                            <td>Result</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>["A", "B"]</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>["A", "B"]</td>
+                            <td>["C", "[\"A\", \"B\"]</td>
+                        </tr>
+                    </table>
+                    <p>%hint% Please note how for the second example, the existing JSON list was escaped into a string.</p>
+                </def>
+                <def title="Merge lists">
+                    Similar to merge, but can properly merge lists.
+                    Due to this behavior, more computational time is required.
+                    <table style="header-row">
+                        <tr>
+                            <td>Input 1</td>
+                            <td>Input 2</td>
+                            <td>Result</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>["A", "B"]</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>["A", "B"]</td>
+                            <td>["C", "A", "B"]</td>
+                        </tr>
+                    </table>
+                </def>
+                <def title="Skip existing">
+                    If a column already exists, ignore the new value.
+                    <table style="header-row">
+                        <tr>
+                            <td>Input 1</td>
+                            <td>Input 2</td>
+                            <td>Result</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>["A", "B"]</td>
+                            <td>C</td>
+                        </tr>
+                    </table>
+                </def>
+                <def title="Overwrite existing">
+                    If a column already exists, overwrite it with the new value
+                    <table style="header-row">
+                        <tr>
+                            <td>Input 1</td>
+                            <td>Input 2</td>
+                            <td>Result</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>["A", "B"]</td>
+                            <td>["A", "B"]</td>
+                        </tr>
+                    </table>
+                </def>
+                <def title="Discard">
+                    If a column already exists, completely delete all the annotation
+                </def>
+            </deflist>
+            <chapter title="Data annotation merge modes">
+                <deflist>
+                    <def title="Merge tables %default%">
+                        Merges the data annotations into a data table data annotation that contains all data annotations.
+                        Tables are not nested, but combined row-wise.
+                        Equivalent to "Merge lists" for text annotations.
+                    </def>
+                    <def title="Merge">
+                        Multiple data annotations are merged into a data table data annotation.
+                        Tables are nested.
+                        Equivalent to "Merge" for text annotations.
+                    </def>
+                    <def title="Skip existing">
+                        If a column already exists, ignore the new value.
+                    </def>
+                    <def title="Overwrite existing">
+                    If a column already exists, overwrite it with the new value
+                    </def>
+                    <def title="Discard">
+                        If a column already exists, completely delete all the annotation
+                    </def>
+                </deflist>
+            </chapter>
+        </chapter>
+    </chapter>
 </topic>

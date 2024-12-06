@@ -14,4 +14,6 @@
     <var name="key_down" value="↓"/>
     <var name="key_enter" value="Enter"/>
     <var name="recommended" value="⭐"/>
+    <var name="default" value="⭐"/>
+    <var name="hint" value="👉"/>
 </vars>
