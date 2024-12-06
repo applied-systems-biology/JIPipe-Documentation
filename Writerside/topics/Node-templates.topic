@@ -5,5 +5,64 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Node templates" id="Node-templates">
 
-    <p>Start typing here...</p>
+    <p>The node templates feature allows you to build a collection of custom nodes or pipelines that
+        can be easily shared with other people. </p>
+    <tip>If you just want to share one or multiple nodes without the node templates feature, copy the nodes and paste
+        the text into a text file, E-mail, or chat. JIPipe uses a text-based format to store information about pipelines
+        and nodes.
+    </tip>
+    <tip>If you want to just remember a commonly used node, you can pin them via the <a href="Adding-nodes.topic">add
+        nodes panel</a>
+        by right-clicking them and selecting the
+        <ui-path>Pin</ui-path>
+        option.
+    </tip>
+    The default location of the
+    <control>Templates</control>
+    panel is at the bottom left of the window.
+    <img src="ui_node_templates_panel.png" alt="The node templates panel"/>
+    <chapter title="Creating templates">
+        You can create a template from any selection of nodes (single or multiple). If you have multiple nodes,
+        the template will remember the connections between them.
+        <procedure>
+            <step>
+                Select the nodes that should be converted into a template
+                <img src="ui_node_templates_create_selection.png" alt="Selected nodes"/>
+            </step>
+            <step>
+                Right-click a node and select the <control>Create node template</control> operation.
+                Alternatively, you can also find the <img src="star.png" alt="icon"/> button
+                in the <a href="Pipeline-editor.topic">editing toolbar</a>.
+                <img src="ui_node_templates_create_action.png" alt="Create template option"/>
+            </step>
+            <step>
+                You will be asked where the template should be stored. Choose <control>Globally</control> if you
+                want to re-use the template in other projects or <control>Inside project</control> if the template
+                should be only available within the project, for example for students.
+                <img src="ui_node_templates_create_storage_location.png" alt="Storage location dialog"/>
+                <tip>You can later copy templates between global and project storage.</tip>
+            </step>
+            <step>
+                A dialog will appear where you can customize the template. Here you can also set the name.
+                <img src="ui_node_templates_create_edit.png" alt="Node template editor"/>
+                <tip>You can open the same dialog later on and change settings.</tip>
+            </step>
+            <step>Click <control>OK</control> and the node template will be created.</step>
+        </procedure>
+    </chapter>
+    <chapter title="Using node templates">
+        You can instantiate node templates by either dragging them into the pipeline, or by double-clicking them.
+        Additionally, there is an <control>Insert</control> operation when right-clicking a template.
+        <video src="video_ui_node_templates_add.mp4" preview-src="video_ui_node_templates_add.png"/>
+    </chapter>
+    <chapter title="Exporting/importing templates">
+        To export templates, select them in the list, right-click them and select the <control>Export</control> option.
+        The saved file in text JSON format can be shared with other people.
+        <p>To import templates, right-click the node template panel and select <control>Import from file</control>.
+        After confirming where the templates should be stored, they will be imported into the project/your JIPipe profile.</p>
+    </chapter>
+    <chapter title="Copy templates between project/global storage">
+        If you want to copy a template into another storage, right-click the template(s) and either select
+        <control>Copy to project</control> or <control>Copy to global storage</control>.
+    </chapter>
 </topic>
