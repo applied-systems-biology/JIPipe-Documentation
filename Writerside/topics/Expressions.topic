@@ -5,5 +5,472 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Expressions" id="Expressions">
 
-    <p>Start typing here...</p>
+    <p>JIPipe features its own expression language that is used for generating or filtering statistics or data,
+        dynamically adapting parameters,
+        configuring project or application settings, and more. Thus, it is useful to be familiar with the expression
+        language and associated features.</p>
+    <note>JIPipe expressions do not work only on numbers or text, but also on complex data types like lists, maps, or
+        objects.
+        The exact use case depends on the node/parameter.
+    </note>
+    <p>Expression-style parameters can be easily identified by the term
+        <emphasis>Expression</emphasis>
+        :
+    </p>
+    <img src="concepts_expressions_identification.png" alt="Identifying expressions"/>
+    <p>Some expressions also indicate when or how many times they are executed:</p>
+    <img src="concepts_expressions_usage.png" alt="Additional indication"/>
+    Each expression parameter comes with an
+    <control>Edit</control>
+    button that opens an editor that lists all available operations,
+    variables, and constants. The editor also applies a syntax check.
+    <img src="concepts_expressions_editor.png" alt="Expression editor"/>
+    The expression language has six basic components:
+    <deflist>
+        <def title="Constants">
+            Predefined values that are useful for a variety of tasks, including e, pi, NaN, or infinity.
+        </def>
+        <def title="Operators">
+            A variety of operators for processing numbers, text, or lists.
+        </def>
+        <def title="Functions">
+            Functions to process the variables/constants
+        </def>
+        <def title="Literals">
+            Quoted strings or numbers
+        </def>
+        <def title="Variables">
+            Values that are usually received from outside (for example, from a node's workload).
+            <p>
+                %hint% JIPipe identifies anything that it does not know as variable, so typos with
+                constants/operators/functions/literals
+                may yield errors about missing variables.
+            </p>
+        </def>
+    </deflist>
+    <chapter title="Empty expressions">
+        Empty expressions automatically fall back to the boolean constant <code>true</code>, which is derived from
+        the original purpose of expression to be used for data filtering.
+    </chapter>
+    <chapter title="Data conversion">
+        Especially when working with <a href="Annotations.topic">text annotations</a>, it is common to convert data into another format.
+        The expression language includes a variety of conversion operations:
+        <deflist>
+            <def title="To number">
+                Use <code>TO_NUMBER</code> or it's short form <code>NUM</code> to convert inputs into numbers.
+                <code-block lang="JavaScript">
+                    NUM("5") // Result is 5.0
+                    NUM(true) // Result is 1.0
+                    NUM(false) // Result is 0.0
+                </code-block>
+                If you want an integer number, you can also use <code>TO_INTEGER</code>
+                <code-block lang="JavaScript">
+                    TO_INTEGER("5") // Result is 5
+                    TO_INTEGER(true) // Result is 1
+                    TO_INTEGER(false) // Result is 0
+                    TO_INTEGER(5.2) // Result is 5
+                </code-block>
+            </def>
+            <def title="To boolean">
+                Use <code>TO_BOOLEAN</code> to convert data into true/false.
+                <list>
+                    <li>For numbers, all values &gt;= 1 are converted to <code>true</code>, otherwise <code>false</code></li>
+                    <li>For strings, all values that have a case-insensitve match to <code>"TRUE"</code>, <code>"T"</code>, <code>"ON"</code>, <code>"YES"</code>, or <code>"Y"</code> are converted to <code>true</code> </li>
+                </list>
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Multiple statements">
+        The JIPipe expression language supports multiple statements that are concatenated with the <code>;</code>
+        operator.
+        The result of the expression is always the
+        <emphasis>last</emphasis>
+        statement.
+        This is for example useful if you require to set variables within the expression or want to temporarily
+        overwrite the result without deleting the formula.
+        <tip>New lines will be ignored by the parser, so you can have multi-line expressions</tip>
+        <chapter title="Example: setting variables">
+            <code-block lang="JAVASCRIPT">
+                SET_VARIABLE("a", e^(SQRT(5)));
+                a^2 + a^3
+            </code-block>
+            Will return the result of <code> a^2 + a^3</code>.
+            <warning>Please be careful when setting variables. You might overwrite a variable that is not reset on the
+                next iteration
+            </warning>
+        </chapter>
+        <chapter title="Example: temporarily deactivate filter">
+            <code-block lang="JAVASCRIPT">
+                name CONTAINS "experiment1"; true
+            </code-block>
+            Will always return <code>true</code>
+        </chapter>
+    </chapter>
+    <chapter title="Quantities">
+        The expression language contains methods to work with quantities (values with units) and allows you to do
+        conversions and
+        extracting information.
+        <chapter title="Example: Extracting the unit">
+            <code-block lang="JavaScript">
+                QUANTITY_GET_UNIT("1 microns")
+            </code-block>
+            Will return <code>"microns"</code>
+        </chapter>
+        <chapter title="Example: Extracting the value">
+            <code-block lang="JavaScript">
+                QUANTITY_GET_VALUE("1 microns")
+            </code-block>
+            Will return <code>1</code>
+        </chapter>
+        <chapter title="Example: Unit conversion">
+            <code-block lang="JavaScript">
+                QUANTITY_CONVERT("1 microns", "mm")
+            </code-block>
+            Will return <code>"0.001 mm"</code>
+        </chapter>
+        <chapter title="Supported units">
+            px, pixels, pixel, nm, µm, microns, micron, mm, cm, dm, m, km, inch, in, foot, ft, yard, yd, ng, µg, mg, g,
+            kg, t, Da, oz, lb, ns, µs, ms, s, min, h, d
+        </chapter>
+    </chapter>
+    <chapter title="Lists/arrays">
+        Expressions come with a variety of operators to work with arrays/lists.
+        <chapter title="Creating and combining arrays">
+            <p>Arrays are created via the <code>ARRAY</code> function</p>
+            <code-block lang="JavaScript">
+                ARRAY(1, 2, 3)
+                ARRAY("a", 5, 6)
+        </code-block>
+            Arrays can also be added together:
+            <code-block lang="JavaScript">
+            ARRAY(1, 5, 8) + ARRAY(1, 2, 3)
+        </code-block>
+            , which would result in the output <code>[1.0,5.0,8.0,1.0,2.0,3.0]</code>.
+        </chapter>
+        <chapter title="Extracting values">
+            <p>To extract an element from an array, use the <code>@</code>/<code>[]</code> operator or
+                <code>GET_ITEM</code>/<code>GET_ITEM_OR_DEFAULT</code>:
+            </p>
+
+            <code-block lang="JavaScript">
+            ARRAY(1, 2, 3) @ 0
+            ARRAY(1, 2, 3)[0]
+            GET_ITEM(ARRAY(1, 2, 3), 0)
+        </code-block>
+            all return 1.
+            <note>The bracket operator <code>[]</code> is slightly experimental and might not work fully in all cases.
+            </note>
+        </chapter>
+        <chapter title="Checking for item existence">
+            The <code>IN</code>/<code>CONTAINS</code> operators can be used to check if an item is contained within an
+            array.
+            <code-block lang="JavaScript">
+            5 IN ARRAY(1, 5, 8)
+            ARRAY(1, 5, 8) CONTAINS 5
+        </code-block>
+        </chapter>
+        <chapter title="Example: applying a function per array element">
+             <code-block lang="JavaScript">
+            TRANSFORM_ARRAY(ARRAY(1, 5, 8), ${ SQRT(value) })
+        </code-block>
+            Results in <code>[1.0,2.23606797749979,2.8284271247461903]</code>. The ${ ... } operator is syntactic sugar
+            to avoid having to manually escape more complex functions and can
+            in this case be replaced with <code>"SQRT(value)"</code>
+        </chapter>
+    </chapter>
+    <chapter title="Maps">
+        Expressions can handle map-like structures and come with functions to create maps and extract information.
+        <chapter title="Creating maps">
+            Maps can be created using the <code>MAP()</code> function that receives a list of arrays with two items (key
+            and value).
+            For better readability, we recommend to use the <code>PAIR(key, value)</code> function or the <code>key:
+            value</code> operator.
+            <code-block lang="JavaScript">
+                MAP(ARRAY("a", 1), ARRAY("b", 2))
+                MAP(PAIR("a", 1), PAIR("b", 2))
+                MAP("a": 1, "b": 2)
+            </code-block>
+            All return a map <code>{"a":1.0,"b":2.0}</code>
+        </chapter>
+        <chapter title="Checking for key existence">
+            Similar to Python, the IN operator checks the key set of the map:
+            <code-block lang="JavaScript">
+                "a" IN MAP("a": 1, "b": 2)
+            </code-block>
+        </chapter>
+        <chapter title="Extracting values">
+            <p>To extract a value from a map, use the <code>@</code>/<code>[]</code> operator or
+                <code>GET_ITEM</code>/<code>GET_ITEM_OR_DEFAULT</code>:
+            </p>
+
+            <code-block lang="JavaScript">
+            MAP("a": 1, "b": 2) @ "a"
+            MAP("a": 1, "b": 2)["a"]
+            GET_ITEM(MAP("a": 1, "b": 2), "a")
+        </code-block>
+        </chapter>
+    </chapter>
+    <chapter title="JSON">
+        Data can be converted from and to JSON.
+        <chapter title="Parsing JSON">
+            Use the <code>PARSE_JSON</code> method to convert JSON data into a map/boolean/array/number:
+            <code-block lang="JavaScript">
+                PARSE_JSON("{\"a\":1.0,\"b\":2.0}")
+            </code-block>
+        </chapter>
+        <chapter title="Creating JSON">
+            Use the <code>TO_JSON</code> method to convert an object into JSON:
+            <code-block lang="JavaScript">
+                TO_JSON(MAP("a": 1, "b": 2))
+            </code-block>
+        </chapter>
+    </chapter>
+    <chapter title="Reference: Constants">
+        The expression language defines the following constants:
+        <table style="header-row">
+            <tr>
+                <td>Name</td>
+                <td>Value</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td><code>false</code></td>
+                <td>false</td>
+                <td>A boolean false value</td>
+            </tr>
+            <tr>
+                <td><code>true</code></td>
+                <td>false</td>
+                <td>A boolean true value</td>
+            </tr>
+            <tr>
+                <td><code>e</code></td>
+                <td>2.718281828459045</td>
+                <td>Euler's number</td>
+            </tr>
+            <tr>
+                <td><code>new_line</code></td>
+                <td>"\n"</td>
+                <td>A new line string (for text)</td>
+            </tr>
+            <tr>
+                <td><code>null</code></td>
+                <td>null</td>
+                <td>Java's null pointer</td>
+            </tr>
+            <tr>
+                <td><code>nan</code></td>
+                <td>NaN</td>
+                <td>Floating point (double) NaN</td>
+            </tr>
+            <tr>
+                <td><code>ninf</code></td>
+                <td>-∞</td>
+                <td>Floating point (double) negative infinity</td>
+            </tr>
+            <tr>
+                <td><code>inf</code></td>
+                <td>∞</td>
+                <td>Floating point (double) positive infinity</td>
+            </tr>
+            <tr>
+                <td><code>pi</code></td>
+                <td>3.141592653589793</td>
+                <td>PI</td>
+            </tr>
+            <tr>
+                <td><code>tau</code></td>
+                <td>6.283185307179586</td>
+                <td>2x PI</td>
+            </tr>
+        </table>
+    </chapter>
+    <chapter title="Reference: Operators">
+        The following operators are supported, ordered by their precedence (i.e. operators that are higher up are
+        executed before the others)
+        <table style="header-row">
+            <tr>
+                <td>Precedence</td>
+                <td>Operator</td>
+                <td>Supported types</td>
+                <td>Description</td>
+                <td>Example</td>
+            </tr>
+            <!-- 11/12 -->
+            <tr>
+                <td>12</td>
+                <td><code>-x</code></td>
+                <td>Numbers</td>
+                <td>Negate number</td>
+                <td><code>-10</code></td>
+            </tr>
+            <!-- 10 -->
+            <tr>
+                <td>10</td>
+                <td><code>$x</code></td>
+                <td>Strings</td>
+                <td>Resolves a variable</td>
+                <td><code>$"my variable"</code></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td><code>x^y</code></td>
+                <td>Numbers</td>
+                <td>Divides two numbers</td>
+                <td><code>5 / 10</code></td>
+            </tr>
+            <!-- 9 -->
+            <tr>
+                <td>9</td>
+                <td><code>x @ y</code><br/><code>x AT y</code></td>
+                <td>Lists/Maps/Strings (left), Numbers/Strings (right)</td>
+                <td>Accesses an element from a list (by index), gets an element from a map, or gets the character at a
+                    specific position
+                </td>
+                <td><code>
+                    ARRAY(1, 2, 3) @ 0
+                </code></td>
+            </tr>
+            <!-- 7 -->
+            <tr>
+                <td>7</td>
+                <td><code>x EXISTS</code></td>
+                <td>Strings</td>
+                <td>Returns true if a variable with the given value exists, otherwise false</td>
+                <td><code>"my variable" EXISTS</code></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><code>x * y</code></td>
+                <td>Numbers</td>
+                <td>Multiplies two numbers</td>
+                <td><code>5 * 10</code></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><code>x / y</code></td>
+                <td>Numbers</td>
+                <td>Divides two numbers</td>
+                <td><code>5 / 10</code></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><code>x % y</code></td>
+                <td>Numbers</td>
+                <td>Applies modulo division</td>
+                <td><code>11 % 3</code></td>
+            </tr>
+            <!-- 6 -->
+            <tr>
+                <td>6</td>
+                <td><code>x - y</code></td>
+                <td>Numbers</td>
+                <td>Subtract two numbers</td>
+                <td><code>11 - 3</code></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><code-block>
+                    x CONTAINS y
+                    y IN x
+                </code-block>
+                </td>
+                <td>Lists/Strings</td>
+                <td>Check if a lists/string contains an element/substring</td>
+                <td><code>1 IN ARRAY(1, 2, 3)</code></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><code>x + y</code></td>
+                <td>Numbers/Strings/Lists</td>
+                <td>Adds two numbers/lists/strings</td>
+                <td><code-block>
+                    11 + 3
+                    ARRAY(1,2) + ARRAY(3)
+                    "a" + "b"</code-block>
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code>x &lt; y</code></td>
+                <td>Numbers</td>
+                <td>Less than</td>
+                <td><code>5 &lt; 10</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code>x &gt; y</code></td>
+                <td>Numbers</td>
+                <td>Greater than</td>
+                <td><code>5 &gt; 10</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code>x &lt;= y</code></td>
+                <td>Numbers</td>
+                <td>Less than or equal</td>
+                <td><code>5 &lt;= 10</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code>x &gt;= y</code></td>
+                <td>Numbers</td>
+                <td>Greater than or equal</td>
+                <td><code>5 &gt;= 10</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code-block>x == y
+x EQUALS y</code-block>
+                </td>
+                <td>Anything</td>
+                <td>Equality check</td>
+                <td><code>1 == 1</code></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><code-block>
+x != y
+x UNEQUAL y
+                </code-block>
+                </td>
+                <td>Anything</td>
+                <td>Inequality check</td>
+                <td><code>value != 10</code></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><code-block>
+                    !x
+                    NOT x
+                </code-block>
+                </td>
+                <td>Boolean</td>
+                <td>Invert boolean</td>
+                <td><code>NOT value IN ARRAY(1, 2, 3)</code></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><code-block>
+                    x &amp; y
+                    x AND y
+                </code-block>
+                </td>
+                <td>Boolean</td>
+                <td>Boolean AND</td>
+                <td><code>Area &gt; 5 AND Area &lt; 10</code></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><code-block>
+                    x | y
+                    x OR y
+                </code-block>
+                </td>
+                <td>Boolean</td>
+                <td>Boolean OR</td>
+                <td><code>Area &gt; 5 OR Area &lt; 10</code></td>
+            </tr>
+        </table>
+    </chapter>
 </topic>

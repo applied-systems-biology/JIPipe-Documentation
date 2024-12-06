@@ -16,4 +16,5 @@
     <var name="recommended" value="⭐"/>
     <var name="default" value="⭐"/>
     <var name="hint" value="👉"/>
+    <var name="warn" value="⚠"/>
 </vars>
