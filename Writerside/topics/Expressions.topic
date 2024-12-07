@@ -52,6 +52,28 @@
         Empty expressions automatically fall back to the boolean constant <code>true</code>, which is derived from
         the original purpose of expression to be used for data filtering.
     </chapter>
+    <chapter title="Accessing variables">
+        Variables are usually received from outside and may include annotations, data, measurements, or other values.
+        Most expression-based parameters provide information to the expression editor which variables are available.
+        <img src="concepts_expressions_variables.png" alt="Information about variables" thumbnail="true" />
+        <note>There are certain variables that cannot be known by the JIPipe user interface, for example, if
+        they are generated during the runtime. In such cases, the editor will indicate those via placeholders <code>&lt; ... &gt;</code>.
+        In certain cases, the editor will try to estimate the variables from cached values.</note>
+        <p>To access a variable within an expression, type it in:</p>
+        <code-block lang="JavaScript">
+            "hello" + myVariable
+        </code-block>
+        If the variable name contains special reserved characters or spaces, you will have to use the resolve operator <code>$</code>
+        or <code>GET_VARIABLE</code>:
+        <code-block lang="JavaScript">
+            "hello" + $"My Variable"
+            "hello" + GET_VARIABLE("My Variable")
+            "hello" + GET_VARIABLE("My Variable", "default value") // Returns "default value" if the variable does not exist
+        </code-block>
+        <tip>If you have trouble with remembering the syntax, use the <control>Insert variable</control>
+        button above the expression field inside the editor. Type in the name and the editor will insert
+        the correct variable query at the cursor.</tip>
+    </chapter>
     <chapter title="Data conversion">
         Especially when working with <a href="Annotations.topic">text annotations</a>, it is common to convert data into another format.
         The expression language includes a variety of conversion operations:
