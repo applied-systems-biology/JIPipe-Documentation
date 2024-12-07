@@ -5,5 +5,86 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Graph compartments" id="Graph-compartments">
 
-    <p>Start typing here...</p>
+    <p>For larger projects that may involve hundreds of nodes, it becomes at some point essential to split the pipeline
+        into smaller units, for example one for file handling, another for segmentation, and units for handling
+        visualizations or generating statistics.</p>
+    <p>Graph compartments are JIPipe's main mode of visually separating the workflow into
+        multiple units
+        <emphasis>without</emphasis>
+        splitting the pipeline from a functional standpoint.
+        This means that nodes in two different compartments are technically still part of the same pipeline, but
+        are organized via the user interface.
+    </p>
+    <tip>If you want to split off parts of your pipeline into custom nodes, use <a href="Group-nodes.topic">group
+        nodes</a>.
+    </tip>
+    <tip>Compartments are different from <a href="Graph-partitions.topic">partitions</a> that allow to tell
+        JIPipe how to execute certain parts of the pipeline.
+    </tip>
+    <chapter title="Creating compartments">
+        JIPipe always organizes pipelines into compartments. Just by default, there is only one ("Analysis") present
+        that is opened immediately upon creating a new project. To create a new compartment, open the
+        <control>Compartments</control>
+        tab by either navigating to the tab (if present) or by clicking the
+        <control>Compartments</control>
+        button at the top-right of the window.
+        <img src="ui_compartments_editor_access.png" alt="Accessing the compartments editor" thumbnail="true"/>
+        In the compartments editor, you can either drag the
+        <control>Graph compartment</control>
+        node into the pipeline
+        or double-click the item, similar to how the <a href="Adding-nodes.topic">Add nodes</a> panel behaves for
+        workflow graphs.
+        <video src="video_ui_compartments_add.mp4" preview-src="video_ui_compartments_add.png"/>
+        The workflow represented by the compartment can be opened by double-clicking it.
+        <tip>Compartments are represented by special nodes and have the same or similar operations to functional nodes.
+            You can apply most of the principles behind the <a href="Pipeline-editor.topic">workflow graph editor</a>.
+        </tip>
+    </chapter>
+    <chapter title="Connecting compartments">
+        By default, no data is passed between compartments. The data transfer is established by adding one or multiple
+        outputs to
+        the source compartment and connecting it to the
+        <control>Input</control>
+        slot of the target compartment.
+        <p>Outputs are created similar to workflow-nodes by clicking the <img src="add.png" alt="add"/> at the
+            bottom of the compartment node.</p>
+        <img src="ui_compartments_add_output.png" alt="Adding compartment output" thumbnail="true"/>
+        The resulting output then can be connected to the input.
+        <img src="ui_compartments_connected_output.png" alt="Connected compartment"/>
+        To determine which data should be passed to the other compartment, connect data to the newly created
+        <control>Output</control>
+        node that appeared in the source compartment.
+        <img src="ui_compartments_connected_output_2.png" alt="Connected inside the compartment"/>
+        The output node is an
+        <control>IO interface</control>
+        node that passes data from the source to the target compartment.
+        Here you then can connect it to the workflow.
+        <img src="ui_compartments_connected_output_3.png" alt="Connection in the target compartment"/>
+    </chapter>
+    <chapter title="Executing compartments">
+        Compartment nodes within the
+        <control>Compartments</control>
+        editor have a <img src="run-play.png" alt="Run"/>
+        button that is internally connected to the output IO interface nodes. The same applies to the
+        <control>Results</control>
+        panel of a compartment node.
+        <p>This feature allows to run parts of the pipeline without navigating into the compartments, thus making
+            your pipeline more user-friendly.</p>
+        <note>We recommend to also connect outputs for terminal compartments (e.g., visualizations or output files from
+            exporter nodes).
+        </note>
+        <video src="video_ui_compartments_run.mp4" preview-src="video_ui_compartments_run.png"/>
+    </chapter>
+    <chapter title="Compartment parameters">
+        To ensure that users of your workflow are not required to navigate through your pipeline to change parameters,
+        you can connect parameters from within your workflow to the compartment node.
+        <p>To do this, select the compartment and navigate to <ui-path>Parameters | Edit parameter references</ui-path>.</p>
+        <img src="ui_compartments_parameter_references.png" alt="Parameter references button"  thumbnail="true"/>
+        In the dialog you will first need to create a new group by clicking <ui-path>Add | Add empty group</ui-path>.
+        You can set the group name and description and then will be able to add parameters into the group via <ui-path>Add parameter reference ...</ui-path>.
+        Select the parameter of interest and confirm the selection. The parameter is now also available from within the compartment.
+        <video src="video_ui_compartments_parameter_references.mp4"
+               preview-src="video_ui_compartments_parameter_references.png"/>
+    </chapter>
+
 </topic>
