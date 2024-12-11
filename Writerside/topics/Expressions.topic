@@ -52,30 +52,42 @@
         Empty expressions automatically fall back to the boolean constant <code>true</code>, which is derived from
         the original purpose of expression to be used for data filtering.
     </chapter>
+    <chapter title="Testing expressions">
+        JIPipe provides a developer tool that allows you to play around with expressions similar to a calculator.
+        You can find it by navigating to
+        <ui-path>Tools | Development | Calculator</ui-path>
+        <img src="concepts_expressions_calculator.png" alt="The calculator tool" thumbnail="true"/>
+    </chapter>
     <chapter title="Accessing variables">
         Variables are usually received from outside and may include annotations, data, measurements, or other values.
         Most expression-based parameters provide information to the expression editor which variables are available.
-        <img src="concepts_expressions_variables.png" alt="Information about variables" thumbnail="true" />
+        <img src="concepts_expressions_variables.png" alt="Information about variables" thumbnail="true"/>
         <note>There are certain variables that cannot be known by the JIPipe user interface, for example, if
-        they are generated during the runtime. In such cases, the editor will indicate those via placeholders <code>&lt; ... &gt;</code>.
-        In certain cases, the editor will try to estimate the variables from cached values.</note>
+            they are generated during the runtime. In such cases, the editor will indicate those via placeholders <code>&lt;
+                ... &gt;</code>.
+            In certain cases, the editor will try to estimate the variables from cached values.
+        </note>
         <p>To access a variable within an expression, type it in:</p>
         <code-block lang="JavaScript">
             "hello" + myVariable
         </code-block>
-        If the variable name contains special reserved characters or spaces, you will have to use the resolve operator <code>$</code>
+        If the variable name contains special reserved characters or spaces, you will have to use the resolve operator
+        <code>$</code>
         or <code>GET_VARIABLE</code>:
         <code-block lang="JavaScript">
             "hello" + $"My Variable"
             "hello" + GET_VARIABLE("My Variable")
             "hello" + GET_VARIABLE("My Variable", "default value") // Returns "default value" if the variable does not exist
         </code-block>
-        <tip>If you have trouble with remembering the syntax, use the <control>Insert variable</control>
-        button above the expression field inside the editor. Type in the name and the editor will insert
-        the correct variable query at the cursor.</tip>
+        <tip>If you have trouble with remembering the syntax, use the
+            <control>Insert variable</control>
+            button above the expression field inside the editor. Type in the name and the editor will insert
+            the correct variable query at the cursor.
+        </tip>
     </chapter>
     <chapter title="Data conversion">
-        Especially when working with <a href="Annotations.topic">text annotations</a>, it is common to convert data into another format.
+        Especially when working with <a href="Annotations.topic">text annotations</a>, it is common to convert data into
+        another format.
         The expression language includes a variety of conversion operations:
         <deflist>
             <def title="To number">
@@ -96,8 +108,11 @@
             <def title="To boolean">
                 Use <code>TO_BOOLEAN</code> to convert data into true/false.
                 <list>
-                    <li>For numbers, all values &gt;= 1 are converted to <code>true</code>, otherwise <code>false</code></li>
-                    <li>For strings, all values that have a case-insensitve match to <code>"TRUE"</code>, <code>"T"</code>, <code>"ON"</code>, <code>"YES"</code>, or <code>"Y"</code> are converted to <code>true</code> </li>
+                    <li>For numbers, all values &gt;= 1 are converted to <code>true</code>, otherwise <code>false</code>
+                    </li>
+                    <li>For strings, all values that have a case-insensitve match to <code>"TRUE"</code>,
+                        <code>"T"</code>, <code>"ON"</code>, <code>"YES"</code>, or <code>"Y"</code> are converted to
+                        <code>true</code></li>
                 </list>
             </def>
         </deflist>
@@ -244,6 +259,109 @@
             Use the <code>TO_JSON</code> method to convert an object into JSON:
             <code-block lang="JavaScript">
                 TO_JSON(MAP("a": 1, "b": 2))
+            </code-block>
+        </chapter>
+    </chapter>
+    <chapter title="Conditional value (if/else/switch)">
+        The expression language supports the simple conditional processing.
+
+        <chapter title="If-else">
+            Use the <code>IF_ELSE</code> function to return the second or the third parameter depending on the first
+            parameter.
+            <code-block lang="JavaScript">
+                IF_ELSE(1 &lt; 3, "Universe works as expected", "The matrix is broken")
+            </code-block>
+            will return "Universe works as expected".
+            <note>Please note that due to limitations in the parser, IF_ELSE does not apply lazy parsing, i.e.
+                all three parameters are always evaluated and cannot contain missing variables etc.
+                <p>An example would be</p>
+                <code-block lang="JavaScript">
+                SET_VARIABLE("a", 5);
+IF_ELSE_EXPR(1 &lt; 3, a * 2, b * 2)
+            </code-block>
+                that will crash due to a missing variable "b".
+            </note>
+        </chapter>
+        <chapter title="If-else (lazy)">
+            If you know that one of the <code>IF_ELSE</code> branches will yield an error, you can use <code>IF_ELSE_EXPR</code>
+            that
+            would receive the branching code as strings.
+            <code-block lang="JavaScript">
+                SET_VARIABLE("a", 5);
+IF_ELSE_EXPR(1 &lt; 3, "a * 2", "b * 2")
+            </code-block>
+            will return "10" without throwing an error.
+        </chapter>
+        <chapter title="Switch-case">
+            A common feature of many programming languages is a function that maps values to other values.
+            This is accessible via the <code>SWITCH_MAP</code> function.
+            <code-block lang="JavaScript">
+SET_VARIABLE("a", 5);
+SWITCH_MAP(a, CASE(1, "one"), CASE(5, "five"), CASE(7, "seven"))
+            </code-block>
+            returns 5.
+            <p>If the matched value is not present, it stays unchanged.</p>
+            <code-block lang="JavaScript">
+SET_VARIABLE("a", 15);
+SWITCH_MAP(a, CASE(1, "one"), CASE(5, "five"), CASE(7, "seven"))
+            </code-block>
+            returns 15.
+            <tip>
+                You can also use the pair operator <code>key: value</code> or any <code>ARRAY</code> instead of <code>CASE</code>:
+                <code-block lang="JavaScript">
+                SET_VARIABLE("a", 5);
+SWITCH_MAP(a, 1: "one", 5: "five", 7: "seven")
+                </code-block>
+            </tip>
+        </chapter>
+        <chapter title="Switch-case (ladder)">
+            Chaining multiple <code>IF_ELSE</code> methods can become unreadable. This is why JIPipe provides the
+            <code>SWITCH</code> and <code>CASE(condition, value)</code> functions. The surrounding <code>SWITCH</code>
+            would select
+            the first <code>CASE</code> where the condition is <code>true</code> and return its value.
+            <tip>Use line breaks to increase the readability.</tip>
+            <code-block lang="JavaScript">
+                SET_VARIABLE("a", 5);
+SWITCH(CASE(a == 1, "one"),
+       CASE(a == 5, "five"),
+       CASE(a == 7, "seven"))
+            </code-block>
+            returns "five".
+            <note>
+                If no case matches, the function will return <code>null</code>, which may cause errors.
+                To avoid this, create a default case:
+                <code-block lang="JavaScript">
+                    SET_VARIABLE("a", 100);
+SWITCH(CASE(a == 1, "one"),
+       CASE(a == 5, "five"),
+       CASE(a == 7, "seven"),
+       CASE(true, "Unknown"))
+                </code-block>
+                returns "Unknown"
+            </note>
+            <tip>
+                If you want to do lazy-evaluation, return strings and wrap the result of <code>SWITCH</code> into <code>EVALUATE</code>.
+                <code-block lang="JavaScript">
+                    SET_VARIABLE("a", 5);
+SET_VARIABLE("b", 2.5);
+EVALUATE(SWITCH(CASE(a == 1, ${ c * 2 } ),
+       CASE(a == 5, ${ b * 2 } ),
+       CASE(a == 7, ${ c * 2.5 } ),
+       CASE(true, "nan")))
+                </code-block>
+                returns 5.0. The ${ ... } operator is syntactic sugar
+                to avoid having to manually escape more complex functions. <code>${ c * 2 }</code> is equivalent to
+                <code>"${ c * 2 }"</code>
+            </tip>
+
+        </chapter>
+        <chapter title="Switch-case (ladder, legacy)">
+            There is an alternative variant to <code>SWITCH</code> and <code>CASE</code> called <code>SWITCH_CASE</code>.
+            Instead of having two functions, there is only one <code>SWITCH_CASE</code> function where the
+            odd-indexed parameters are mapped to the condition and even-indexed parameters to the values.
+            <code-block lang="JavaScript">
+                SET_VARIABLE("a", 5);
+SWITCH_CASE(a == 1, "one", a == 5, "five", a == 7, "seven", true, "Unknown")
             </code-block>
         </chapter>
     </chapter>
