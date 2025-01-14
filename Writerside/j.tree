@@ -52,6 +52,7 @@
     <toc-element topic="FAQ.topic"/>
     <toc-element topic="Troubleshooting.topic"/>
     <toc-element topic="References.topic">
+        <toc-element topic="Running-JIPipe-headless-CLI.topic"/>
         <toc-element topic="JIPipe-data-table-format.topic"/>
     </toc-element>
 </instance-profile>

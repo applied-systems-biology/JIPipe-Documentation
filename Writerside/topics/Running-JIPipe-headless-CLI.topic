@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Running JIPipe headless/CLI" id="Running-JIPipe-headless-CLI">
+
+    <p>You can run JIPipe pipelines using a command line interface (CLI) and inside headless environments.</p>
+    <p>The basic usage of the CLI is as follows:</p>
+    <code-block lang="bash">
+        ./ImageJ-linux64 --memory 8G --pass-classpath --full-classpath --main-class org.hkijena.jipipe.cli.JIPipeCLIMain [options]
+    </code-block>
+    <p>You can list the available parameters with</p>
+    <code-block lang="bash">
+        ./ImageJ-linux64 --memory 8G --pass-classpath --full-classpath --main-class org.hkijena.jipipe.cli.JIPipeCLIMain help
+    </code-block>
+    <warning>
+        JIPipe will crash if run in a headless environment due to the dependence on some AWT/Swing components in various
+        ImageJ-based data types.
+        <p>You can wrap the command in <code>xvfb-run</code> to enable headless execution.</p>
+    </warning>
+    <code-block>
+JIPipe CLI https://www.jipipe.org/
+Developed by Applied Systems Biology, HKI Jena, Germany
+
+run &lt;options&gt;
+Runs a project file and writes outputs to the specified directory.
+--project &lt;Project file&gt;                                                       Sets the project file to run
+
+Optional parameters:
+--output-folder &lt;Output folder&gt;                                                Sets the output directory (if not set, will use a temporary directory)
+--num-threads &lt;N=1,2,...&gt;                                                      Sets the maximum number of threads for parallelization
+--overwrite-parameters &lt;JSON file&gt;                                             Overrides parameters from a JSON file (key to value pairing)
+--P&lt;Node ID&gt;/&lt;Parameter ID&gt; &lt;Parameter Value (JSON)&gt;                           Overrides one parameter from the specified JSON data
+--overwrite-user-directories &lt;JSON file&gt;                                       Read user directory overrides from a JSON file (object with key to value pairing)
+--U&lt;User directory key&gt; &lt;User directory value&gt;                                 Overrides one user directory key with the specified directory
+--output-results &lt;all/none/only-compartment-outputs&gt;                           Determines which standard JIPipe outputs are written (default: all)
+
+Advanced settings:
+--verbose                                                                      Print all initialization logs (a lot of text)
+--profile-dir                                                                  Sets the directory for the JIPipe profile (location of settings, artifacts, etc.)
+--fast-init                                                                    Skips the validation steps to make the JIPipe initialization faster
+
+To run this tool, execute following command:
+&lt;ImageJ executable&gt; --debug --pass-classpath --full-classpath --main-class org.hkijena.jipipe.cli.JIPipeCLIMain
+
+Environment variables:
+JIPIPE_OVERRIDE_USER_DIR_BASE                                                  Overrides the base directory where JIPipe looks for profiles (the directory itself will contain sub-directories for the JIPipe version)
+
+    </code-block>
+
+    <p>The basic command to run a JIPipe pipeline with default settings is as follows:</p>
+    <code-block lang="bash">
+./ImageJ-linux64 --memory 8G --pass-classpath --full-classpath --main-class org.hkijena.jipipe.cli.JIPipeCLIMain run --project [your project file] --output-folder [work directory/output folder]
+</code-block>
+    You can use additional CLI arguments to control the behavior of the pipeline execution and override various project
+    and pipeline settings.
+    <chapter title="Disabling standard JIPipe outputs">
+        By default, the JIPipe CLI will save all results, including intermediate outputs into the output directory in
+        the JIPipe standard format.
+        To control this behavior, use the <code>--output-results</code> parameter.
+        <note>This setting does not affect the behaviour of exporter nodes.</note>
+        <deflist>
+            <def title="--output-results all">
+                %default% The default option. Save all results, including intermediates to the output directory.
+            </def>
+            <def title="--output-results only-compartment-outputs">
+                Save only the outputs of compartment output nodes.
+            </def>
+            <def title="--output-results none">
+                Do not save any results using JIPipe's standard format.
+            </def>
+        </deflist>
+    </chapter>
+    <chapter title="Overriding parameters">
+        Any node parameter can be overridden prior to executing the pipeline using a parameter file and/or by directly
+        providing parameters via the CLI.
+        <p>Each parameter has a unique project-wide identifier in the following format:</p>
+        <code-block>
+        [node-uuid]/[parameter-id]
+    </code-block>
+        The node UUID can be found in the
+        <control>Documentation</control>
+        panel after selecting a node and for example looks like this:
+        <code-block>
+        b3655c10-349a-410a-8d26-38f7430f957d
+    </code-block>
+        The parameter ID can be displayed by clicking the <img src="help.png" alt="Help"/> button next to a parameter in
+        the
+        <control>Parameters</control>
+        panel or by browsing through
+        <ui-path>Right-click node | Explore parameters</ui-path>
+        .
+        <p>If you use the
+            <control>Documentation</control>
+            panel, there will be an entry
+            <control>Unique identifier</control>
+        </p>
+        <tip>
+            For most parameters there will be also a field
+            <control>Global parameter identifier</control>
+            that already is in the correct format.
+        </tip>
+        The identifier for the parameter
+        <ui-path>Auto threshold 2D | Method</ui-path>
+        for example might look as following:
+        <code-block>
+        7db79633-5589-49cf-9adf-e70abba39076/method
+    </code-block>
+        <chapter title="Obtaining valid parameter values">
+            JIPipe stores parameters in JSON format. While most parameters are stored in a straight-forward way (e.g.,
+            numbers, booleans, texts, enums, ...),
+            there are some parameter types that require a specific format.
+            <p>To obtain a valid value, you have two options:</p>
+            <deflist>
+                <def title="Copying a parameter">
+                    Change the parameter in a node, and click the arrow next to the <img src="help.png" alt="Help"/>
+                    button.
+                    Then select
+                    <control>Copy</control>
+                    to copy the value as JSON.
+                </def>
+                <def title="Using the parameter explorer">
+                    Open the parameter explorer with
+                    <ui-path>Right-click node | Explore parameters</ui-path>
+                    where you
+                    can play around with the values.
+                </def>
+            </deflist>
+        </chapter>
+        <chapter title="Using a parameter file">
+            The parameter file must be in JSON format and should contain the parameter values in JSON format assigned to
+            the project-wide parameter identifier.
+            <p>For example:</p>
+            <code-block lang="json">
+            {
+                "7db79633-5589-49cf-9adf-e70abba39076/method": "Otsu",
+                "7db79633-5589-49cf-9adf-e70abba39076/threshold-annotation": {
+                    "content": "Threshold",
+                    "enabled": false
+                }
+            }
+        </code-block>
+            Provide the file using the <code>--overwrite-parameters [file]</code> setting.
+            <tip>You can have multiple instances of this parameter. The CLI parser will override settings based on the
+                order.
+            </tip>
+        </chapter>
+        <chapter title="Directly setting parameters">
+            You can also set parameters directly by using the <code>--P[parameter key] [parameter value]</code>
+            setting. For example:
+            <code-block>
+            --P7db79633-5589-49cf-9adf-e70abba39076/method Otsu --P7db79633-5589-49cf-9adf-e70abba39076/threshold-annotation {\"content\":\"Threshold\", \"enabled\":false}
+        </code-block>
+            <tip>The CLI parses all parameter overrides in order, meaning that you can combine this option with
+                parameter files.
+            </tip>
+        </chapter>
+    </chapter>
+    <chapter title="Overriding user directories">
+        Similar to parameters, project user directories can also be overridden using file(s) and CLI parameters.
+        <chapter title="Using a settings file">
+            Provide a JSON file that assigns a new path to the user directory key. For example:
+            <code-block lang="JSON">
+            {
+                "input_dir": "PATH TO NEW INPUT DIR",
+                "output_dir": "PATH TO NEW OUTPUT DIR"
+            }
+        </code-block>
+        </chapter>
+        <chapter title="Directly overriding directories">
+            Use the <code>--U[user directory key] [value]</code> setting to set a new path for a user directory using
+            the CLI.
+            <tip>
+                Similar to parameters, the JIPipe CLI handles the user directory overrides in order, meaning that they
+                can be freely combined.
+            </tip>
+        </chapter>
+    </chapter>
+    <chapter title="Overriding the profile directory">
+        <note>Only available after JIPipe version 4.2.0</note>
+        By default, JIPipe uses a profile directory based on the current home directory of the executing user.
+        You can manually override the directory that contains the profiles using the <code>--profile-dir [profile
+        directory]</code> option.
+    </chapter>
+    <chapter title="Setting the number of threads">
+        <warning>
+            Multi-threading for JIPipe is still experimental due to the incompatibility of various ImageJ-based methods
+            with multi-threading.
+        </warning>
+        You can set the number of threads using the <code>--num-threads [number of threads]</code> parameter.
+    </chapter>
+    <chapter title="Advanced options">
+        <note>Only available after JIPipe version 4.2.0</note>
+        <deflist>
+            <def title="--verbose">
+                If set, print the full JIPipe initialization log.
+                (In older JIPipe versions, this is the default)
+            </def>
+            <def title="--fast-init">
+                If set, skip some checks during the JIPipe initialization, so the tool starts faster.
+            </def>
+            <def title="JIPIPE_OVERRIDE_USER_DIR_BASE (Environment variable)">
+                Allows to override where JIPipe builds it's hierarchy of profile directories.
+                Also available for the regular startup (GUI).
+                Overridden by <code>--profile-dir</code>.
+            </def>
+        </deflist>
+    </chapter>
+</topic>
