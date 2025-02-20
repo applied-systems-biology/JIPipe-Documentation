@@ -27,6 +27,7 @@ Please select the following update sites from the list:
 <li><code>ImageScience</code></li>
 <li><code>Multi-Template-Matching</code></li>
 <li><code>OMERO 5.5-5.6</code></li>
+<li><code>N5</code></li>
 <li><code>JIPipe</code></li>
 </ul>
 </step>
