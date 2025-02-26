@@ -78,13 +78,13 @@ JIPIPE_OVERRIDE_USER_DIR_BASE                                                  O
         <p>Each parameter has a unique project-wide identifier in the following format:</p>
         <code-block>
         [node-uuid]/[parameter-id]
-    </code-block>
+        </code-block>
         The node UUID can be found in the
         <control>Documentation</control>
         panel after selecting a node and for example looks like this:
         <code-block>
         b3655c10-349a-410a-8d26-38f7430f957d
-    </code-block>
+        </code-block>
         The parameter ID can be displayed by clicking the <img src="help.png" alt="Help"/> button next to a parameter in
         the
         <control>Parameters</control>
@@ -106,7 +106,7 @@ JIPIPE_OVERRIDE_USER_DIR_BASE                                                  O
         for example might look as following:
         <code-block>
         7db79633-5589-49cf-9adf-e70abba39076/method
-    </code-block>
+        </code-block>
         <chapter title="Obtaining valid parameter values">
             JIPipe stores parameters in JSON format. While most parameters are stored in a straight-forward way (e.g.,
             numbers, booleans, texts, enums, ...),
@@ -155,6 +155,20 @@ JIPIPE_OVERRIDE_USER_DIR_BASE                                                  O
             <tip>The CLI parses all parameter overrides in order, meaning that you can combine this option with
                 parameter files.
             </tip>
+        </chapter>
+        <chapter title="Overriding project-wide parameters (JIPipe 5.0.0+)">
+            JIPipe version 5.0.0 introduced parameters that are stored within the project itself.
+            Such parameters can be overwritten by leaving out the node UUID part of the parameter path.
+            For example, to overwrite a project-wide parameter with key <code>minSize</code>,
+            use the following JSON or CLI parameter:
+            <code-block lang="json">
+            {
+            "/minSize": 100
+            }
+            </code-block>
+            <code-block lang="bash">
+                --P/minSize 100
+            </code-block>
         </chapter>
     </chapter>
     <chapter title="Overriding user directories">
