@@ -16,10 +16,25 @@
         JIPipe auto-selects artifacts based on a variety of criteria that include your operating system, preferred acceleration
         methods, and supported CUDA version. The version that was found is then automatically written into <emphasis>newly created</emphasis>
         projects, so JIPipe can restore the exact (or best fitting approximation) artifacts on other computers.
-        <p>To review/configure the artifacts utilized in your project, navigate to <ui-path>Info &amp; settings | Settings</ui-path> and browse
+        <p>To review/configure the artifacts utilized in your project, navigate to <ui-path>Project | Project settings</ui-path> and browse
         through the entries in the <ui-path>Plugins</ui-path> category.</p>
-        <img src="ui_artifacts_project_management.png" alt="Artifact configuration in projects"/>
-        Clicking the <control>Configure ...</control> button reveals a variety of options, including the manual setup of
+        <img src="ui_artifacts_project_management.png" alt="Artifact configuration in projects" thumbnail="true"/>
+        Clicking the <control>Configure ...</control> button reveals a variety of options, including the manual setup of external dependencies.
+        <p>Since JIPipe 5.0.0 the project overview will also make automated %star% suggestions regarding artifacts, including upgrading
+        to GPU variants or using versions with bugfixes.</p>
+        Newer JIPipe versions also provide a panel in the status bar that allows to quickly configure artifacts or resolve issues.
+        <img src="ui_artifacts_management_statusbar.png" alt="Artifacts manager" />
+        Here you can also include local artifacts repositories if no or slow internet connection is available.
+    </chapter>
+    <chapter title="Offline artifacts">
+        JIPipe since version 5.0.0 supports artifact repositories stored on the local hard drive. This is useful for cases where
+        no or only slow internet is available.
+        <note>Depending on the operating system, the required storage can be up to 80GB or more.</note>
+        <p>To set up a local artifact repository, first download the appropriate artifact package from <a href="https://jipipe.hki-jena.de/resources/">our website</a>.
+        Extract the package (starting with the .001 file) using 7-zip/NanaZip/PeaZip/WinRAR.</p>
+        <p>In JIPipe click the <control>Artifacts</control> button in the status bar and select <ui-path>Add local directory ...</ui-path>.
+        In the file chooser select the <emphasis>root</emphasis> directory of the local repository (the one that contains the README file).
+        JIPipe then will automatically also query the local repository.</p>
     </chapter>
     <chapter title="Managing plugins">
         <note>The plugin manager is only required if you installed a JIPipe plugin from another developer.
