@@ -26,7 +26,7 @@
         <img src="ui_artifacts_management_statusbar.png" alt="Artifacts manager" />
         Here you can also include local artifacts repositories if no or slow internet connection is available.
     </chapter>
-    <chapter title="Offline artifacts">
+    <chapter title="Offline artifacts" id="offline-artifacts">
         JIPipe since version 5.0.0 supports artifact repositories stored on the local hard drive. This is useful for cases where
         no or only slow internet is available.
         <note>Depending on the operating system, the required storage can be up to 80GB or more.</note>

@@ -4,6 +4,13 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
+    <chapter title="Linux/macOS: R or TesseractOCR crash">
+        Save the project, so JIPipe can put the temporary directory into a different location.
+    </chapter>
+    <chapter title="macOS: JIPipe is being blocked for security reasons">
+        macOS is an operating system that heavily enforces security, which is incompatible with plugin-heavy software like Fiji or JIPipe.
+        Please follow the <a href="https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac">official guide</a> on allowing an exception.
+    </chapter>
     <chapter title="Windows: crashes during data saving with long paths">
         This is often happens during training/inference using Deep Learning tools like Cellpose, but can also happen
         if your projects are deep within the hierarchy of directories. The cause is the (by default) very short supported
@@ -55,6 +62,8 @@
         </procedure>
     </chapter>
     <chapter title="Resetting the application settings" id="resetting_app_settings">
+        <note>If you broke default artifacts in older versions using the application settings (not recommended!), upgrade to a
+        newer JIPipe version (4.1.0 or newer). Here you can just disable your custom configuration.</note>
         <p>This might be needed if you accidentally misconfigured something and want to restore the default behavior.</p>
         <note>Your node templates will not be deleted, as those are saved in separate files.</note>
         <tabs>
