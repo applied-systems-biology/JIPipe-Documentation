@@ -39,6 +39,7 @@
         <toc-element topic="Plugins-and-artifacts.topic"/>
     </toc-element>
     <toc-element topic="Features.topic">
+        <toc-element topic="OMERO-integration.topic"/>
         <toc-element topic="Filament-toolbox.topic">
             <toc-element topic="Filament-creation.topic"/>
             <toc-element topic="Filament-metadata-storage.topic"/>

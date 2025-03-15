@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="OMERO integration" id="OMERO-integration">
+
+    <p>JIPipe provides support for exploring OMERO databases and uploading and downloading data.</p>
+    <chapter title="Connecting to OMERO">
+        To connect to an OMERO server, JIPipe need to be provided with the necessary credentials.
+        You can provide them in various levels:
+        <list>
+            <li>Application-wide: the credentials are stored in your JIPipe profile</li>
+            <li>Project-wide: the credentials are stored within the project itself</li>
+            <li>Per node: the credentials are stored within the node</li>
+        </list>
+        Please note that, while passwords are not stored in clear-text, they are only masked by storing them as BASE64 that
+        can be easily decrypted.
+        <chapter title="Setting the OMERO credentials application-wide">
+            <procedure>
+                <step>Navigate to <ui-path>Project | Application settings | Plugins | OMERO integration</ui-path></step>
+                <step>Click <control>Configure ...</control> and select <control>Edit</control></step>
+                <step>Insert the required information and confirm the selection</step>
+            </procedure>
+            <note>While not necessary, we recommend to also include the webclient URL. It is usually
+            <code>https://[OMERO HOST]/webclient</code>.
+            </note>
+            <img src="omero_edit_environment_global.png" alt="Editing the global OMERO environment" thumbnail="true" />
+        </chapter>
+        <chapter title="Setting the OMERO credentials per project">
+            <procedure>
+                <step>Navigate to <ui-path>Project | Project settings | Plugins | OMERO</ui-path></step>
+                <step>Enable the override parameter, click <control>Configure ...</control>, and select <control>Edit</control></step>
+                <step>Insert the required information and confirm the selection</step>
+            </procedure>
+        </chapter>
+        <chapter title="Setting the OMERO credentials per node">
+            <procedure>
+                <step>Select the node</step>
+                <step>Enable the parameter <control>Override OMERO credentials</control>, click <control>Configure ...</control>, and select <control>Edit</control></step>
+                <step>Insert the required information and confirm the selection</step>
+            </procedure>
+        </chapter>
+    </chapter>
+    <chapter title="Obtaining OMERO references by ID">
+        If you already have OMERO data objects (projects, datasets, images, screens, etc.), they need to be first
+        transformed into JIPipe data items that can be further processed.
+        JIPipe provides for each OMERO object type a data source node where you can directly input the ID of the object.
+        <img src="omero_data_sources.png" alt="OMERO data sources"/>
+        On executing such nodes, JIPipe will contact the OMERO server to obtain some necessary information.
+        Please ensure that you have set up your OMERO credentials.
+    </chapter>
+    <chapter title="Navigating through OMERO">
+        JIPipe provides a variety of nodes to list child data items that are related to OMERO references. For example,
+        you can list the images within a dataset or the plates within a screen. The nodes also provide a powerful expression-based filtering
+        system that allow you to select specific child items based on metadata.
+        <img src="omero_list_hierarchy.png" alt="OMERO navigation nodes"/>
+        Due to the way how JIPipe structures OMERO references, you do not have to iterate through the full hierarchy of
+        the OMERO structures. For example, you can start with a <control>Define dataset IDs</control> and lists its contained
+        images using <control>List OMERO images in dataset</control>.
+    </chapter>
+    <chapter title="Downloading and uploading">
+        If you obtained <control>OMERO Image reference</control> data, you can download it into an <control>OME image</control>
+        using <control>Download image from OMERO</control>. Any associated tables can be downloaded using <control>Download table from OMERO</control>.
+        Both nodes will automatically extract OMERO Key-Value pairs and tags into JIPipe annotations for further processing.
+        <img src="omero_download.png" alt="OMERO downloader nodes"/>
+        To upload to OMERO, use the <control>Upload image to OMERO dataset</control> node.
+        Afterward, you can attach tables to the OMERO image using <control>Attach table to OMERO image</control>.
+        <img src="omero_upload.png" alt="OMERO uploader nodes"/>
+        <note>If you need to create a new dataset, you can use the <control>Create OMERO dataset</control> node.</note>
+        <warning>We are currently working on additional upload methods.</warning>
+    </chapter>
+</topic>
