@@ -36,6 +36,7 @@
         <toc-element topic="Running-projects.topic"/>
         <toc-element topic="Graph-partitions.topic"/>
         <toc-element topic="Graph-compartments.topic"/>
+        <toc-element topic="Project-overview.topic"/>
         <toc-element topic="Plugins-and-artifacts.topic"/>
     </toc-element>
     <toc-element topic="Features.topic">

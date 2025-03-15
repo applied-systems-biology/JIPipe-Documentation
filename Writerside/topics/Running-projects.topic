@@ -16,26 +16,50 @@
     You can instruct JIPipe to run the whole project by clicking the <control>Run</control> button at the top-right corner of
     the JIPipe window.
     <img src="ui_run_button.png" alt="The run button" />
-    Clicking the button will create an internal copy of your current project and open a new tab <control>Run</control>
-    that comes with a variety of settings.
-    <p>By default, JIPipe will execute all nodes of your pipeline and store the generated results into
-    the provided <control>Output folder</control> in a JIPipe-specific format.</p>
-    <chapter title="Disable JIPipe standard output">
-        If you want to prevent the storage of the data into JIPipe's own format, for example if you created
-        your own exporter nodes, de-select the <control>Save results to disk in JIPipe format</control>
-        checkbox.
-        <p>JIPipe will automatically analyze your pipeline and offer you to turn off features that would impact
-        the performance of the pipeline:</p>
-        <img src="ui_run_disable_jipipe_format.png" thumbnail="true" alt="Notification to disable feature" />
+    Clicking the <control>Run</control> button will open a new dialog (newly introduced in JIPipe 5.0.0) that lists
+    a variety of available run options.
+    <img src="ui_run_project_new.png" alt="New project run dialog" />
+    On the left-hand side, all options will be listed that include
+    <deflist>
+        <def title="Run sets">
+            A run set is a set of nodes that should be executed together. Such run sets can be set up by right-clicking one or multiple nodes
+            and adding them into a set.
+        </def>
+        <def title="Compartment output nodes">
+            All compartment output nodes are automatically captured by the run dialog.
+        </def>
+        <def title="Whole project/custom run">
+            An option where a custom run is created that allows to change a variety of settings, including which nodes
+            exactly should be executed, how to save results, and how many threads are used (multi-threading is currently still experimental!).
+        </def>
+    </deflist>
+    You can choose from a selection of basic settings regarding how and where results are stored. The interface attempts to guess
+    the settings based on the project itself, but we recommend to carefully review the settings.
+    <chapter title="Whole project/Custom run">
+        Choosing the custom run option will create an internal copy of your current project and open a new interface
+        that comes with a variety of settings.
+        <p>By default, JIPipe will execute all nodes of your pipeline and store the generated results into
+            the provided <control>Output folder</control> in a JIPipe-specific format.</p>
+        <chapter title="Disable JIPipe standard output">
+            If you want to prevent the storage of the data into JIPipe's own format, for example if you created
+            your own exporter nodes, de-select the <control>Save results to disk in JIPipe format</control>
+            checkbox.
+            <p>JIPipe will automatically analyze your pipeline and offer you to turn off features that would impact
+                the performance of the pipeline:</p>
+            <img src="ui_run_disable_jipipe_format.png" thumbnail="true" alt="Notification to disable feature" />
+        </chapter>
+        <chapter title="Disable storage of large intermediate results">
+            JIPipe will analyze the pipeline and detect outputs that contain data with a large memory footprint (e.g., images, 3D ROI, ...),
+            but are only used as intermediate results.
+            You can navigate to the <ui-path>Performance</ui-path> tab and disable the storage of such data to the hard drive.
+            <note>You don't need to configure this feature if <control>Save results to disk in JIPipe format</control> is checked.</note>
+        </chapter>
+        <chapter title="Disable the storage of other results">
+            You can control whether results are stored for a specific output via the <ui-path>Exported</ui-path> tab.
+            <note>You don't need to configure this feature if <control>Save results to disk in JIPipe format</control> is checked.</note>
+        </chapter>
     </chapter>
-    <chapter title="Disable storage of large intermediate results">
-        JIPipe will analyze the pipeline and detect outputs that contain data with a large memory footprint (e.g., images, 3D ROI, ...),
-        but are only used as intermediate results.
-        You can navigate to the <ui-path>Performance</ui-path> tab and disable the storage of such data to the hard drive.
-        <note>You don't need to configure this feature if <control>Save results to disk in JIPipe format</control> is checked.</note>
-    </chapter>
-    <chapter title="Disable the storage of other results">
-        You can control whether results are stored for a specific output via the <ui-path>Exported</ui-path> tab.
-        <note>You don't need to configure this feature if <control>Save results to disk in JIPipe format</control> is checked.</note>
-    </chapter>
+
+
+
 </topic>

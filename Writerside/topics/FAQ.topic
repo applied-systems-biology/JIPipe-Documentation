@@ -4,6 +4,12 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Frequently asked questions" id="FAQ">
+    <chapter title="I installed JIPipe via the ImageJ plugin manager and it doesn't start or is broken in other ways">
+        JIPipe requires some other ImageJ update sites to function correctly. You can learn more about this
+        by reading through the <a href="Manual-installation.md">manual installation guide</a>.
+        <p>We also generally recommend to just use the <a href="Prepackaged-JIPipe.md">prepackaged JIPipe</a> versions,
+        as they are already configured and tested.</p>
+    </chapter>
     <chapter title="What is the JIPipe.tmp.dir directory?">
         JIPipe stores temporary files into this directory. You can delete it safely if no JIPipe project in the containing directory
         is currently open.
@@ -52,6 +58,13 @@
             <li>If you have a small and self-contained set of nodes that should be looped, create a looped <a href="Group-nodes.topic">group</a>. </li>
             <li>If you want to loop a section of your pipeline, setup <a href="Graph-partitions.topic">graph partitions</a>.</li>
         </list>
+    </chapter>
+    <chapter title="Can I make JIPipe run fully offline?">
+        Yes, but you need to set up a local repository for the artifacts that may be required by the pipeline.
+        You can find more information <a href="Plugins-and-artifacts.topic" anchor="offline-artifacts">here</a>.
+    </chapter>
+    <chapter title="Is JIPipe compatible with Java 21?">
+        JIPipe should be compatible with Java 21 starting with version 5.0.0.
     </chapter>
     <chapter title="Question not listed?">
         Please visit the <a href="https://forum.image.sc/">image.sc forum</a>. Here you can ask the community,

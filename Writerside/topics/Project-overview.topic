@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Project overview" id="Project-overview">
+
+    <p>The project overview tab is a useful tool for guiding users through your project and avoiding overloading them
+    with the full complexity of the workflow or compartment graphs. It can be opened by clicking the <control>Project</control>
+    button at the top-right of the window and (since JIPipe 5.0.0) will also automatically open if the current user
+    is not in the list of known project authors.</p>
+    <img src="ui_project_overview.png" alt="Project overview" thumbnail="true"/>
+    <p>%hint% Setting up a helpful and useful project overview tab will make it easier for the users of your workflow (e.g., reviewers) to
+    try out your pipeline.</p>
+    <p>The project overview is roughly divided into four areas:</p>
+    <deflist>
+        <def title="Header">
+            The header contains the project name, authors, links to the website (if present), and other information.
+            It also has information about the license and a field for a few project statistics.
+            <p>
+                At the bottom-right side of the header, you will find various quick-links to commonly used features.
+            </p>
+        </def>
+        <def title="Left sidebar">
+            By default, all panels in the left sidebar are collapsed. It contains less commonly used features like bookmarks,
+            the editor for graph partitions, and a panel to create run sets.
+        </def>
+        <def title="Right sidebar">
+            Contains project-wide parameters (directories, parameters referenced from the workflow, project-global parameters).
+            Here you can also find results that may be generated.
+        </def>
+        <def title="Central panel">
+            Dynamically adapts to available information and tips. Contains the project description, options to run different parts of
+            the pipeline, and a list of helpful tips.
+        </def>
+    </deflist>
+
+</topic>
