@@ -269,7 +269,7 @@
     <chapter title="Editing tools">
         <img src="ui_toolbar_annotated.png" alt="Annotated toolbar"/>
         <p>The toolbar displayed above the pipeline editor contains the following commands:</p>
-        <chapter title="❶ Node tools">
+        <chapter title="%c1% Node tools">
             The first tool category involves operations that are related to moving and connecting nodes.
             <deflist>
                 <def title="Default tool">
@@ -313,7 +313,7 @@
                 </def>
             </deflist>
         </chapter>
-        <chapter title="❷ Graph annotation tools">
+        <chapter title="%c2% Graph annotation tools">
             The second category involves tools for creating graph annotations (e.g. text boxes) that are useful for
             annotating the pipeline.
             <tip>Graph annotations are also just (specialized) nodes, meaning that you can edit, copy, and paste them
@@ -366,12 +366,12 @@
                 </def>
             </deflist>
         </chapter>
-        <chapter title="❸ Context-based commands">
+        <chapter title="%c3% Context-based commands">
             <p>After the graph annotation tools, the toolbar displays actions that are based on the current selection of
                 nodes.
                 This means that none are displayed if you did not select a node.</p>
         </chapter>
-        <chapter title="❹ Additional commands">
+        <chapter title="%c4% Additional commands">
             Finally, the toolbar contains a variety of additional useful commands.
             <deflist>
                 <def title="Center view to nodes">

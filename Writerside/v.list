@@ -3,9 +3,9 @@
 <vars>
     <var name="product" value="JIPipe"/>
     <var name="mouse" value="🖱"/>
-    <var name="c1" value="➊"/>
-    <var name="c2" value="➋"/>
-    <var name="c3" value="➌"/>
+    <var name="c1" value="❶"/>
+    <var name="c2" value="❷"/>
+    <var name="c3" value="❸"/>
     <var name="c4" value="❹"/>
     <var name="c5" value="❺"/>
     <var name="key_left" value="←"/>
