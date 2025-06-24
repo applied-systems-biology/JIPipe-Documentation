@@ -299,7 +299,7 @@ IF_ELSE_EXPR(1 &lt; 3, "a * 2", "b * 2")
 SET_VARIABLE("a", 5);
 SWITCH_MAP(a, CASE(1, "one"), CASE(5, "five"), CASE(7, "seven"))
             </code-block>
-            returns 5.
+            returns "five".
             <p>If the matched value is not present, it stays unchanged.</p>
             <code-block lang="JavaScript">
 SET_VARIABLE("a", 15);
@@ -456,8 +456,8 @@ SWITCH_CASE(a == 1, "one", a == 5, "five", a == 7, "seven", true, "Unknown")
                 <td>10</td>
                 <td><code>x^y</code></td>
                 <td>Numbers</td>
-                <td>Divides two numbers</td>
-                <td><code>5 / 10</code></td>
+                <td>Raises x to the power of y</td>
+                <td><code>2 ^ 3</code></td>
             </tr>
             <!-- 9 -->
             <tr>

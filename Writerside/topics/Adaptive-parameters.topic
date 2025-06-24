@@ -124,7 +124,7 @@
         <img src="ui_parameter_explorer_example.png" alt="Parameter explorer" thumbnail="true"/>
         Based on the knowledge gained from the parameter explorer, adapt the adaptive parameter expression to
         generate
-        anb appropriate JSON string.
+        an appropriate JSON string.
         <chapter title="Example">
             In this example, we want to make the parameter <control>Threshold annotation</control> of the <control>Auto threshold 2D</control>
             node adaptive.

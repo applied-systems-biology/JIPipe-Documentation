@@ -97,7 +97,7 @@
         button that is located at the slot's datatype icon and by then navigating to <ui-path>Find matching node ...</ui-path> item.
         You can also double-click the slot.
         <p>This will open a dialog with a search bar and a list of matching existing/new nodes. JIPipe ensures that only nodes are displayed
-        that is compatible to the slot.</p>
+        that are compatible with the slot.</p>
         <p>Click an item to open a menu that allows you to either add the node to the pipeline (for new nodes only), or create a connection.
         If a node does not exist, it will be automatically created.</p>
         <video src="video_add_nodes_algorithm_finder.mp4" preview-src="video_add_nodes_algorithm_finder.png"/>
