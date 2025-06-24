@@ -5,5 +5,17 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Features" id="Features">
 
-    <p>Start typing here...</p>
+    <section-starting-page>
+        <title>JIPipe features</title>
+        <description>Learn more about the JIPipe features</description>
+        <spotlight>
+            <a href="OMERO-integration.topic">Learn how to access OMERO</a>
+            <a href="Python-integration.topic">Read about the Python integration</a>
+        </spotlight>
+        <primary>
+            <title>Additional features</title>
+            <a href="Filament-toolbox.topic">Working with graphs and filaments</a>
+            <a href="R-integration.topic">Integrate R scripts</a>
+        </primary>
+    </section-starting-page>
 </topic>

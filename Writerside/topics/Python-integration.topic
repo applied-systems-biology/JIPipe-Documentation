@@ -57,6 +57,10 @@
         Most of the steps are already covered by the Python integration node and the <a
             href="https://github.com/applied-systems-biology/jipipe-python">JIPipe Python adapter library</a>
         that is automatically injected into the Python script.
+        <note>
+            If you want to read the API documentation of the Python adapter library, you can find it <a href="https://jipipe.hki-jena.de/resources/">here</a>
+            under the header <emphasis>Python binding docs</emphasis>.
+        </note>
     </chapter>
     <chapter title="Writing Python scripts">
         Generally, you can use all Python libraries that are available to you in the currently configured Python
