@@ -4,12 +4,21 @@
 <topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Troubleshooting" id="Troubleshooting">
+    <chapter title="Windows: Fiji/JIPipe are not starting">
+        Please note that the first startup might take longer due to antivirus scanner checks. Check the task manager for
+        the ImageJ/Fiji/JIPipe process.
+        <p>If JIPipe is still not starting, and you are running a newly installed Windows, you can try to install the <a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">Visual C++ Runtime</a>,
+        which might not be at this point available.</p>
+    </chapter>
     <chapter title="Linux/macOS: R or TesseractOCR crash">
         Save the project, so JIPipe can put the temporary directory into a different location.
     </chapter>
     <chapter title="macOS: JIPipe is being blocked for security reasons">
         macOS is an operating system that heavily enforces security, which is incompatible with plugin-heavy software like Fiji or JIPipe.
         Please follow the <a href="https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac">official guide</a> on allowing an exception.
+    </chapter>
+    <chapter title="macOS: OpenCV not available">
+        We unfortunately cannot fix this issue, as no compatible OpenCV version is provided within the ImageJ update sites.
     </chapter>
     <chapter title="Windows: crashes during data saving with long paths">
         This is often happens during training/inference using Deep Learning tools like Cellpose, but can also happen
