@@ -13,9 +13,14 @@
             <td>Example</td>
         </tr>
         <tr>
-            <td><code>JIPIPE_LOCAL_REPOSITORY</code></td>
-            <td>Redirects the user's local artifact repository. Must be writable.</td>
-            <td><code>/data/jipipe-artifacts</code></td>
+            <td><code>JIPIPE_OVERRIDE_SYSTEM_ARTIFACTS_DIR</code></td>
+            <td>Redirects the system artifact repository. Can be readonly to prevent the removal of packages. Defaults to <code>[ImageJDir]/jipipe/artifacts</code> </td>
+            <td><code>/data/jipipe-system-artifacts</code></td>
+        </tr>
+        <tr>
+            <td><code>JIPIPE_OVERRIDE_USER_ARTIFACTS_DIR</code></td>
+            <td>Redirects the user's local artifact repository. Must be writable, because JIPipe may install additional artifacts when needed.</td>
+            <td><code>/data/jipipe-user-artifacts</code></td>
         </tr>
         <tr>
             <td><code>JIPIPE_OVERRIDE_SHARED_DIR</code></td>
