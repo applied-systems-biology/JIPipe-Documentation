@@ -12,6 +12,10 @@
         <toc-element topic="Manual-installation.md"/>
         <toc-element topic="ImageJ-update-site.md"/>
     </toc-element>
+    <toc-element topic="Deployment.topic">
+        <toc-element topic="Docker.topic"/>
+        <toc-element topic="Environment-variables.topic"/>
+    </toc-element>
     <toc-element topic="Concepts.topic">
         <toc-element topic="Visual-programming.topic"/>
         <toc-element topic="Annotations.topic"/>

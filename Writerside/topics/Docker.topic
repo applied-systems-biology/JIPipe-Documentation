@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Docker" id="Docker">
+
+    <p>
+        We provide Docker containers that allow to run the JIPipe CLI:
+        <a href="https://hub.docker.com/r/appsysbiohkijena/jipipe">https://hub.docker.com/r/appsysbiohkijena/jipipe</a>
+        The related Dockerfiles can be found here:
+        <a href="https://asb-git.hki-jena.de/RGerst/jipipe/-/tree/master/dist/docker?ref_type=heads">https://asb-git.hki-jena.de/RGerst/jipipe/-/tree/master/dist/docker</a>
+    </p>
+    <p>
+        The latest tag always points to the latest version of JIPipe. Please note that starting with JIPipe 6.0.0, Java 21 is used.
+        To use the CLI for processing data, you will need to mount one or multiple volumes.
+    </p>
+    <code-block lang="bash">
+        docker run --rm -v $(pwd):/data appsysbiohkijena/jipipe:latest run --project /data/project.jip --output-folder /data/output
+    </code-block>
+</topic>

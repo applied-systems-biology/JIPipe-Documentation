@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Environment variables" id="Environment-variables">
+
+    <p>JIPipe reads the following environment variables that can be used to control certain functionalities:</p>
+    <table style="both">
+        <tr>
+            <td>Variable</td>
+            <td>Function</td>
+            <td>Example</td>
+        </tr>
+        <tr>
+            <td><code>JIPIPE_LOCAL_REPOSITORY</code></td>
+            <td>Redirects the user's local artifact repository. Must be writable.</td>
+            <td><code>/data/jipipe-artifacts</code></td>
+        </tr>
+        <tr>
+            <td><code>JIPIPE_OVERRIDE_SHARED_DIR</code></td>
+            <td>Allows to override a version-independent shared directory where JIPipe can install various tools (for example ORAS or CEF). Must be writable.</td>
+            <td><code>/data/jipipe-shared</code></td>
+        </tr>
+        <tr>
+            <td><code>JIPIPE_OVERRIDE_USER_DIR_BASE</code></td>
+            <td>Allows to override where JIPipe puts its profiles. This directory will contain the versioned user profiles, e.g., <code>$JIPIPE_OVERRIDE_USER_DIR_BASE/6.0.0</code>. Must be writable.</td>
+            <td><code>/data/jipipe-shared</code></td>
+        </tr>
+        <tr>
+            <td><code>java.io.tmpdir</code></td>
+            <td>Allows to override the Java-internal temporary directory. Must be writable. Please note that JIPipe usually puts temporary directories next to the project.</td>
+            <td><code>/data/jipipe-tmp</code></td>
+        </tr>
+    </table>
+</topic>
