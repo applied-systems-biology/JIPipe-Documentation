@@ -216,7 +216,7 @@
                     add_image(img, dso)
 
                     # You can also create text annotations (set annotation "test" to the value "value")
-                    add_image(img, dso, text_annotations={"test", "value"})
+                    add_image(img, dso, text_annotations={"test": "value", "test2": "value"})
                 </code-block>
 
             </tab>
@@ -236,7 +236,7 @@
                     add_table(df, dso)
 
                     # You can also create text annotations (set annotation "test" to the value "value")
-                    add_table(df, dso, text_annotations={"test", "value"})
+                    add_table(df, dso, text_annotations={"test": "value", "test2": "value"})
                 </code-block>
             </tab>
             <tab title="Custom image export">
