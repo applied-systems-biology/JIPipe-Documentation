@@ -5,6 +5,7 @@
        xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
        title="Environment variables" id="Environment-variables">
 
+    <note>This information is only applicable to JIPipe 6.0.0 and newer</note>
     <p>JIPipe reads the following environment variables that can be used to control certain functionalities:</p>
     <table style="both">
         <tr>
