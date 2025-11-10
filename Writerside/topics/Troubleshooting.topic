@@ -117,4 +117,14 @@
         This is a known issue caused by the Weka filter. It will be fixed in
         the next version after 4.0.0.
     </chapter>
+    <chapter title="JIPipe 6.0.0+: downloading artifacts throws 'denied' error">
+        If the output of the ORAS download looks like the following:
+        <code-block>
+            Error response from registry: denied: denied
+        </code-block>
+        You may be logged in into ORAS. Open a console and type
+        <code-block lang="bash">
+            oras logout
+        </code-block>
+    </chapter>
 </topic>
