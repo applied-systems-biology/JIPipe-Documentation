@@ -14,6 +14,7 @@
     </toc-element>
     <toc-element topic="Deployment.topic">
         <toc-element topic="Docker.topic"/>
+        <toc-element topic="Cloud-desktop.topic"/>
         <toc-element topic="Environment-variables.topic"/>
     </toc-element>
     <toc-element topic="Concepts.topic">

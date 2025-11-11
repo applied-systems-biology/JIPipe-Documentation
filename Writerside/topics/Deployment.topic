@@ -8,6 +8,10 @@
     <section-starting-page>
         <title>Advanced deployment guides</title>
         <description>The referenced articles are about more advanced deployment options, e.g., deployment using Docker or virtual desktops.</description>
+        <primary>
+            <title>Deploy on cloud desktops</title>
+            <a href="Cloud-desktop.topic">Learn more</a>
+        </primary>
         <spotlight>
             <a href="Environment-variables.topic">Override environment variables</a>
             <a href="Docker.topic">Deploy with Docker</a>

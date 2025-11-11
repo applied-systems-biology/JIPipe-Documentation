@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Cloud desktop" id="Cloud-desktop">
+    <note>This information is only applicable to JIPipe 6.0.0 and newer</note>
+    <p>JIPipe can be deployed on cloud desktop environments, although certain environment variables may need to be set and additional
+    tools need to be run depending on the intended setup. This page will handle common cases regarding the deployment.</p>
+    <chapter id="general-notes" title="General notes">
+        While ImageJ/Fiji is intended to be an application where users are expected to install plugins, JIPipe is
+        designed to be a monolithic software that comes pre-installed with all features (except for third-party tools).
+        <p>This allows system administrators to fully deploy JIPipe into cloud desktops with great flexibility.</p>
+        <p>The basis of the deployment is the <a href="https://jipipe.org/download">pre-compiled package</a> for the
+        target operating system which contains a full installation of Fiji, together with all required plugins, dependencies,
+         as well as a <a href="https://github.com/apposed/jaunch">Jaunch</a> launcher for JIPipe that acts as entry point for the GUI and CLI.</p>
+    </chapter>
+    <chapter id="user-data" title="User profiles">
+        JIPipe stores settings, backups, and other user data into profile directories that are named after the current version (e.g., <code>6.0.0</code>)
+        and are rooted at a platform-dependent directory:
+        <table style="header-column">
+            <tr>
+                <td>Windows</td>
+                <td><code>&percnt;APPDATA&percnt;/JIPipe/profiles</code></td>
+            </tr>
+            <tr>
+                <td>Linux</td>
+                <td><code>$XDG_DATA_HOME/JIPipe/profiles</code> or <code>~/.local/share/JIPipe/profiles</code></td>
+            </tr>
+            <tr>
+                <td>macOS</td>
+                <td><code>~/Library/Application Support/JIPipe/profiles</code></td>
+            </tr>
+            <tr>
+                <td>Environment variable</td>
+                <td><code>JIPIPE_OVERRIDE_USER_DIR_BASE</code></td>
+            </tr>
+        </table>
+        You can overwrite the profile directory using the environment variable <code>JIPIPE_OVERRIDE_USER_DIR_BASE</code>.
+        <note>JIPipe will create subdirectories automatically and requires the permissions to do so!</note>
+    </chapter>
+    <chapter id="shared-data" title="User shared data">
+        JIPipe uses a writable version-independent directory to store various shared libraries and tools:
+        <table style="header-column">
+            <tr>
+                <td>Windows</td>
+                <td><code>&percnt;APPDATA&percnt;/JIPipe/shared</code></td>
+            </tr>
+            <tr>
+                <td>Linux</td>
+                <td><code>$XDG_DATA_HOME/JIPipe/shared</code> or <code>~/.local/share/JIPipe/shared</code></td>
+            </tr>
+            <tr>
+                <td>macOS</td>
+                <td><code>~/Library/Application Support/JIPipe/shared</code></td>
+            </tr>
+            <tr>
+                <td>Environment variable</td>
+                <td><code>JIPIPE_OVERRIDE_SHARED_DIR</code></td>
+            </tr>
+        </table>
+        You can overwrite the shared directory using the environment variable <code>JIPIPE_OVERRIDE_SHARED_DIR</code>.
+    </chapter>
+    <chapter id="artifacts" title="Artifacts">
+        JIPipe does not provide third-party tools (e.g., Cellpose, R, Python, ...) in its standard distribution to save
+        space. Instead, artifact packages are downloaded from an <a href="https://applied-systems-biology.github.io/jipipe-artifacts/">online repository</a> on demand.
+        The extracted artifacts packages are stored inside the following directory:
+        <table style="header-column">
+            <tr>
+                <td>Windows</td>
+                <td><code>&percnt;APPDATA&percnt;/JIPipe/artifacts</code></td>
+            </tr>
+            <tr>
+                <td>Linux</td>
+                <td><code>$XDG_DATA_HOME/JIPipe/artifacts</code> or <code>~/.local/share/JIPipe/artifacts</code></td>
+            </tr>
+            <tr>
+                <td>macOS</td>
+                <td><code>~/Library/Application Support/JIPipe/artifacts</code></td>
+            </tr>
+            <tr>
+                <td>Environment variable</td>
+                <td><code>JIPIPE_OVERRIDE_USER_ARTIFACTS_DIR</code></td>
+            </tr>
+        </table>
+        You can overwrite the artifacts directory using the environment variable <code>JIPIPE_OVERRIDE_USER_ARTIFACTS_DIR</code>.
+        JIPipe needs permissions to create a hierarchy of directories, set the executable bit (Linux/macOS), and execute applications from
+        within the directory.
+        <chapter id="system-artifacts" title="System artifacts">
+            Most artifacts can be pre-deployed into a read-only directory to avoid re-downloading packages with an extracted size of up to 5-10GB per package
+            for each user. JIPipe will look for <emphasis>system artifacts</emphasis> within a specific directory and mark them internally as read-only:
+            <table style="header-column">
+                <tr>
+                    <td>All operating systems</td>
+                    <td><code>[ImageJ directory]/jipipe/artifacts</code></td>
+                </tr>
+                <tr>
+                    <td>Environment variable</td>
+                    <td><code>JIPIPE_OVERRIDE_SYSTEM_ARTIFACTS_DIR</code></td>
+                </tr>
+            </table>
+            If the directory does not exist, JIPipe will not create it due to the read-only nature of this feature.
+        </chapter>
+        <chapter id="cli-install-artifacts" title="Pre-deploy artifacts">
+            The JIPipe CLI since version 6.0.0 allows the headless download and deployment of artifacts using the <code>install-artifacts</code> subcommand:
+            <code-block lang="Bash">
+                ./jipipe-linux-x64 install-artifacts --deploy [all|none|readonly] --query [query1] --query [query2] --query [...]
+            </code-block>
+            By default, the CLI will download all compatible artifacts for the current system (implicit <code>*</code> query) and extract
+            them into the user's artifacts directory. If you provide at least one query, the downloader will limit itself to the query and
+            if required dependencies like ORAS.
+            <p>For the pre-deployment of a system artifacts repository, redirect the repository directory using <code>JIPIPE_OVERRIDE_USER_ARTIFACTS_DIR</code> and deploy with the <code>readonly</code> mode:</p>
+            <code-block lang="Bash">
+                export JIPIPE_OVERRIDE_USER_ARTIFACTS_DIR=/usr/share/jipipe-artifacts
+                ./jipipe-linux-x64 install-artifacts --deploy readonly
+            </code-block>
+            The <code>readonly</code> mode will automatically skip all artifacts that <emphasis>must</emphasis> be installed by the user.
+        </chapter>
+    </chapter>
+</topic>
