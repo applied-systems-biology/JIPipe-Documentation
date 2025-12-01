@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="ImageJ macro support" id="ImageJ-macro-support">
+
+    <p>JIPipe supports the execution of <emphasis>most</emphasis> ImageJ macros through a node:</p>
+    <deflist>
+        <def title="Run ImageJ macro">
+            <p>
+                Executes the macro for each <a href="Batch-processing.topic">iteration step</a>.
+                Each slot receives
+                <emphasis>exactly one</emphasis>
+                data item per step.
+            </p>
+        </def>
+    </deflist>
+    <chapter title="Background">
+        The integration works by first making the incoming data available as objects (images, tables, etc.)
+        that can be accessed through standard ImageJ macros.
+        See the <a href="https://imagej.net/Scripting">ImageJ scripting documentation</a> for more details.
+        After the execution of the macro, JIPipe gathers outputs and converts them back into JIPipe-accessible data.
+        <p>Due to the limited set of data types supported by ImageJ, JIPipe will apply the following operations depending on the
+        data type:</p>
+        <table style="header-row">
+            <tr>
+                <td>Data type</td>
+                <td>To ImageJ</td>
+                <td>From ImageJ</td>
+            </tr>
+            <tr>
+                <td>Image (ImageJ image etc.)</td>
+                <td>Will open the image in an ImageJ image window that is named after the <emphasis>input slot</emphasis></td>
+                <td>Will look for an ImageJ image window named after the <emphasis>output slot</emphasis></td>
+            </tr>
+            <tr>
+                <td>Table (ImageJ table etc.)</td>
+                <td>Will store the table data into an ImageJ table window. To write into the standard ImageJ results table, name the input <code>Results</code>.</td>
+                <td>Will look for an ImageJ table that is named after the <emphasis>output slot</emphasis>. To extract the standard ImageJ results table, name the output <code>Results</code>.</td>
+            </tr>
+            <tr>
+                <td>Paths (Files/Folders/Paths)</td>
+                <td>Will create a table with one row and a single column <code>Path</code> that contains the path. Will then apply the same operation as for tables.</td>
+                <td>Will look for an ImageJ table named the <emphasis>output slot</emphasis>, take the first column and assume that the rows of that column contain the paths to be put into the output.</td>
+            </tr>
+        </table>
+        While other data types are technically supported, they may behave unexpectedly.
+    </chapter>
+    <chapter title="Writing ImageJ macros">
+        You will need to adapt your macro code to work with how JIPipe interacts with ImageJ. A good way to get started is the following code
+        that applies a Gaussian blur macro to each image received by the input <code>Input</code> and returns the resulting image back to JIPipe
+        by renaming the output image <code>Output</code> (the name of the output slot):
+        <code-block lang="c">
+// Each input image slot creates a window with its name.
+// You have to select it, first
+selectWindow("Input");
+
+// Apply Gaussian on image "Input"
+run("Gaussian Blur...", "sigma=2");
+
+// JIPipe extracts output images based on their window name
+rename("Output");
+
+        </code-block>
+    </chapter>
+    <chapter title="Passing parameters">
+        You can create macro parameters that will be automatically injected into the macro code by JIPipe.
+        To do this, click the <ui-path>Edit</ui-path> button within the <ui-path>Macro parameters</ui-path> category and
+        create a new parameter. The key will be used as a variable name in the macro code.
+        <note>Expression parameters are currently not directly supported. But you can use <a href="External-parameters.topic">external parameters</a> to
+        override macro parameters to achieve the same effect.</note>
+    </chapter>
+</topic>
